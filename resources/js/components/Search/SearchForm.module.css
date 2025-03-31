@@ -1,0 +1,9 @@
+.searchGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 31%);
+  gap: 0.5rem;
+}
+
+input[placeholder="Gatenavn"] {
+  grid-column: 1 / 3;
+}

@@ -1,0 +1,11 @@
+.navLink {
+  display: block;
+  padding: 0.7rem 1rem;
+  text-align: center;
+  color: var(--gray-dark);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--light);
+  }
+}

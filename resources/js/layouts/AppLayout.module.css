@@ -1,0 +1,14 @@
+.header {
+    z-index: 200;
+    width: 100%;
+    position: fixed;
+    padding: 0 1rem;
+    background-color: var(--background);
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.mainContainer {
+    position: relative;
+    top: 52.8px;
+    height: calc(100vh - 52.8px);
+}

@@ -1,0 +1,36 @@
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+label[for] {
+  cursor: pointer;
+}
+
+.horizontalLine {
+  margin: 1.5rem 0;
+}
+
+.filterCustom {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.andOrNotFieldset {
+    display: flex;
+}
+
+.andOrNot {
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+  input {
+    display: none;
+  }
+
+  &:has(> input:checked) {
+    background-color: rgb(252, 241, 208);
+  }
+}

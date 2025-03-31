@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  td,
+  th {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  thead {
+    background-color: var(--primary);
+    border-top: 1px solid #ddd;
+  }
+}

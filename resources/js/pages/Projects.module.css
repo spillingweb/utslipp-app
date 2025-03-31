@@ -1,0 +1,9 @@
+.projectsList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 2rem;
+}

@@ -1,0 +1,9 @@
+.textLink {
+    text-decoration: underline lightgray;
+    text-underline-offset: 4px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        text-decoration: underline var(--primary);
+    }
+}

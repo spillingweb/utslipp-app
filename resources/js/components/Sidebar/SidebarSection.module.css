@@ -1,0 +1,28 @@
+.section {
+  display: none;
+  width: 0;
+
+  &:target {
+    display: block;
+    width: 25rem;
+  }
+}
+
+.sectionHeader {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+  font-size: 1.2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  a {
+    display: flex;
+    color: var(--gray-dark);
+  }
+}
+
+.sectionContent {
+  padding: 1rem;
+}

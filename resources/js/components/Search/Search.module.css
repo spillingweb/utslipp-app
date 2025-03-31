@@ -1,0 +1,12 @@
+.resultsContainer {
+  margin-top: 1rem;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.errorMessage {
+  color: red;
+  margin: 0;
+}

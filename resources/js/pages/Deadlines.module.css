@@ -1,0 +1,11 @@
+.searchAndExport {
+  margin-bottom: 1rem;
+
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  
+  input {
+    margin-right: auto;
+  }
+}

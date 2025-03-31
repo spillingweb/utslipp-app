@@ -1,0 +1,6 @@
+.radio {
+    margin-bottom: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: start;
+}

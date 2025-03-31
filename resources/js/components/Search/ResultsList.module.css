@@ -1,0 +1,18 @@
+.noResults {
+    color: red;
+}
+
+.resultsList {
+  list-style: none;
+  padding: 0;
+  line-height: 1.5rem;
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+  }
+}

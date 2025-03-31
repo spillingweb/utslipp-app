@@ -1,0 +1,36 @@
+.projectCard {
+  background-color: rgb(252, 241, 208);
+  border: 1px solid #e7e7e7;
+  border-radius: 5px;
+}
+
+.projectHeader {
+  padding: 1rem;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.projectData {
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.01);
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+
+    &:hover {
+      text-decoration: underline;
+      color: #05564e;
+    }
+  }
+}
+
+.pieChart {
+  padding: 1rem;
+  height: 15rem;
+  align-content: center;
+}
