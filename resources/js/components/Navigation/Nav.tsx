@@ -1,6 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
-import Logo from '../../../assets/ringerike-logo.svg';
 import styles from './Nav.module.css';
+import LogoBrand from '../ui/LogoBrand';
 
 const Nav = () => {
     const { url } = usePage();
@@ -11,10 +11,7 @@ const Nav = () => {
 
     return (
         <nav className={styles.nav} aria-label="Main navigation">
-            <div className={styles.brand}>
-                <img src={Logo} alt="Logo Ringerike kommune" className={styles.logo} />
-                <h1>UTSLIPP</h1>
-            </div>
+            <LogoBrand />
             <ul className={styles.navTabs}>
                 <Link href="/" prefetch className={setClass(url === '/')}>
                     Kart

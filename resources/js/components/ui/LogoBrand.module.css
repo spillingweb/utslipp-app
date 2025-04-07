@@ -1,0 +1,9 @@
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    height: 2rem;
+}
