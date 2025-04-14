@@ -1,6 +1,12 @@
 .authPage {
     height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: var(--muted);
+
     display: flex;
+    flex-direction: column;
+    gap: 2rem;
     justify-content: center;
     align-items: center;
 }

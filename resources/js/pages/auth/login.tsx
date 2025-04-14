@@ -50,7 +50,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         autoComplete="email"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
-                        placeholder="email@example.com"
                     />
                     <InputError message={errors.email} />
                 </fieldset>
@@ -72,7 +71,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         autoComplete="current-password"
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
-                        placeholder="Passord"
                     />
                     <InputError message={errors.password} />
                 </fieldset>
@@ -92,13 +90,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     {processing && <LoaderCircle />}
                     Logg inn
                 </Button>
-
-                <div className={styles.flexSpaceBetween}>
-                    Har du ingen konto?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
-                        Registrer deg
-                    </TextLink>
-                </div>
             </form>
 
             {status && <div>{status}</div>}

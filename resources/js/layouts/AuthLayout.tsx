@@ -11,10 +11,8 @@ export default function AuthLayout({
 }>) {
     return (
         <div className={styles.authPage}>
-            <Card>
-                <LogoBrand />
-                {children}
-            </Card>
+            <LogoBrand />
+            <Card>{children}</Card>
         </div>
     );
 }

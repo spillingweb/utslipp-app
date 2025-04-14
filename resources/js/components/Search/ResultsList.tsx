@@ -4,7 +4,7 @@ import { AddressData } from "./Search";
 
 type ResultsListProps = {
   addressArray: AddressData[];
-  mapRef: React.RefObject<L.Map | null>;
+  map: L.Map | null;
   setFormValues: React.Dispatch<
     React.SetStateAction<{
       gardsnummer: string;
@@ -26,7 +26,7 @@ type ResultsListProps = {
 
 const ResultsList = ({
   addressArray,
-  mapRef,
+  map,
   setFormValues,
   setFetchedData,
 }: ResultsListProps) => {
@@ -53,7 +53,10 @@ const ResultsList = ({
 
     // Go to the address on the map
     const { lat, lon } = representasjonspunkt;
-    mapRef.current && mapRef.current.flyTo([lat, lon], 18);
+    
+    if (map) {
+      map.flyTo([lat, lon], 18);
+    }
 
     // Change fetchedData so it contains only the clicked address, so the results list is removed
     setFetchedData({ adresser: [address] });

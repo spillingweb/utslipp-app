@@ -2,8 +2,14 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    line-height: 0;
 }
 
 .logo {
     height: 2rem;
+}
+
+.brandText {
+    font-size: 1.7rem;
+    letter-spacing: .1rem;
 }

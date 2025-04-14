@@ -6,7 +6,7 @@ const LogoBrand = () => {
   return (
       <div className={styles.brand}>
         <img src={Logo} alt="Logo Ringerike kommune" className={styles.logo}/>
-        <span>UTSLIPP</span>
+        <span className={styles.brandText}>UTSLIPP</span>
       </div>
   )
 };
