@@ -79,7 +79,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     <Input
                         id="remember"
                         type='checkbox'
-                        checked={data.remember}
                         onClick={() => setData('remember', !data.remember)}
                         tabIndex={3}
                     />

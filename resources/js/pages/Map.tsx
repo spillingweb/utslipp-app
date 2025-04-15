@@ -1,36 +1,29 @@
-import Filter from '@/components/Filter/Filter';
-import Legend from '@/components/Legend/Legend';
-import ContextClick from '@/components/Map/ContextClick';
 import LayersControlConfig from '@/components/Map/LayersControlConfig';
-import Search from '@/components/Search/Search';
+import SearchLayer from '@/components/Map/SearchLayer';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import AppLayout from '@/layouts/AppLayout';
 import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
 import { Head } from '@inertiajs/react';
-import L from 'leaflet';
 import { useState } from 'react';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
 
+export type AddressData = {
+    adressetekst: string;
+    adressenavn: string;
+    nummer: number;
+    gardsnummer: number;
+    bruksnummer: number;
+    festenummer: number;
+    representasjonspunkt: {
+        epsg: string;
+        lat: number;
+        lon: number;
+    };
+};
+
 const Map = () => {
-    const [map, setMap] = useState<L.Map | null>(null);
-
-    // const [position, setPosition] = useState<L.LatLng | null>(null);
-
-    // const onMove = useCallback(() => {
-    //     if (map) {
-    //         setPosition(map.getCenter());
-    //     }
-    // }, [map]);
-
-    // useEffect(() => {
-    //     if (!map) return;
-
-    //     map.on('move', onMove);
-    //     return () => {
-    //         map.off('move', onMove);
-    //     };
-    // }, [map, onMove]);
+    const [searchAddressArray, setSearchAddressArray] = useState<AddressData[] | null>(null);
 
     return (
         <AppLayout>
@@ -45,7 +38,6 @@ const Map = () => {
             <MapContainer
                 center={[60.34, 10]}
                 zoom={10}
-                ref={setMap}
                 className={styles.mapContainer}
                 zoomControl={false}
                 minZoom={10}
@@ -55,15 +47,11 @@ const Map = () => {
                 ]}
                 layers={[lyrSoner, lyrHvittRundt]}
             >
+                <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig />
-                <ScaleControl position="bottomright" imperial={false} maxWidth={400}/>
-                <ContextClick />
+                <Sidebar setSearchAddressArray={setSearchAddressArray} />
+                {searchAddressArray && <SearchLayer addressArray={searchAddressArray} />}
             </MapContainer>
-            <Sidebar>
-                <Search map={map} />
-                <Filter />
-                <Legend />
-            </Sidebar>
         </AppLayout>
     );
 };

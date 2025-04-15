@@ -4,6 +4,8 @@
   text-align: center;
   color: var(--foreground);
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 
   &:hover {
     background-color: var(--muted);

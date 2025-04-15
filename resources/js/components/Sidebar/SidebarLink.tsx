@@ -1,18 +1,18 @@
-import styles from "./SidebarLink.module.css";
+import styles from './SidebarLink.module.css';
 
 type SidebarLinkProps = {
-  target: string;
-  icon: React.ReactNode;
+    onClick: React.MouseEventHandler<HTMLButtonElement>;
+    icon: React.ReactNode;
 };
 
 const SidebarLink = (props: SidebarLinkProps) => {
-  return (
-    <li>
-      <a href={`#${props.target}`} className={styles.navLink}>
-        {props.icon}
-      </a>
-    </li>
-  );
+    return (
+        <li>
+            <button onClick={props.onClick} className={styles.navLink}>
+                {props.icon}
+            </button>
+        </li>
+    );
 };
 
 export default SidebarLink;

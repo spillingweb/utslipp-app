@@ -19,9 +19,13 @@ import {
     Vannmiljo,
     VannNett,
 } from '@/lib/layersDefinitions';
+import React from 'react';
 import { LayersControl } from 'react-leaflet';
 
-export const LAYERS = {
+export const LAYERS: {
+    basemaps: { name: string; component: React.JSX.Element }[];
+    overlays: { name: string; component: React.JSX.Element; checked?: boolean }[];
+} = {
     basemaps: [
         { name: 'Gråtone', component: <GraatoneBackground /> },
         { name: 'Farger', component: <FargerBackground /> },
@@ -30,8 +34,8 @@ export const LAYERS = {
         { name: 'Buffersone avløp (100 m)', component: <BuffersoneOverlay /> },
         { name: 'Randsoner', component: <RandsoneOverlay /> },
         { name: 'Nye VA-traseer', component: <UtbyggingOverlay /> },
+        { name: 'Bygninger med adresse', component: <ByggAdresse />, checked: true },
         { name: 'Eiendom', component: <Matrikkel /> },
-        { name: 'Bygninger med adresse', component: <ByggAdresse /> },
         { name: 'Vannflater', component: <Vann /> },
         { name: 'Økologisk tilstand (Vann-Nett)', component: <VannNett /> },
         { name: 'Løsmassekart', component: <Losmasser /> },
@@ -56,7 +60,7 @@ const LayersControlConfig = () => {
                 </LayersControl.BaseLayer>
             ))}
             {LAYERS.overlays.map((layer) => (
-                <LayersControl.Overlay key={layer.name} name={layer.name}>
+                <LayersControl.Overlay checked={layer.checked ? true : undefined} key={layer.name} name={layer.name}>
                     {layer.component}
                 </LayersControl.Overlay>
             ))}
