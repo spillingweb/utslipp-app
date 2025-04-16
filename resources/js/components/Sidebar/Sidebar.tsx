@@ -1,6 +1,6 @@
 import { AddressData } from '@/pages/Map';
 import L from 'leaflet';
-import { Filter as FilterIcon, List, Search as SearchIcon } from 'lucide-react';
+import { Filter as FilterIcon, List as ListIcon, Search as SearchIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import Filter from '../Filter/Filter';
 import Legend from '../Legend/Legend';
@@ -24,7 +24,7 @@ const Sidebar = ({ setSearchAddressArray }: SidebarProps) => {
     });
 
     // State to manage the currently open tab in the sidebar
-    const [tabOpen, setTabOpen] = useState<'Search' | 'Filter' | 'Legend' | null>(null);
+    const [tabOpen, setTabOpen] = useState<'Search' | 'Filter' | 'Legend' | null>('Search');
 
     // If the clicked tab is already open, close it. Otherwise, open the clicked tab.
     const handleClickOnSidebarNav = (target: 'Search' | 'Filter' | 'Legend') => {
@@ -35,9 +35,9 @@ const Sidebar = ({ setSearchAddressArray }: SidebarProps) => {
         <div className={styles.sidebar} ref={sidebarRef}>
             <nav aria-label="Map sidebar navigation">
                 <ul className={styles.navTabs}>
-                    <SidebarLink onClick={() => handleClickOnSidebarNav('Search')} icon={<SearchIcon size={20} />} />
-                    <SidebarLink onClick={() => handleClickOnSidebarNav('Filter')} icon={<FilterIcon size={20} />} />
-                    <SidebarLink onClick={() => handleClickOnSidebarNav('Legend')} icon={<List size={20} />} />
+                    <SidebarLink onClick={() => handleClickOnSidebarNav('Search')} isActive={tabOpen === 'Search'} icon={<SearchIcon size={20} />} />
+                    <SidebarLink onClick={() => handleClickOnSidebarNav('Filter')} isActive={tabOpen === 'Filter'} icon={<FilterIcon size={20} />} />
+                    <SidebarLink onClick={() => handleClickOnSidebarNav('Legend')} isActive={tabOpen === 'Legend'} icon={<ListIcon size={20} />} />
                 </ul>
             </nav>
             <div className={styles.sidebarContent}>

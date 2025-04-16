@@ -7,13 +7,12 @@ import ResultsList from './ResultsList';
 import styles from './Search.module.css';
 import SearchForm from './SearchForm';
 
-const Search = ({
-    setTabOpen,
-    setSearchAddressArray,
-}: {
+type SearchProps = {
     setTabOpen: React.Dispatch<React.SetStateAction<'Search' | 'Filter' | 'Legend' | null>>;
     setSearchAddressArray: React.Dispatch<React.SetStateAction<AddressData[] | null>>;
-}) => {
+};
+
+const Search = ({ setTabOpen, setSearchAddressArray }: SearchProps) => {
     // Fetch data, status and fetch function from custom fetch hook
     const { loading, setFetchedData, fetchedData, error, fetchData } = useFetch<{
         adresser: AddressData[];
@@ -31,7 +30,8 @@ const Search = ({
     // Fetch address data from Kartverket when right-clicking on a point in the map
     useMapEvent('contextmenu', (e) => {
         fetchData(() => fetchPositionData(e.latlng.lat, e.latlng.lng));
-        setTabOpen('Search'); // Open the search tab when right-clicking on the map
+        setTabOpen('Search'); // Open the search tab when right-clicking
+        
     });
 
     // Fetch address data from Kartverket when form is submitted

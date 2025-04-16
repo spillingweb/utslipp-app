@@ -1,6 +1,6 @@
 .navLink {
   display: block;
-  padding: 0.6rem 0.7rem;
+  padding: 0.7rem;
   text-align: center;
   color: var(--foreground);
   cursor: pointer;
@@ -10,4 +10,8 @@
   &:hover {
     background-color: var(--muted);
   }
+}
+
+.active {
+  background-color: var(--primary);
 }
