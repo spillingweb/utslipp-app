@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\RoleController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -21,6 +23,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('Admin');
     })->name('admin');
+
+    Route::resource('roles', RoleController::class);
 });
 
 require __DIR__.'/settings.php';

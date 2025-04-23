@@ -1,3 +1,4 @@
+import { RoleType } from "@/pages/Admin";
 import Table from "../ui/Table";
 
 const DUMMY_ACCESS_GROUPS = [
@@ -18,7 +19,10 @@ const DUMMY_ACCESS_GROUPS = [
   },
 ];
 
-const AccessGroupTable = () => {
+const AccessGroupTable = ({roles}: {roles: RoleType[]}) => {
+
+  console.log(roles);
+  
   return (
     <Table headers={["Navn", "Beskrivelse", "Antall brukere", "", "", ""]}>
       {DUMMY_ACCESS_GROUPS.map((group) => (

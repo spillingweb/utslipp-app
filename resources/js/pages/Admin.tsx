@@ -6,8 +6,15 @@ import { useState } from 'react';
 import Heading from '../components/ui/Heading';
 import styles from './Admin.module.css';
 
-const Admin = () => {
+export type RoleType = {
+    id: number;
+    name: string;
+}
+
+const Admin = ({ roles }: { roles: RoleType[] }) => {
     const [activeTab, setActiveTab] = useState('users');
+
+    console.log(roles);
 
     return (
         <AppLayout>
@@ -25,7 +32,7 @@ const Admin = () => {
                     </button>
                 </li>
             </ul>
-            {activeTab === 'users' ? <UserTable /> : <AccessGroupTable />}
+            {activeTab === 'users' ? <UserTable /> : <AccessGroupTable roles={roles} />}
         </AppLayout>
     );
 };

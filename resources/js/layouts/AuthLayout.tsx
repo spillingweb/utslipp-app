@@ -6,7 +6,6 @@ import styles from './AuthLayout.module.css';
 export default function AuthLayout({
     children,
 }: PropsWithChildren<{
-    name?: string;
     title?: string;
 }>) {
     return (
