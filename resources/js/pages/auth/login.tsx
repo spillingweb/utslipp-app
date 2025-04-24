@@ -1,5 +1,4 @@
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 import InputError from '@/components/InputError';
@@ -86,7 +85,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 </fieldset>
 
                 <Button type="submit" tabIndex={4} disabled={processing}>
-                    {processing && <LoaderCircle />}
                     Logg inn
                 </Button>
             </form>

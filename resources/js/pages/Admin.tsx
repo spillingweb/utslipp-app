@@ -6,15 +6,26 @@ import { useState } from 'react';
 import Heading from '../components/ui/Heading';
 import styles from './Admin.module.css';
 
-export type RoleType = {
+type Data<T> = {
+    data: T[];
+};
+
+export type Role = {
     id: number;
     name: string;
-}
+    description: string;
+};
 
-const Admin = ({ roles }: { roles: RoleType[] }) => {
+export type User = {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string | null;
+    created_at: string;
+};
+
+const Admin = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
     const [activeTab, setActiveTab] = useState('users');
-
-    console.log(roles);
 
     return (
         <AppLayout>
@@ -32,7 +43,7 @@ const Admin = ({ roles }: { roles: RoleType[] }) => {
                     </button>
                 </li>
             </ul>
-            {activeTab === 'users' ? <UserTable /> : <AccessGroupTable roles={roles} />}
+            {activeTab === 'users' ? <UserTable users={users.data} /> : <AccessGroupTable roles={roles.data} />}
         </AppLayout>
     );
 };

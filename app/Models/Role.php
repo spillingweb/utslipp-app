@@ -12,8 +12,8 @@ class Role extends Model
 
     const ROLES = [
         'Admin' => 'Admin',
-        'Edit' => 'Edit',
-        'View' => 'View',
+        'Edit' => 'Redigering',
+        'View' => 'Innsyn',
     ];
 
     public function users()
