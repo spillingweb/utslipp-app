@@ -5,8 +5,9 @@ import InputError from '@/components/InputError';
 import TextLink from '@/components/TextLink';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import AuthLayout from '@/layouts/AuthLayout';
 
+import FormCard from '@/components/ui/FormCard';
+import AuthLayout from '@/layouts/AuthLayout';
 import styles from './login.module.css';
 
 type LoginForm = {
@@ -15,19 +16,14 @@ type LoginForm = {
     remember: boolean;
 };
 
-interface LoginProps {
-    status?: string;
-    canResetPassword: boolean;
-}
-
-export default function Login({ status, canResetPassword }: LoginProps) {
+export default function Login() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
         password: '',
         remember: false,
     });
 
-    const submit: FormEventHandler = (e) => {
+    const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('login'), {
             onFinish: () => reset('password'),
@@ -35,9 +31,9 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     };
 
     return (
-        <AuthLayout title='Logg inn'>
+        <AuthLayout>
             <Head title="Logg inn" />
-            <form onSubmit={submit} className={styles.loginForm}>
+            <FormCard onSubmit={handleSubmit} logo>
                 <fieldset className={styles.loginInput}>
                     <label htmlFor="email">E-postadresse</label>
                     <Input
@@ -56,11 +52,10 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 <fieldset className={styles.loginInput}>
                     <div className={styles.flexSpaceBetween}>
                         <label htmlFor="password">Passord</label>
-                        {canResetPassword && (
-                            <TextLink href={route('password.request')} tabIndex={5}>
-                                Glemt passordet?
-                            </TextLink>
-                        )}
+
+                        <TextLink href={route('password.request')} tabIndex={5}>
+                            Glemt passordet?
+                        </TextLink>
                     </div>
                     <Input
                         id="password"
@@ -75,21 +70,14 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 </fieldset>
 
                 <fieldset>
-                    <Input
-                        id="remember"
-                        type='checkbox'
-                        onClick={() => setData('remember', !data.remember)}
-                        tabIndex={3}
-                    />
+                    <Input id="remember" type="checkbox" onClick={() => setData('remember', !data.remember)} tabIndex={3} />
                     <label htmlFor="remember">Husk meg</label>
                 </fieldset>
 
                 <Button type="submit" tabIndex={4} disabled={processing}>
                     Logg inn
                 </Button>
-            </form>
-
-            {status && <div>{status}</div>}
+            </FormCard>
         </AuthLayout>
     );
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoleResource;
+use App\Http\Resources\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -13,14 +16,18 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class RegisteredUserController extends Controller
+class UserController extends Controller
 {
     /**
      * Show the registration page.
      */
     public function create(): Response
     {
-        return Inertia::render('auth/register');
+        $roles = Role::all();
+
+        return Inertia::render('Admin/CreateUser', [
+            'roles' => RoleResource::collection($roles),
+        ]);
     }
 
     /**
@@ -32,7 +39,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -44,8 +51,25 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        return to_route('admin')
+            ->with('message', 'Brukeren ble opprettet.');
+    }
 
-        return to_route('utslipp');
+    public function edit(User $user): Response
+    {
+        $roles = Role::all();
+
+        return Inertia::render('Admin/EditUser', [
+            'user' => UserResource::make($user),
+            'roles' => RoleResource::collection($roles)
+        ]);
+    }
+
+    public function destroy(User $user) 
+    {
+        $user->delete();
+
+        return to_route('admin')
+            ->with('message', 'Brukeren ble slettet.');
     }
 }

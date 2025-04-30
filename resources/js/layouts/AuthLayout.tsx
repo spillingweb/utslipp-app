@@ -1,5 +1,3 @@
-import Card from '@/components/ui/Card';
-import LogoBrand from '@/components/ui/LogoBrand';
 import { type PropsWithChildren } from 'react';
 import styles from './AuthLayout.module.css';
 
@@ -8,10 +6,5 @@ export default function AuthLayout({
 }: PropsWithChildren<{
     title?: string;
 }>) {
-    return (
-        <div className={styles.authPage}>
-            <LogoBrand />
-            <Card>{children}</Card>
-        </div>
-    );
+    return <div className={styles.authPage}>{children}</div>;
 }

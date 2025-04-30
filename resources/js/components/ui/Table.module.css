@@ -2,11 +2,13 @@ table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  overflow-x: scroll;
 
   td,
   th {
     border-bottom: 1px solid #ddd;
     padding: 8px;
+    min-width: 7rem
   }
 
   thead {

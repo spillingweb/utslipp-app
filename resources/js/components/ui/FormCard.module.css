@@ -1,0 +1,12 @@
+.centerContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.heading {
+    text-align: center;
+}

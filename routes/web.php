@@ -19,9 +19,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/frister', function () {
         return Inertia::render('Deadlines');
     })->name('deadlines');
-
-    Route::resource('admin', AdminController::class);
 });
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';

@@ -1,9 +1,3 @@
-/* .appLayout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-} */
-
 .header {
     z-index: 200;
     width: 100%;
@@ -17,7 +11,7 @@
     position: relative;
     top: 52.8px;
     height: calc(100vh - 52.8px);
-    background-color: var(--muted);
+    overflow-y: scroll;
 }
 
 .padding {

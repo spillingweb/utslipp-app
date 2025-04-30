@@ -1,12 +1,13 @@
 import AccessGroupTable from '@/components/Admin/AccessGroupTable';
 import UserTable from '@/components/Admin/UserTable';
+import Button from '@/components/ui/Button';
 import AppLayout from '@/layouts/AppLayout';
-import { Head } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import Heading from '../components/ui/Heading';
-import styles from './Admin.module.css';
+import Heading from '../../components/ui/Heading';
+import styles from './Index.module.css';
 
-type Data<T> = {
+export type Data<T> = {
     data: T[];
 };
 
@@ -22,15 +23,26 @@ export type User = {
     email: string;
     email_verified_at: string | null;
     created_at: string;
+    role: Role;
 };
 
-const Admin = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
+const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
     const [activeTab, setActiveTab] = useState('users');
+
+    const { flash } = usePage<{ flash: { message: string | null } }>().props;
+
+    const handleCreateUser = () => {
+        router.get(route('user.create'));
+    };
 
     return (
         <AppLayout>
             <Head title="Admin" />
-            <Heading level={2}>Admin - Utslipp Ringerike</Heading>
+            <div className={styles.flexHeader}>
+                <Heading level={2}>Admin - Utslipp Ringerike</Heading>
+                <Button onClick={handleCreateUser}>+ Legg til bruker</Button>
+            </div>
+            {flash.message && <div className={styles.flashMessage}>{flash.message}</div>}
             <ul className={styles.tabs}>
                 <li>
                     <button className={`${styles.tab} ${activeTab === 'users' ? styles.activeTab : ''}`} onClick={() => setActiveTab('users')}>
@@ -48,4 +60,4 @@ const Admin = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
     );
 };
 
-export default Admin;
+export default Index;

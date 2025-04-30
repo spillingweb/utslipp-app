@@ -1,4 +1,4 @@
-import { Role } from "@/pages/Admin";
+import { Role } from "@/pages/Admin/Index";
 import Table from "../ui/Table";
 
 const AccessGroupTable = ({roles}: {roles: Role[]}) => {

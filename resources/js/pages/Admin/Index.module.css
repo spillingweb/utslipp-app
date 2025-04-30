@@ -3,6 +3,12 @@
   margin: 0 auto;
 }
 
+.flexHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .tabs {
   list-style-type: none;
   margin: 0;
@@ -28,4 +34,11 @@
 
 .activeTab {
   background-color: rgb(252, 241, 208);
+}
+
+.flashMessage {
+  background-color: var(--success);
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
 }
