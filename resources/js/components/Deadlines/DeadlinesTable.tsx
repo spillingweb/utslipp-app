@@ -1,43 +1,12 @@
+import { TilsynObject } from "@/pages/Deadlines/Index";
 import Table from "../ui/Table";
 import styles from "./DeadlinesTable.module.css";
 
-const DUMMY_PROPERTIES = [
-  {
-    id: 1,
-    frist: "01.01.2021",
-    saksbehandler: "Per",
-    gnr: 1,
-    bnr: 1,
-    adresse: "Perveien 1",
-    status: "Ikke startet",
-    kommentar: "",
-  },
-  {
-    id: 2,
-    frist: "01.01.2021",
-    saksbehandler: "Per",
-    gnr: 1,
-    bnr: 1,
-    adresse: "Perveien 1",
-    status: "Ikke startet",
-    kommentar: "",
-  },
-  {
-    id: 3,
-    frist: "01.01.2021",
-    saksbehandler: "Per",
-    gnr: 1,
-    bnr: 1,
-    adresse: "Perveien 1",
-    status: "Ikke startet",
-    kommentar: "",
-  },
-];
+const DeadlinesTable = ({tilsynObjects}: {tilsynObjects: TilsynObject[]}) => {
 
-const DeadlinesTable = () => {
   return (
     <Table headers={["Frist", "Saksbehandler", "Gnr", "Bnr", "Adresse", "Status", "Kommentar", ""]}>
-        {DUMMY_PROPERTIES.map((property) => (
+        {tilsynObjects.map((property) => (
           <tr key={property.id}>
             <td>{property.frist}</td>
             <td>{property.saksbehandler}</td>

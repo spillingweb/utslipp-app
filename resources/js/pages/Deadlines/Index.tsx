@@ -4,9 +4,21 @@ import Heading from '@/components/ui/Heading';
 import Input from '@/components/ui/Input';
 import AppLayout from '@/layouts/AppLayout';
 import { Head } from '@inertiajs/react';
-import styles from './Deadlines.module.css';
+import { Data } from '../Admin/Index';
+import styles from './Index.module.css';
 
-const Deadlines = () => {
+export type TilsynObject = {
+    id: number;
+    frist: string;
+    saksbehandler: string;
+    gnr: string;
+    bnr: string;
+    adresse: string;
+    status: string;
+    kommentar: string;
+};
+
+const Deadlines = ({ tilsynObjects }: { tilsynObjects: Data<TilsynObject> }) => {
     return (
         <AppLayout>
             <Head title="Frister" />
@@ -19,7 +31,7 @@ const Deadlines = () => {
                 <Button onClick={() => console.log('Empty')}>Eksporter til Excel</Button>
                 <Button onClick={() => console.log('Empty')}>Skriv ut</Button>
             </div>
-            <DeadlinesTable />
+            <DeadlinesTable tilsynObjects={tilsynObjects.data} />
         </AppLayout>
     );
 };

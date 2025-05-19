@@ -1,7 +1,9 @@
 import { User } from '@/pages/Admin/Index';
-import { Link, router } from '@inertiajs/react';
-import Button from '../ui/Button';
+import { router } from '@inertiajs/react';
+import TextLink from '../TextLink';
+import ButtonLink from '../ui/ButtonLink';
 import Table from '../ui/Table';
+import styles from './UserTable.module.css';
 
 type UserTableProps = {
     users: User[];
@@ -19,15 +21,15 @@ const UserTable = ({ users }: UserTableProps) => {
     return (
         <Table headers={['ID', 'Navn', 'E-post', 'Registrert dato', 'Verifisert', '']}>
             {users.map((user) => (
-                <tr key={user.id}>
+                <tr key={user.id} className={styles.tableRow}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.created_at}</td>
                     <td>{user.email_verified_at ? 'Ja' : 'Nei'}</td>
-                    <td>
-                        <Link href={route('user.edit', user.id)}>Endre</Link>
-                        <Button onClick={() => handleDeleteUser(user)}>Slett</Button>
+                    <td className={styles.linkColumn}>
+                        <TextLink href={route('user.edit', user.id)}>Endre</TextLink>
+                        <ButtonLink style={{'marginLeft': '1rem'}} onClick={() => handleDeleteUser(user)}>Slett</ButtonLink>
                     </td>
                 </tr>
             ))}

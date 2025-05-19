@@ -1,4 +1,33 @@
 import L from 'leaflet';
+import { TILSYN_STATUS } from './tilsynStatus';
+
+/******* Marker styles ********/
+
+// layer for new sewage pipes
+function styleTilsynObjectsMarker(feature: GeoJSON.Feature): L.CircleMarkerOptions {
+    let circleMarkerOptions: L.CircleMarkerOptions = {
+        radius: 20,
+        fillOpacity: 0,
+        color: 'black',
+    };
+
+    if (!feature.properties) return circleMarkerOptions;
+
+    for (const status of TILSYN_STATUS) {
+        if (feature.properties.status === status.id) {
+            circleMarkerOptions = {
+                ...circleMarkerOptions,
+                color: status.color,
+            };
+        }
+    };
+
+    return circleMarkerOptions;
+}
+
+export const returnTilsynMarker = (feature: GeoJSON.Feature, latlng: L.LatLng) => {
+    return L.circle(latlng, styleTilsynObjectsMarker(feature));
+};
 
 // layer for new sewage pipes
 function styleKumMarker(feature: GeoJSON.Feature): L.CircleMarkerOptions {

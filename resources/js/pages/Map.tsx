@@ -3,9 +3,10 @@ import SearchLayer from '@/components/Map/SearchLayer';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import AppLayout from '@/layouts/AppLayout';
 import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
+import { returnTilsynMarker } from '@/lib/layerStyles';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
-import { MapContainer, ScaleControl } from 'react-leaflet';
+import { GeoJSON, MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
 
 export type AddressData = {
@@ -22,9 +23,12 @@ export type AddressData = {
     };
 };
 
-const Map = () => {
+const Map = ({ tilsynObjects }: { tilsynObjects: {jsonb_build_object: string}[] }) => {
     const [searchAddressArray, setSearchAddressArray] = useState<AddressData[] | null>(null);
     const [tilsynFormVisible, setTilsynFormVisible] = useState(false);
+
+    const tilsynObjectsJSON = JSON.parse(tilsynObjects[0].jsonb_build_object);
+    console.log(tilsynObjectsJSON);
 
     return (
         <AppLayout>
@@ -48,6 +52,7 @@ const Map = () => {
                 ]}
                 layers={[lyrSoner, lyrHvittRundt]}
             >
+                <GeoJSON data={tilsynObjectsJSON} pointToLayer={returnTilsynMarker} />
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig position="topright" />
                 <Sidebar setSearchAddressArray={setSearchAddressArray} tilsynFormVisible={tilsynFormVisible} />
