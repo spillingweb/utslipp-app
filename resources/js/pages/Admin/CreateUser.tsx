@@ -126,7 +126,7 @@ const CreateUser = () => {
                     <Button type="submit" tabIndex={5}>
                         Opprett bruker
                     </Button>
-                    <Button variant="secondary" type='reset' onClick={() => router.get(route('admin'))} tabIndex={4}>
+                    <Button variant="secondary" type="reset" onClick={() => router.get(route('admin'))} tabIndex={4}>
                         Avbryt
                     </Button>
                 </div>

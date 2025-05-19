@@ -24,6 +24,7 @@ export type AddressData = {
 
 const Map = () => {
     const [searchAddressArray, setSearchAddressArray] = useState<AddressData[] | null>(null);
+    const [tilsynFormVisible, setTilsynFormVisible] = useState(false);
 
     return (
         <AppLayout>
@@ -48,9 +49,9 @@ const Map = () => {
                 layers={[lyrSoner, lyrHvittRundt]}
             >
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
-                <LayersControlConfig />
-                <Sidebar setSearchAddressArray={setSearchAddressArray} />
-                {searchAddressArray && <SearchLayer addressArray={searchAddressArray} />}
+                <LayersControlConfig position="topright" />
+                <Sidebar setSearchAddressArray={setSearchAddressArray} tilsynFormVisible={tilsynFormVisible} />
+                {searchAddressArray && <SearchLayer addressArray={searchAddressArray} setTilsynFormVisible={setTilsynFormVisible} />}
             </MapContainer>
         </AppLayout>
     );

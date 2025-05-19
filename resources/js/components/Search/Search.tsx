@@ -6,13 +6,15 @@ import { useMapEvent } from 'react-leaflet';
 import ResultsList from './ResultsList';
 import styles from './Search.module.css';
 import SearchForm from './SearchForm';
+import NewTilsynForm from './NewTilsynForm';
 
 type SearchProps = {
     setTabOpen: React.Dispatch<React.SetStateAction<'Search' | 'Filter' | 'Legend' | null>>;
     setSearchAddressArray: React.Dispatch<React.SetStateAction<AddressData[] | null>>;
+    tilsynFormVisible: boolean;
 };
 
-const Search = ({ setTabOpen, setSearchAddressArray }: SearchProps) => {
+const Search = ({ setTabOpen, setSearchAddressArray, tilsynFormVisible }: SearchProps) => {
     // Fetch data, status and fetch function from custom fetch hook
     const { loading, setFetchedData, fetchedData, error, fetchData } = useFetch<{
         adresser: AddressData[];
@@ -31,7 +33,6 @@ const Search = ({ setTabOpen, setSearchAddressArray }: SearchProps) => {
     useMapEvent('contextmenu', (e) => {
         fetchData(() => fetchPositionData(e.latlng.lat, e.latlng.lng));
         setTabOpen('Search'); // Open the search tab when right-clicking
-        
     });
 
     // Fetch address data from Kartverket when form is submitted
@@ -68,6 +69,7 @@ const Search = ({ setTabOpen, setSearchAddressArray }: SearchProps) => {
             <div className={styles.resultsContainer}>
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {fetchedData && <ResultsList addressArray={fetchedData.adresser} setFetchedData={setFetchedData} />}
+                {tilsynFormVisible && fetchedData && <NewTilsynForm addressData={fetchedData.adresser[0]} />}
             </div>
         </>
     );

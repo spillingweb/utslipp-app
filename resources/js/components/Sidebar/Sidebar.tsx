@@ -11,9 +11,10 @@ import SidebarSection from './SidebarSection';
 
 type SidebarProps = {
     setSearchAddressArray: React.Dispatch<React.SetStateAction<AddressData[] | null>>;
+    tilsynFormVisible: boolean;
 };
 
-const Sidebar = ({ setSearchAddressArray }: SidebarProps) => {
+const Sidebar = ({ setSearchAddressArray, tilsynFormVisible }: SidebarProps) => {
     // Disable click propagation on the sidebar to prevent map interactions when clicking on the sidebar
     const sidebarRef = useRef(null);
 
@@ -42,7 +43,7 @@ const Sidebar = ({ setSearchAddressArray }: SidebarProps) => {
             </nav>
             <div className={styles.sidebarContent}>
                 <SidebarSection title="Søk i eiendommer" isOpen={tabOpen === 'Search'}>
-                    <Search setTabOpen={setTabOpen} setSearchAddressArray={setSearchAddressArray} />
+                    <Search setTabOpen={setTabOpen} setSearchAddressArray={setSearchAddressArray} tilsynFormVisible={tilsynFormVisible} />
                 </SidebarSection>
                 <SidebarSection title="Filtrer tilsynsobjekter" isOpen={tabOpen === 'Filter'}>
                     <Filter />

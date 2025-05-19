@@ -12,7 +12,7 @@ type RadioProps = {
 const Radio = ({ label, name, id, value, onChange, checked = false }: RadioProps) => {
     return (
         <label className={styles.radio} htmlFor={id}>
-            <input type="radio" name={name} id={id} value={value} onChange={onChange} checked={checked} />
+            <input type="radio" name={name} id={id} value={value} onChange={onChange} defaultChecked={checked} />
             {label}
         </label>
     );

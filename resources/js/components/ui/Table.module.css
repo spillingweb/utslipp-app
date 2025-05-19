@@ -1,18 +1,31 @@
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  overflow-x: scroll;
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    overflow-x: scroll;
 
-  td,
-  th {
-    border-bottom: 1px solid #ddd;
-    padding: 8px;
-    min-width: 7rem
-  }
+    td,
+    th {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+        min-width: 7rem;
+    }
 
-  thead {
+    thead,
+    tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed; /* even columns width , fix width of table too*/
+    }
+}
+
+.thead {
     background-color: var(--primary);
     border-top: 1px solid #ddd;
-  }
+}
+
+.tbody {
+    display: block;
+    height: 40rem;
+    overflow: auto;
 }

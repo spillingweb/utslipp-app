@@ -8,14 +8,14 @@ type TableProps = {
 const Table = ({ headers, children }: TableProps) => {
   return (
     <table className={styles.table}>
-      <thead>
+      <thead className={styles.thead}>
         <tr>
           {headers.map((header, i) => (
             <th key={i}>{header}</th>
           ))}
         </tr>
       </thead>
-      <tbody>
+      <tbody className={styles.tbody}>
         {children}
       </tbody>
     </table>

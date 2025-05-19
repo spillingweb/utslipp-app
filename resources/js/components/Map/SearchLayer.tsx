@@ -1,7 +1,12 @@
 import { AddressData } from '@/pages/Map';
 import { Circle, LayerGroup, Marker, Tooltip, useMap } from 'react-leaflet';
 
-const SearchLayer = ({ addressArray }: { addressArray: AddressData[] }) => {
+type SearchLayerProps = {
+    addressArray: AddressData[];
+    setTilsynFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const SearchLayer = ({ addressArray, setTilsynFormVisible }: SearchLayerProps) => {
     const map = useMap();
 
     if (addressArray.length === 1) {
@@ -13,12 +18,17 @@ const SearchLayer = ({ addressArray }: { addressArray: AddressData[] }) => {
             map.flyTo([lat, lon], 18);
         }
 
+        const handleClickNewTilsyn: React.MouseEventHandler<HTMLAnchorElement> = () => {
+            //  Gjør noe for å bli kvitt tooltip
+            setTilsynFormVisible(true);
+        };
+
         return (
             <Circle center={[lat, lon]} radius={15} pathOptions={{ color: 'yellow', weight: 10, opacity: 0.5, fillOpacity: 0 }}>
-                <Tooltip interactive permanent direction="right" offset={[50, 0]}>
+                <Tooltip interactive direction="right" offset={[50, 0]}>
                     <b>{addressArray[0].adressetekst}</b>
                     <br />
-                    <a href="#" onClick={() => console.log('You clicked the link!')}>
+                    <a href="#" onClick={handleClickNewTilsyn}>
                         Legg til tilsynsobjekt
                     </a>
                 </Tooltip>
