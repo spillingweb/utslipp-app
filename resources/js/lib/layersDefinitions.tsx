@@ -7,7 +7,7 @@ import { randsoner } from './geoJSON/randsoner';
 import { soner } from './geoJSON/soner';
 import { trase } from './geoJSON/trase';
 import { vaBuffer } from './geoJSON/vaBuffer';
-import { makeGrunnforurensningPopupContent, makeVannNettPopupContent, returnKumMarker } from './layerStyles';
+import { GrunnforurensningPopupContent, VannNettPopupContent, returnKumMarker } from './layerStyles';
 import WMSLayer from './WMSLayer';
 
 /******** Inital layers used on map inititialization (not on layer control) *********/
@@ -99,7 +99,7 @@ export const LAYERS: {
                         const popupOptions = { maxWidth: 200 };
 
                         layer.bindPopup(
-                            '<b>Område:</b> ' + feature.properties?.Omraade + '<br><b>Anbefaling: </b>' + feature.properties?.Anbefaling,
+                            `<b>Område: </b>${feature.properties?.Omraade}<br><b>Anbefaling: </b>${feature.properties?.Anbefaling}`,
                             popupOptions,
                         );
                     }}
@@ -168,7 +168,7 @@ export const LAYERS: {
                         identify: true,
                         info_format: 'application/geo+json',
                     }}
-                    makePopupContent={makeVannNettPopupContent}
+                    makePopupContent={VannNettPopupContent}
                 />
             ),
         },
@@ -252,7 +252,7 @@ export const LAYERS: {
                         identify: true,
                         info_format: 'application/geojson',
                     }}
-                    makePopupContent={makeGrunnforurensningPopupContent}
+                    makePopupContent={GrunnforurensningPopupContent}
                 />
             ),
         },

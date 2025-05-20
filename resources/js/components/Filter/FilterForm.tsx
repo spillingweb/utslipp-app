@@ -1,5 +1,5 @@
 import styles from "./FilterForm.module.css";
-import Select from "../UI/Select";
+import Select from "../ui/Select";
 import { FILTER_SELECT_OPTIONS } from "../../lib/filterArrays";
 
 type FilterFormProps = {

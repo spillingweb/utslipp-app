@@ -40,3 +40,40 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface TilsynObject {
+    id: number;
+    updated_at: string;
+    gnr: number;
+    bnr: number;
+    fnr: number;
+    adresse: string;
+    bygning: string;
+    sone: string;
+    status: string;
+    saksnr: string;
+    kommentar: string;
+    frist: string;
+    saksbehandler: string;
+    endret_av: string;
+    svarskjema: string;
+    slam: string;
+    kontroll: string;
+    arkiv: string;
+    hjemmel: string;
+    prosjekt: string;
+};
+
+export type AddressData = {
+    adressetekst: string;
+    adressenavn: string;
+    nummer: number;
+    gardsnummer: number;
+    bruksnummer: number;
+    festenummer: number;
+    representasjonspunkt: {
+        epsg: string;
+        lat: number;
+        lon: number;
+    };
+};

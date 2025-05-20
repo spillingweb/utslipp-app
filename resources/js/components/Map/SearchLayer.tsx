@@ -1,15 +1,17 @@
-import { AddressData } from '@/pages/Map';
+import { AddressData, TilsynObject } from '@/types';
 import { Circle, LayerGroup, Marker, Tooltip, useMap } from 'react-leaflet';
 
 type SearchLayerProps = {
     addressArray: AddressData[];
-    setTilsynFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    setTilsynFormData: React.Dispatch<React.SetStateAction<TilsynObject | null>>;
 };
 
-const SearchLayer = ({ addressArray, setTilsynFormVisible }: SearchLayerProps) => {
+const SearchLayer = ({ addressArray, setTilsynFormData }: SearchLayerProps) => {
     const map = useMap();
 
     if (addressArray.length === 1) {
+        const address = addressArray[0];
+
         // Make yellow circle around the address and fly to location
         const { lat, lon } = addressArray[0].representasjonspunkt;
 
@@ -20,12 +22,17 @@ const SearchLayer = ({ addressArray, setTilsynFormVisible }: SearchLayerProps) =
 
         const handleClickNewTilsyn: React.MouseEventHandler<HTMLAnchorElement> = () => {
             //  Gjør noe for å bli kvitt tooltip
-            setTilsynFormVisible(true);
+            setTilsynFormData({
+                gnr: address.gardsnummer,
+                bnr: address.bruksnummer,
+                fnr: address.festenummer,
+                adresse: address.adressetekst,
+            } as TilsynObject);
         };
 
         return (
-            <Circle center={[lat, lon]} radius={15} pathOptions={{ color: 'yellow', weight: 10, opacity: 0.5, fillOpacity: 0 }}>
-                <Tooltip interactive direction="right" offset={[50, 0]}>
+            <Circle center={[lat, lon]} radius={20} pathOptions={{ color: 'yellow', weight: 10, opacity: 0.5, fillOpacity: 0 }}>
+                <Tooltip interactive permanent direction="right">
                     <b>{addressArray[0].adressetekst}</b>
                     <br />
                     <a href="#" onClick={handleClickNewTilsyn}>

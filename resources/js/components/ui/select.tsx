@@ -1,15 +1,13 @@
 import styles from "./Input.module.css";
 import { SelectOption } from "../../lib/filterArrays";
 
-type SelectProps = {
-  name: string;
-  id: string;
+interface SelectProps extends React.ComponentPropsWithoutRef<"select"> {
   optionsArray: SelectOption[];
 };
 
-const Select = ({ name, id, optionsArray }: SelectProps) => {
+const Select = ({ optionsArray, ...props }: SelectProps) => {
   return (
-    <select className={styles.input} name={name} id={id}>
+    <select className={styles.input} {...props}>
       {optionsArray.map((option) => {
         let text: string;
 

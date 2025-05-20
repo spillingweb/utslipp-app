@@ -21,7 +21,7 @@ class TilsynObjectController extends Controller
 
     public function show(Tilsyn_object $tilsynObject)
     {
-        $tilsynObjects = DB::select("SELECT jsonb_build_object(
+        $tilsynData = DB::select("SELECT jsonb_build_object(
                 'type',     'FeatureCollection',
                 'features', jsonb_agg(features.feature)
             )
@@ -34,7 +34,7 @@ class TilsynObjectController extends Controller
             ) AS feature
             FROM (SELECT * FROM tilsyn_objects) inputs) features;"
         );
-
-        return Inertia::render('Map', ['tilsynObjects' => $tilsynObjects]);
+        
+        return Inertia::render('Map', ['tilsynData' => $tilsynData]);
     }
 }

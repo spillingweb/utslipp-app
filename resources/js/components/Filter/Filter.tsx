@@ -1,17 +1,45 @@
-import { AND_OR_NOT_BUTTONS, FILTER_RADIO_BUTTONS } from '@/lib/filterArrays';
 import Button from '../ui/Button';
 import Heading from '../ui/Heading';
 import Radio from '../ui/Radio';
 import styles from './Filter.module.css';
 import FilterForm from './FilterForm';
 
+const AND_OR_NOT_BUTTONS = [
+    { label: 'OG', id: 'radioAND', value: 'AND' },
+    { label: 'ELLER', id: 'radioOR', value: 'OR' },
+    { label: 'OG IKKE', id: 'radioNOT', value: 'AND NOT' },
+];
+
 const Filter = () => {
+    const handleFilterObjects = (value: string) => {
+        console.log(value);
+    };
+
     return (
         <>
             <div className={styles.filterRadio}>
-                {FILTER_RADIO_BUTTONS.map((filter) => (
-                    <Radio key={filter.id} label={filter.label} name="fltTilsyn" id={filter.id} value={filter.value} />
-                ))}
+                <Radio
+                    label="Vis bare tilsynsobjekter"
+                    name="filterTilsyn"
+                    id="filterDefault"
+                    value="deafult"
+                    onChange={() => handleFilterObjects('default')}
+                    checked
+                />
+                <Radio
+                    label="Vis både tilsynsobjekter og bygninger knytta til kommunalt avløp"
+                    name="filterTilsyn"
+                    id="filterAll"
+                    value="all"
+                    onChange={() => handleFilterObjects('all')}
+                />
+                <Radio
+                    label="Vis tilsynsobjekter der hvor fristen har gått ut"
+                    name="filterTilsyn"
+                    id="filterDeadline"
+                    value="deadline"
+                    onChange={() => handleFilterObjects('deadline')}
+                />
             </div>
             <hr className={styles.horizontalLine} />
             <Heading level={3}>Egendefinerte filtre:</Heading>

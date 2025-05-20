@@ -6,17 +6,7 @@ import AppLayout from '@/layouts/AppLayout';
 import { Head } from '@inertiajs/react';
 import { Data } from '../Admin/Index';
 import styles from './Index.module.css';
-
-export type TilsynObject = {
-    id: number;
-    frist: string;
-    saksbehandler: string;
-    gnr: string;
-    bnr: string;
-    adresse: string;
-    status: string;
-    kommentar: string;
-};
+import { TilsynObject } from '@/types';
 
 const Deadlines = ({ tilsynObjects }: { tilsynObjects: Data<TilsynObject> }) => {
     return (

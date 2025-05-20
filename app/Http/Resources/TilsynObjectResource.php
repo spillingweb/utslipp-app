@@ -16,8 +16,8 @@ class TilsynObjectResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
+            'updated_at' => $this->updated_at->toFormattedDateString(),
             'geom' => $this->geom,
             'gnr' => $this->gnr,
             'bnr' => $this->bnr,
@@ -27,7 +27,7 @@ class TilsynObjectResource extends JsonResource
             'status' => $this->status,
             'saksnr' => $this->saksnr,
             'kommentar' => $this->kommentar,
-            'frist' => $this->frist,
+            'frist' => $this->frist->toFormattedDateString(),
             'saksbehandler' => $this->saksbeh,
             'endret_av' => $this->endret_av,
             'svarskjema' => $this->svarskjema,

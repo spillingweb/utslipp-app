@@ -1,18 +1,19 @@
 import styles from "./TilsynForm.module.css";
+import Form from "../ui/Form";
+import { TilsynObject } from "@/types";
+import Select from "../ui/Select";
+import Heading from "../ui/Heading";
 
-const TilsynForm = () => {
+const TilsynForm = ({data}: {data: TilsynObject}) => {
+
   return (
-    <form className={styles.resultForm}>
-      <label htmlFor="name">Navn</label>
-      <input type="text" name="name" id="name" />
-      <label htmlFor="email">E-post</label>
-      <input type="email" name="email" id="email" />
-      <label htmlFor="phone">Telefon</label>
-      <input type="tel" name="phone" id="phone" />
-      <label htmlFor="message">Melding</label>
-      <textarea name="message" id="message"></textarea>
-      <button type="submit">Send</button>
-    </form>
+    <Form onSubmit={() => console.log("TilsynForm")}>
+      <Heading className={styles.heading} level={2}>{`${data.gnr}/${data.bnr}${data.fnr ? `/${data.fnr}` : ''} ${data.adresse}`}</Heading>
+      <fieldset className={styles.fieldset}>
+        <label className={styles.label} htmlFor="zone">Sone</label>
+        <Select optionsArray={[{value: '1', text: '1'}, {value: '2', text: '2'}]} id="zone" defaultValue={data.sone} disabled={data.id !== undefined} />
+      </fieldset>
+    </Form>
   );
 };
 
