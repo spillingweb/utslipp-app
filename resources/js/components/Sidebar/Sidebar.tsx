@@ -1,23 +1,17 @@
 import L from 'leaflet';
 import { Filter as FilterIcon, List as ListIcon, Search as SearchIcon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import Filter from '../Filter/Filter';
-import Legend from '../Legend/Legend';
-import Search from '../Search/Search';
+import { useEffect, useRef } from 'react';
 import styles from './Sidebar.module.css';
 import SidebarLink from './SidebarLink';
-import SidebarSection from './SidebarSection';
-import { AddressData, TilsynObject } from '@/types';
 
 type SidebarProps = {
-    setSearchAddressArray: React.Dispatch<React.SetStateAction<AddressData[] | null>>;
-    tilsynFormData: TilsynObject | null;
-    setTilsynFormData: React.Dispatch<React.SetStateAction<TilsynObject | null>>;
+    tabOpen: 'search' | 'filter' | 'legend' | null;
+    setTabOpen: React.Dispatch<React.SetStateAction<'search' | 'filter' | 'legend' | null>>;
+    children: React.ReactNode;
 };
 
-const Sidebar = ({ setSearchAddressArray, tilsynFormData, setTilsynFormData }: SidebarProps) => {
+const Sidebar = ({ tabOpen, setTabOpen, children }: SidebarProps) => {
     // State to manage the currently open tab in the sidebar
-    const [tabOpen, setTabOpen] = useState<'search' | 'filter' | 'legend' | null>('search');
 
     // Disable click propagation on the sidebar to prevent map interactions when clicking on the sidebar
     const sidebarRef = useRef(null);
@@ -42,15 +36,7 @@ const Sidebar = ({ setSearchAddressArray, tilsynFormData, setTilsynFormData }: S
                     <SidebarLink onClick={() => handleClickOnSidebarNav('legend')} isActive={tabOpen === 'legend'} icon={<ListIcon size={20} />} />
                 </ul>
             </nav>
-            <div className={styles.sidebarContent}>
-                <SidebarSection
-                    title="Søk i eiendommer"
-                    isOpen={tabOpen === 'search'}
-                    children={<Search setTabOpen={setTabOpen} setSearchAddressArray={setSearchAddressArray} tilsynFormData={tilsynFormData} setTilsynFormData={setTilsynFormData}/>}
-                />
-                <SidebarSection title="Filtrer tilsynsobjekter" isOpen={tabOpen === 'filter'} children={<Filter />} />
-                <SidebarSection title="Tegnforklaring tilsynsobjekter" isOpen={tabOpen === 'legend'} children={<Legend />} />
-            </div>
+            <div className={styles.sidebarContent}>{children}</div>
         </div>
     );
 };

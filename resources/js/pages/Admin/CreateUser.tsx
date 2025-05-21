@@ -1,7 +1,7 @@
 import InputError from '@/components/InputError';
 import Button from '@/components/ui/Button';
 import FormCard from '@/components/ui/FormCard';
-import Input from '@/components/ui/Input';
+import {Input} from '@/components/ui/Input';
 import Radio from '@/components/ui/Radio';
 import AppLayout from '@/layouts/AppLayout';
 import { Head, router, useForm } from '@inertiajs/react';

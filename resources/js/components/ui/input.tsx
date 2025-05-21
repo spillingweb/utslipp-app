@@ -1,22 +1,25 @@
-import styles from "./Input.module.css";
+import styles from './Input.module.css';
 
-const Input = ({
-  type = "text",
-  ...props
-}: React.ComponentPropsWithoutRef<"input">) => {
-  let className = styles.input;
+export const Input = ({ type = 'text', className, ...props }: React.ComponentPropsWithoutRef<'input'>) => {
+    let classes = styles.input;
 
-  if (type === "checkbox") {
-    className = styles.checkbox;
-  }
+    if (type === 'checkbox') {
+        classes = styles.checkbox;
+    }
 
-  return (
-    <input
-      type={type}
-      className={className}
-      {...props}
-    />
-  );
+    if (className) {
+        classes += ` ${className}`;
+    }
+
+    return <input type={type} className={classes} {...props} />;
 };
 
-export default Input;
+export const TextArea = ({ className, ...props }: React.ComponentPropsWithoutRef<'textarea'>) => {
+    let classes = styles.input;
+
+    if (className) {
+        classes += ` ${className}`;
+    }
+
+    return <textarea className={classes} {...props} />;
+};

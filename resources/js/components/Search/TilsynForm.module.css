@@ -1,12 +1,11 @@
 .heading {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     text-align: center;
 }
 
 .formGrid {
-    height: 50rem;
     display: grid;
-    grid-template-columns: 7rem 15rem;
+    grid-template-columns: 30% 50%;
     gap: 0.6rem;
     align-items: center;
 
@@ -21,13 +20,17 @@
     }
 }
 
-select:disabled {
-    /* for Firefox */
-    -moz-appearance: none;
-    /* for Safari, Chrome, Opera */
-    -webkit-appearance: none;
+.formParagraph {
+    margin: 0;
+    padding: 0.5rem;
 }
 
 .grid2columns {
     grid-column: 1 / -1;
+}
+
+.cta {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
 }

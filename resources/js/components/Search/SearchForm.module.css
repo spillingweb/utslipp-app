@@ -1,7 +1,8 @@
 .searchGrid {
   display: grid;
-  grid-template-columns: repeat(3, 31%);
+  grid-template-columns: repeat(3, 32%);
   gap: 0.5rem;
+
 }
 
 input[placeholder="Gatenavn"] {

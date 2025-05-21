@@ -42,8 +42,8 @@ export interface User {
 }
 
 export interface TilsynObject {
-    id: number;
-    updated_at: Date;
+    id: number | undefined;
+    updated_at: string;
     gnr: number;
     bnr: number;
     fnr: number;
@@ -53,7 +53,7 @@ export interface TilsynObject {
     status: string;
     saksnr: string;
     kommentar: string;
-    frist: Date;
+    frist: string;
     saksbehandler: string;
     endret_av: string;
     svarskjema: string;
@@ -61,7 +61,7 @@ export interface TilsynObject {
     kontroll: string;
     arkiv: string;
     hjemmel: string;
-    prosjekt: number;
+    prosjekt: string;
 };
 
 export type AddressData = {
@@ -76,4 +76,12 @@ export type AddressData = {
         lat: number;
         lon: number;
     };
+};
+
+export type SearchFormValues = {
+    gardsnummer: string;
+    bruksnummer: string;
+    festenummer: string;
+    adressenavn: string;
+    nummer: string;
 };

@@ -1,12 +1,12 @@
 import DeadlinesTable from '@/components/Deadlines/DeadlinesTable';
 import Button from '@/components/ui/Button';
 import Heading from '@/components/ui/Heading';
-import Input from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import AppLayout from '@/layouts/AppLayout';
+import { TilsynObject } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Data } from '../Admin/Index';
 import styles from './Index.module.css';
-import { TilsynObject } from '@/types';
 
 const Deadlines = ({ tilsynObjects }: { tilsynObjects: Data<TilsynObject> }) => {
     return (

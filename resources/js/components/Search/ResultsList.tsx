@@ -1,4 +1,4 @@
-import { AddressData } from '@/pages/Map';
+import { AddressData } from '@/types';
 import Heading from '../ui/Heading';
 import styles from './ResultsList.module.css';
 

@@ -1,28 +1,29 @@
 import { useFetch } from '@/hooks/useFetch';
-import { fetchAddressData, fetchPositionData } from '@/lib/http';
-import { AddressData, TilsynObject } from '@/types';
+import { fetchPositionData } from '@/lib/http';
+import { AddressData, SearchFormValues } from '@/types';
 import { useEffect, useState } from 'react';
 import { useMapEvent } from 'react-leaflet';
+import SearchLayer from '../Map/SearchLayer';
+import SidebarSection from '../Sidebar/SidebarSection';
 import ResultsList from './ResultsList';
 import styles from './Search.module.css';
 import SearchForm from './SearchForm';
-import TilsynForm from './TilsynForm';
 
 type SearchProps = {
+    isOpen: boolean;
     setTabOpen: React.Dispatch<React.SetStateAction<'search' | 'filter' | 'legend' | null>>;
-    setSearchAddressArray: React.Dispatch<React.SetStateAction<AddressData[] | null>>;
-    tilsynFormData: TilsynObject | null;
-    setTilsynFormData: React.Dispatch<React.SetStateAction<TilsynObject | null>>;
+    setTilsynFormProperties: React.Dispatch<React.SetStateAction<{ open: boolean; disabled: boolean }>>;
+    onNewTilsyn: (address: AddressData) => void;
+    children?: React.ReactNode;
 };
 
-const Search = ({ setTabOpen, setSearchAddressArray, tilsynFormData, setTilsynFormData }: SearchProps) => {
+const Search = ({ isOpen, setTabOpen, setTilsynFormProperties, onNewTilsyn, children }: SearchProps) => {
     // Fetch data, status and fetch function from custom fetch hook
     const { loading, setFetchedData, fetchedData, error, fetchData } = useFetch<{
         adresser: AddressData[];
     }>();
 
-    // Store form values in state as they are typed in input fields
-    const [formValues, setFormValues] = useState({
+    const [searchFormValues, setSearchFormValues] = useState<SearchFormValues>({
         gardsnummer: '',
         bruksnummer: '',
         festenummer: '',
@@ -33,27 +34,20 @@ const Search = ({ setTabOpen, setSearchAddressArray, tilsynFormData, setTilsynFo
     // Fetch address data from Kartverket when right-clicking on a point in the map
     useMapEvent('contextmenu', (e) => {
         fetchData(() => fetchPositionData(e.latlng.lat, e.latlng.lng));
-        setTilsynFormData(null); // Reset the TilsynForm data when right-clicking
-        setTabOpen('search'); // Open the search tab when right-clicking
     });
-
-    // Fetch address data from Kartverket when form is submitted
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault(); // Prevent the form from reloading the page
-        fetchData(() => fetchAddressData(formValues));
-    };
 
     // If the fetched data changes, update the form values and search layer on map
     useEffect(() => {
         if (!fetchedData) return;
 
-        const fetchedAddresses = fetchedData.adresser;
+        setTabOpen('search');
+        setTilsynFormProperties({ open: false, disabled: true });
 
-        if (fetchedAddresses.length === 1) {
-            const addressData = fetchedAddresses[0];
+        if (fetchedData.adresser.length === 1) {
+            const addressData = fetchedData.adresser[0];
 
             // Set form state values to the fetched address
-            setFormValues({
+            setSearchFormValues({
                 gardsnummer: addressData.gardsnummer.toString(),
                 bruksnummer: addressData.bruksnummer.toString(),
                 festenummer: addressData.festenummer ? addressData.festenummer.toString() : '',
@@ -61,19 +55,18 @@ const Search = ({ setTabOpen, setSearchAddressArray, tilsynFormData, setTilsynFo
                 nummer: addressData.nummer ? addressData.nummer.toString() : '',
             });
         }
-
-        setSearchAddressArray(fetchedAddresses);
-    }, [fetchedData, setFetchedData, setSearchAddressArray]);
+    }, [fetchedData, setFetchedData, setTabOpen]);
 
     return (
-        <>
-            <SearchForm onSubmit={handleSubmit} formValues={formValues} setFormValues={setFormValues} loading={loading} />
+        <SidebarSection isOpen={isOpen} title="Søk i eiendommer">
+            {fetchedData && <SearchLayer addressArray={fetchedData.adresser} onNewTilsyn={onNewTilsyn} />}
+            <SearchForm searchFormValues={searchFormValues} setSearchFormValues={setSearchFormValues} fetchData={fetchData} loading={loading} />
             <div className={styles.resultsContainer}>
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {fetchedData && <ResultsList addressArray={fetchedData.adresser} setFetchedData={setFetchedData} />}
-                {tilsynFormData && <TilsynForm formData={tilsynFormData} />}
             </div>
-        </>
+            {children}
+        </SidebarSection>
     );
 };
 

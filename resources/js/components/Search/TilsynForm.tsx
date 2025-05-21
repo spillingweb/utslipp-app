@@ -1,55 +1,44 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
 import { TilsynObject } from '@/types';
-import { useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import Button from '../ui/Button';
 import Form from '../ui/Form';
 import Heading from '../ui/Heading';
-import Input from '../ui/Input';
+import { Input, TextArea } from '../ui/Input';
 import Select from '../ui/Select';
 import styles from './TilsynForm.module.css';
 
-const TilsynForm = ({ formData }: { formData: TilsynObject }) => {
-    const [formDisabled, setFormDisabled] = useState(formData.id !== undefined);
+type TilsynFormProps = {
+    formData: TilsynObject;
+    onSubmit: (e: React.FormEvent) => void;
+    setValues: React.Dispatch<React.SetStateAction<TilsynObject | null>>;
+    disabled: boolean;
+};
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        id: formData.id || undefined,
-        gnr: formData.gnr || '',
-        bnr: formData.bnr || '',
-        fnr: formData.fnr || '',
-        adresse: formData.adresse || '',
-        sone: formData.sone || '',
-        prosjekt: formData.prosjekt || '',
-        status: formData.status || '',
-        bygning: formData.bygning || '',
-        hjemmel: formData.hjemmel || '',
-        saksnr: formData.saksnr || '',
-        saksbehandler: formData.saksbehandler || '',
-        frist: formData.frist || '',
-        kommentar: formData.kommentar || '',
-        svarskjema: formData.svarskjema || '',
-        komtek: formData.komtek || '',
-        kontroll: formData.kontroll || '',
-        arkiv: formData.arkiv || '',
-    });
-
-    function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-        // post('/login')
+const TilsynForm = ({ formData, onSubmit, setValues, disabled }: TilsynFormProps) => {
+    // Update state while typing in input fields
+    function handleChange(e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) {
+        const key = e.target.id;
+        const value = e.target.value;
+        setValues((values) => {
+            if (!values) return values;
+            return {
+                ...values,
+                [key]: value,
+            } as TilsynObject;
+        });
     }
 
-    console.log('TilsynForm', formData);
-
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={onSubmit}>
             <Heading
                 className={styles.heading}
                 level={2}
             >{`${formData.gnr}/${formData.bnr}${formData.fnr ? `/${formData.fnr}` : ''} ${formData.adresse}`}</Heading>
-            <fieldset className={styles.formGrid} disabled={formDisabled}>
-                <label htmlFor="zone">Sone</label>
-                <Input id="zone" value={formData.sone} disabled />
+            <fieldset className={styles.formGrid} disabled={disabled}>
+                <label>Sone</label>
+                <p className={styles.formParagraph}>{formData.sone}</p>
 
-                <label htmlFor="project">Prosjekt</label>
+                <label htmlFor="prosjekt">Prosjekt</label>
                 <Select
                     optionsArray={[
                         { value: '1', text: 'Prosjekt 1' },
@@ -57,15 +46,15 @@ const TilsynForm = ({ formData }: { formData: TilsynObject }) => {
                         { value: '3', text: 'Prosjekt 3' },
                         { value: '4', text: 'Prosjekt 4' },
                     ]}
-                    id="project"
-                    value={data.prosjekt}
-                    onChange={(e) => setData('prosjekt', e.target.value)}
+                    id="prosjekt"
+                    value={formData.prosjekt || ''}
+                    onChange={handleChange}
                 />
 
                 <label htmlFor="status">Status</label>
-                <Select optionsArray={TILSYN_STATUS} id="status" value={data.status} onChange={(e) => setData('status', e.target.value)} />
+                <Select optionsArray={TILSYN_STATUS} id="status" value={formData.status || ''} onChange={handleChange} />
 
-                <label htmlFor="building">Bygning</label>
+                <label htmlFor="bygning">Bygning</label>
                 <Select
                     optionsArray={[
                         { value: 'B', text: 'Bolig' },
@@ -73,70 +62,46 @@ const TilsynForm = ({ formData }: { formData: TilsynObject }) => {
                         { value: 'N', text: 'Næringsbygg' },
                         { value: 'I', text: 'Ingen bygning' },
                     ]}
-                    id="building"
-                    value={data.status}
-                    onChange={(e) => setData('status', e.target.value)}
+                    id="bygning"
+                    value={formData.bygning}
+                    onChange={handleChange}
                 />
 
                 <label htmlFor="hjemmel">Hjemmel</label>
-                <Input id="hjemmel" value={data.hjemmel} onChange={(e) => setData('hjemmel', e.target.value)} />
+                <Input id="hjemmel" value={formData.hjemmel || ''} onChange={handleChange} />
 
                 <label htmlFor="saksnr.">Saksnr.</label>
-                <Input id="saksnr." value={data.saksnr} onChange={(e) => setData('saksnr', e.target.value)} />
+                <Input id="saksnr." value={formData.saksnr || ''} onChange={handleChange} />
 
                 <label htmlFor="saksbehandler">Saksbehandler</label>
-                <Input id="saksbehandler" value={data.saksbehandler} onChange={(e) => setData('saksbehandler', e.target.value)} />
+                <Input id="saksbehandler" value={formData.saksbehandler || ''} onChange={handleChange} />
 
                 <label htmlFor="frist">Frist</label>
-                <Input type="date" id="frist" value={data.frist} onChange={(e) => setData('frist', e.target.value)} />
+                <Input type="date" id="frist" value={formData.frist || ''} onChange={handleChange} />
 
                 <label className={styles.grid2columns} htmlFor="kommentar">
                     Kommentar
                 </label>
-                <textarea
-                    className={styles.grid2columns}
-                    id="kommentar"
-                    disabled={formDisabled}
-                    value={data.kommentar}
-                    onChange={(e) => setData('kommentar', e.target.value)}
-                />
+                <TextArea className={styles.grid2columns} id="kommentar" value={formData.kommentar || ''} onChange={handleChange} />
 
                 <label htmlFor="svarskjema">Svarskjema</label>
-                <textarea
-                    className={styles.grid2columns}
-                    id="svarskjema"
-                    disabled={formDisabled}
-                    value={data.svarskjema}
-                    onChange={(e) => setData('svarskjema', e.target.value)}
-                />
+                <TextArea className={styles.grid2columns} id="svarskjema" value={formData.svarskjema || ''} onChange={handleChange} />
 
                 <label htmlFor="komtek">KomTek</label>
-                <textarea
-                    className={styles.grid2columns}
-                    id="komtek"
-                    disabled={formDisabled}
-                    value={data.komtek}
-                    onChange={(e) => setData('komtek', e.target.value)}
-                />
+                <TextArea className={styles.grid2columns} id="komtek" value={formData.komtek || ''} onChange={handleChange} />
 
-                <label htmlFor="kontroll">Slamtømming kontroll</label>
-                <textarea
-                    className={styles.grid2columns}
-                    id="kontroll"
-                    disabled={formDisabled}
-                    value={data.kontroll}
-                    onChange={(e) => setData('kontroll', e.target.value)}
-                />
+                <label htmlFor="kontroll" className={styles.grid2columns} >Slamtømming kontroll</label>
+                <TextArea className={styles.grid2columns} id="kontroll" value={formData.kontroll || ''} onChange={handleChange} />
 
                 <label htmlFor="arkiv">Arkiv</label>
-                <textarea
-                    className={styles.grid2columns}
-                    id="arkiv"
-                    disabled={formDisabled}
-                    value={data.arkiv}
-                    onChange={(e) => setData('arkiv', e.target.value)}
-                />
+                <TextArea className={styles.grid2columns} id="arkiv" value={formData.arkiv || ''} onChange={handleChange} />
             </fieldset>
+            {!disabled && (
+                <div className={styles.cta}>
+                    <Button>Legg til nytt tilsynsobjekt</Button>
+                    <Button variant="secondary">Avbryt</Button>
+                </div>
+            )}
         </Form>
     );
 };

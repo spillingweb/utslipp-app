@@ -3,6 +3,7 @@ import Heading from '../ui/Heading';
 import Radio from '../ui/Radio';
 import styles from './Filter.module.css';
 import FilterForm from './FilterForm';
+import SidebarSection from '../Sidebar/SidebarSection';
 
 const AND_OR_NOT_BUTTONS = [
     { label: 'OG', id: 'radioAND', value: 'AND' },
@@ -10,13 +11,13 @@ const AND_OR_NOT_BUTTONS = [
     { label: 'OG IKKE', id: 'radioNOT', value: 'AND NOT' },
 ];
 
-const Filter = () => {
+const Filter = ({isOpen}: {isOpen: boolean}) => {
     const handleFilterObjects = (value: string) => {
         console.log(value);
     };
 
     return (
-        <>
+        <SidebarSection title="Filtrer objekter" isOpen={isOpen}>
             <div className={styles.filterRadio}>
                 <Radio
                     label="Vis bare tilsynsobjekter"
@@ -63,7 +64,7 @@ const Filter = () => {
             <p className={styles.filterInfo}>
                 Antall filtrerte objekter: <span>6</span>
             </p>
-        </>
+        </SidebarSection>
     );
 };
 

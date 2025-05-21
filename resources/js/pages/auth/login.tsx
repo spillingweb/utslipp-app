@@ -4,7 +4,7 @@ import { FormEventHandler } from 'react';
 import InputError from '@/components/InputError';
 import TextLink from '@/components/TextLink';
 import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 
 import FormCard from '@/components/ui/FormCard';
 import AuthLayout from '@/layouts/AuthLayout';
