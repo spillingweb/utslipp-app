@@ -7,7 +7,7 @@ import { returnTilsynMarker } from '@/lib/layerStyles';
 import { AddressData, TilsynObject } from '@/types';
 import { Head } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import { GeoJSON, MapContainer, ScaleControl, useMap } from 'react-leaflet';
+import { GeoJSON, MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
 import L from 'leaflet';
 

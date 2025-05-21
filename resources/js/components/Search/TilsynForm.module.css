@@ -1,15 +1,33 @@
 .heading {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     text-align: center;
 }
 
-.fieldset {
-    display: flex;
-    gap: 1rem;
+.formGrid {
+    height: 50rem;
+    display: grid;
+    grid-template-columns: 7rem 15rem;
+    gap: 0.6rem;
     align-items: center;
+
+    label {
+        font-weight: bold;
+    }
+
+    &:disabled > *,
+    input:disabled {
+        border: none;
+        background-color: transparent;
+    }
 }
 
-.label {
-    font-weight: bold;
+select:disabled {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Safari, Chrome, Opera */
+    -webkit-appearance: none;
+}
 
+.grid2columns {
+    grid-column: 1 / -1;
 }

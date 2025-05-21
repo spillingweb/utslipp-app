@@ -24,6 +24,7 @@ const Sidebar = ({ setSearchAddressArray, tilsynFormData, setTilsynFormData }: S
     useEffect(() => {
         if (sidebarRef.current) {
             L.DomEvent.disableClickPropagation(sidebarRef.current);
+            L.DomEvent.disableScrollPropagation(sidebarRef.current);
         }
     }, []);
 

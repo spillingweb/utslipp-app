@@ -7,7 +7,7 @@ interface SelectProps extends React.ComponentPropsWithoutRef<"select"> {
 
 const Select = ({ optionsArray, ...props }: SelectProps) => {
   return (
-    <select className={styles.input} {...props}>
+    <select className={`${styles.input} ${styles.select}`} {...props}>
       {optionsArray.map((option) => {
         let text: string;
 

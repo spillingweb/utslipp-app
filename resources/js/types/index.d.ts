@@ -43,25 +43,25 @@ export interface User {
 
 export interface TilsynObject {
     id: number;
-    updated_at: string;
+    updated_at: Date;
     gnr: number;
     bnr: number;
     fnr: number;
     adresse: string;
     bygning: string;
-    sone: string;
+    sone: number;
     status: string;
     saksnr: string;
     kommentar: string;
-    frist: string;
+    frist: Date;
     saksbehandler: string;
     endret_av: string;
     svarskjema: string;
-    slam: string;
+    komtek: string;
     kontroll: string;
     arkiv: string;
     hjemmel: string;
-    prosjekt: string;
+    prosjekt: number;
 };
 
 export type AddressData = {

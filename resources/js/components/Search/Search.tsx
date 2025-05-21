@@ -71,7 +71,7 @@ const Search = ({ setTabOpen, setSearchAddressArray, tilsynFormData, setTilsynFo
             <div className={styles.resultsContainer}>
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {fetchedData && <ResultsList addressArray={fetchedData.adresser} setFetchedData={setFetchedData} />}
-                {tilsynFormData && <TilsynForm data={tilsynFormData} />}
+                {tilsynFormData && <TilsynForm formData={tilsynFormData} />}
             </div>
         </>
     );

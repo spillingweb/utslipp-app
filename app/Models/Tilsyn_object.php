@@ -21,7 +21,7 @@ class Tilsyn_object extends Model
         'saksbeh',
         'endret_av',
         'svarskjema',
-        'slam',
+        'komtek',
         'kontroll',
         'arkiv',
         'hjemmel',

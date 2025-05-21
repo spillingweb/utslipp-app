@@ -4,8 +4,8 @@ import styles from './Legend.module.css';
 const Legend = () => {
     return (
         <ul className={styles.legend}>
-            {TILSYN_STATUS.map((status, index) => (
-                <li key={index}>
+            {TILSYN_STATUS.map((status) => (
+                <li key={status.value}>
                     <svg height="24" width="24">
                         <circle
                             cx="12"

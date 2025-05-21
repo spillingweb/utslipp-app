@@ -16,7 +16,7 @@ function styleTilsynObjectsMarker(feature: GeoJSON.Feature): L.CircleMarkerOptio
     if (!feature.properties) return circleMarkerOptions;
 
     for (const status of TILSYN_STATUS) {
-        if (feature.properties.status === status.id) {
+        if (feature.properties.status === status.value) {
             circleMarkerOptions = {
                 ...circleMarkerOptions,
                 color: status.color,
