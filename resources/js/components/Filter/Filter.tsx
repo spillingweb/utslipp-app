@@ -4,6 +4,12 @@ import Radio from '../ui/Radio';
 import styles from './Filter.module.css';
 import FilterForm from './FilterForm';
 import SidebarSection from '../Sidebar/SidebarSection';
+import { returnTilsynMarker } from '@/lib/layerStyles';
+import { GeoJSON } from 'react-leaflet';
+import { use } from 'react';
+import { TilsynFormContext } from '@/store/tilsyn-form-context';
+import { TilsynObject } from '@/types';
+
 
 const AND_OR_NOT_BUTTONS = [
     { label: 'OG', id: 'radioAND', value: 'AND' },
@@ -11,9 +17,19 @@ const AND_OR_NOT_BUTTONS = [
     { label: 'OG IKKE', id: 'radioNOT', value: 'AND NOT' },
 ];
 
-const Filter = ({isOpen}: {isOpen: boolean}) => {
+const Filter = ({isOpen, tilsynObjects}: {isOpen: boolean, tilsynObjects: GeoJSON.FeatureCollection | null}) => {
+    const { setTilsynFormData, setTilsynFormProperties } = use(TilsynFormContext);
+
     const handleFilterObjects = (value: string) => {
         console.log(value);
+    };
+
+    const handleTilsynClick = (feature: GeoJSON.Feature) => {
+        setTilsynFormData(feature.properties as TilsynObject);
+        setTilsynFormProperties({
+            open: true,
+            disabled: true,
+        });
     };
 
     return (
@@ -64,6 +80,15 @@ const Filter = ({isOpen}: {isOpen: boolean}) => {
             <p className={styles.filterInfo}>
                 Antall filtrerte objekter: <span>6</span>
             </p>
+            {tilsynObjects && (
+                    <GeoJSON
+                        data={tilsynObjects}
+                        pointToLayer={returnTilsynMarker}
+                        onEachFeature={(feature: GeoJSON.Feature, layer: L.Layer) => {
+                            layer.on('click', () => handleTilsynClick(feature));
+                        }}
+                    />
+                )}
         </SidebarSection>
     );
 };

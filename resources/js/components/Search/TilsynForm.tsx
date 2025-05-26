@@ -1,5 +1,7 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
+import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { TilsynObject } from '@/types';
+import { use } from 'react';
 import Button from '../ui/Button';
 import Form from '../ui/Form';
 import Heading from '../ui/Heading';
@@ -7,19 +9,16 @@ import { Input, TextArea } from '../ui/Input';
 import Select from '../ui/Select';
 import styles from './TilsynForm.module.css';
 
-type TilsynFormProps = {
-    formData: TilsynObject;
-    onSubmit: (e: React.FormEvent) => void;
-    setValues: React.Dispatch<React.SetStateAction<TilsynObject | null>>;
-    disabled: boolean;
-};
+const TilsynForm = () => {
+    const { setTilsynFormData, tilsynFormData: formData, tilsynFormProperties } = use(TilsynFormContext);
 
-const TilsynForm = ({ formData, onSubmit, setValues, disabled }: TilsynFormProps) => {
+    const { disabled } = tilsynFormProperties;
+
     // Update state while typing in input fields
     function handleChange(e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) {
         const key = e.target.id;
         const value = e.target.value;
-        setValues((values) => {
+        setTilsynFormData((values) => {
             if (!values) return values;
             return {
                 ...values,
@@ -28,8 +27,13 @@ const TilsynForm = ({ formData, onSubmit, setValues, disabled }: TilsynFormProps
         });
     }
 
+    function handleSubmitTilsynForm(e: React.FormEvent) {
+        e.preventDefault();
+        // router.post('/login')
+    }
+
     return (
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={handleSubmitTilsynForm}>
             <Heading
                 className={styles.heading}
                 level={2}
@@ -90,7 +94,9 @@ const TilsynForm = ({ formData, onSubmit, setValues, disabled }: TilsynFormProps
                 <label htmlFor="komtek">KomTek</label>
                 <TextArea className={styles.grid2columns} id="komtek" value={formData.komtek || ''} onChange={handleChange} />
 
-                <label htmlFor="kontroll" className={styles.grid2columns} >Slamtømming kontroll</label>
+                <label htmlFor="kontroll" className={styles.grid2columns}>
+                    Slamtømming kontroll
+                </label>
                 <TextArea className={styles.grid2columns} id="kontroll" value={formData.kontroll || ''} onChange={handleChange} />
 
                 <label htmlFor="arkiv">Arkiv</label>

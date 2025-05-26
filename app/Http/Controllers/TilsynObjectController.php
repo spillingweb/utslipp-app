@@ -30,11 +30,11 @@ class TilsynObjectController extends Controller
                 'type',       'Feature',
                 'id',         id,
                 'geometry',   ST_AsGeoJSON(geom)::jsonb,
-                'properties', to_jsonb(inputs) - 'gid' - 'geom'
+                'properties', to_jsonb(inputs) - 'geom'
             ) AS feature
             FROM (SELECT * FROM tilsyn_objects) inputs) features;"
         );
         
-        return Inertia::render('Map', ['tilsynObjectsData' => $tilsynObjectsData]);
+        return Inertia::render('Map', ['tilsynObjectsData' => $tilsynObjectsData[0]->jsonb_build_object]);
     }
 }

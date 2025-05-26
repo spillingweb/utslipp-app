@@ -2,50 +2,25 @@ import Filter from '@/components/Filter/Filter';
 import Legend from '@/components/Legend/Legend';
 import LayersControlConfig from '@/components/Map/LayersControlConfig';
 import Search from '@/components/Search/Search';
-import TilsynForm from '@/components/Search/TilsynForm';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { useTilsynForm } from '@/hooks/useTilsynForm';
 import AppLayout from '@/layouts/AppLayout';
 import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
-import { returnTilsynMarker } from '@/lib/layerStyles';
-import { AddressData, TilsynObject } from '@/types';
 import { Head } from '@inertiajs/react';
-import L from 'leaflet';
 import { useEffect, useState } from 'react';
-import { GeoJSON, MapContainer, ScaleControl } from 'react-leaflet';
+import {  MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
 
-const Map = ({ tilsynObjectsData }: { tilsynObjectsData: { jsonb_build_object: string }[] }) => {
-    const [tabOpen, setTabOpen] = useState<'search' | 'filter' | 'legend' | null>('search');
+const Map = ({ tilsynObjectsData }: { tilsynObjectsData: string }) => {
+    const [sidebarTabOpen, setSidebarTabOpen] = useState<'search' | 'filter' | 'legend' | null>('search');
     const [tilsynObjects, setTilsynObjects] = useState<GeoJSON.FeatureCollection | null>(null);
-
-    const { tilsynData, tilsynFormProperties, setTilsynFormProperties, setTilsynData, startNewTilsyn } = useTilsynForm();
 
     // Parse the tilsynObjectsData and set it to state
     useEffect(() => {
         if (tilsynObjectsData && tilsynObjectsData.length > 0) {
-            const parsedTilsynObjects = JSON.parse(tilsynObjectsData[0].jsonb_build_object);
-            setTilsynObjects(parsedTilsynObjects);
+            const parsedData = JSON.parse(tilsynObjectsData) as GeoJSON.FeatureCollection;
+            setTilsynObjects(parsedData);
         }
     }, [tilsynObjectsData]);
-
-    function handleSubmitTilsynForm(e: React.FormEvent) {
-        e.preventDefault();
-        // router.post('/login')
-    }
-
-    const handleTilsynClick = (feature: GeoJSON.Feature) => {
-        setTilsynData(feature.properties as TilsynObject);
-        setTilsynFormProperties({
-            open: true,
-            disabled: true,
-        });
-    };
-
-    const handleNewTilsyn = (address: AddressData) => {
-        // Få bort tooltip?
-        startNewTilsyn(address, 3); // Finn en måte å få sonen fra kartlaget
-    };
 
     return (
         <AppLayout>
@@ -69,30 +44,12 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: { jsonb_build_object: s
                 ]}
                 layers={[lyrSoner, lyrHvittRundt]}
             >
-                {tilsynObjects && (
-                    <GeoJSON
-                        data={tilsynObjects}
-                        pointToLayer={returnTilsynMarker}
-                        onEachFeature={(feature: GeoJSON.Feature, layer: L.Layer) => {
-                            layer.on('click', () => handleTilsynClick(feature));
-                        }}
-                    />
-                )}
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig position="topright" />
-                <Sidebar tabOpen={tabOpen} setTabOpen={setTabOpen}>
-                    <Search isOpen={tabOpen === 'search'} setTabOpen={setTabOpen} onNewTilsyn={handleNewTilsyn} setTilsynFormProperties={setTilsynFormProperties}>
-                        {tilsynData && tilsynFormProperties.open === true && (
-                            <TilsynForm
-                                formData={tilsynData}
-                                onSubmit={handleSubmitTilsynForm}
-                                setValues={setTilsynData}
-                                disabled={tilsynFormProperties.disabled}
-                            />
-                        )}
-                    </Search>
-                    <Filter isOpen={tabOpen === 'filter'} />
-                    <Legend isOpen={tabOpen === 'legend'} />
+                <Sidebar tabOpen={sidebarTabOpen} setTabOpen={setSidebarTabOpen}>
+                    <Search isOpen={sidebarTabOpen === 'search'} setSidebarTabOpen={setSidebarTabOpen} />
+                    <Filter isOpen={sidebarTabOpen === 'filter'} tilsynObjects={tilsynObjects} />
+                    <Legend isOpen={sidebarTabOpen === 'legend'} />
                 </Sidebar>
             </MapContainer>
         </AppLayout>

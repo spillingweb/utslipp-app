@@ -42,14 +42,13 @@ export interface User {
 }
 
 export interface TilsynObject {
-    id: number | undefined;
     updated_at: string;
-    gnr: number;
-    bnr: number;
-    fnr: number;
+    gnr: string;
+    bnr: string;
+    fnr: string;
     adresse: string;
     bygning: string;
-    sone: number;
+    sone: string;
     status: string;
     saksnr: string;
     kommentar: string;
@@ -64,15 +63,14 @@ export interface TilsynObject {
     prosjekt: string;
 };
 
-export type AddressData = {
+interface AddressData {
     adressetekst: string;
-    adressenavn: string;
-    nummer: number;
-    gardsnummer: number;
-    bruksnummer: number;
-    festenummer: number;
+    adressenavn?: string;
+    nummer?: string;
+    gardsnummer: string;
+    bruksnummer: string;
+    festenummer: string;
     representasjonspunkt: {
-        epsg: string;
         lat: number;
         lon: number;
     };

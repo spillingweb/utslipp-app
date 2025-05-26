@@ -27,7 +27,7 @@ class TilsynObjectResource extends JsonResource
             'status' => $this->status,
             'saksnr' => $this->saksnr,
             'kommentar' => $this->kommentar,
-            'frist' => $this->frist->toFormattedDateString(),
+            'frist' => $this->frist,
             'saksbehandler' => $this->saksbeh,
             'endret_av' => $this->endret_av,
             'svarskjema' => $this->svarskjema,
