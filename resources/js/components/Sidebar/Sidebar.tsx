@@ -1,4 +1,3 @@
-import { TilsynFormProvider } from '@/store/tilsyn-form-context';
 import L from 'leaflet';
 import { Filter as FilterIcon, List as ListIcon, Search as SearchIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
@@ -12,8 +11,6 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ tabOpen, setTabOpen, children }: SidebarProps) => {
-    // State to manage the currently open tab in the sidebar
-
     // Disable click propagation on the sidebar to prevent map interactions when clicking on the sidebar
     const sidebarRef = useRef(null);
     useEffect(() => {
@@ -29,30 +26,16 @@ const Sidebar = ({ tabOpen, setTabOpen, children }: SidebarProps) => {
     };
 
     return (
-        <TilsynFormProvider>
-            <div className={styles.sidebar} ref={sidebarRef}>
-                <nav aria-label="Map sidebar navigation">
-                    <ul className={styles.navTabs}>
-                        <SidebarLink
-                            onClick={() => handleClickOnSidebarNav('search')}
-                            isActive={tabOpen === 'search'}
-                            icon={<SearchIcon size={20} />}
-                        />
-                        <SidebarLink
-                            onClick={() => handleClickOnSidebarNav('filter')}
-                            isActive={tabOpen === 'filter'}
-                            icon={<FilterIcon size={20} />}
-                        />
-                        <SidebarLink
-                            onClick={() => handleClickOnSidebarNav('legend')}
-                            isActive={tabOpen === 'legend'}
-                            icon={<ListIcon size={20} />}
-                        />
-                    </ul>
-                </nav>
-                <div className={styles.sidebarContent}>{children}</div>
-            </div>
-        </TilsynFormProvider>
+        <div className={styles.sidebar} ref={sidebarRef}>
+            <nav aria-label="Map sidebar navigation">
+                <ul className={styles.navTabs}>
+                    <SidebarLink onClick={() => handleClickOnSidebarNav('search')} isActive={tabOpen === 'search'} icon={<SearchIcon size={20} />} />
+                    <SidebarLink onClick={() => handleClickOnSidebarNav('filter')} isActive={tabOpen === 'filter'} icon={<FilterIcon size={20} />} />
+                    <SidebarLink onClick={() => handleClickOnSidebarNav('legend')} isActive={tabOpen === 'legend'} icon={<ListIcon size={20} />} />
+                </ul>
+            </nav>
+            <div className={styles.sidebarContent}>{children}</div>
+        </div>
     );
 };
 

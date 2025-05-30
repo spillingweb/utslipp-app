@@ -2,6 +2,7 @@ import { useFetch } from '@/hooks/useFetch';
 import { fetchPositionData } from '@/lib/http';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { AddressData, SearchFormValues } from '@/types';
+import { LatLngLiteral } from 'leaflet';
 import { use, useEffect, useState } from 'react';
 import { useMapEvents } from 'react-leaflet';
 import SearchLayer from '../Map/SearchLayer';
@@ -14,10 +15,12 @@ import TilsynForm from './TilsynForm';
 type SearchProps = {
     isOpen: boolean;
     setSidebarTabOpen: React.Dispatch<React.SetStateAction<'search' | 'filter' | 'legend' | null>>;
+    setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
+    setToolTip: React.Dispatch<React.SetStateAction<AddressData | null>>;
 };
 
-const Search = ({ isOpen, setSidebarTabOpen }: SearchProps) => {
-    const [toolTipOpen, setToolTipOpen] = useState(false);
+const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: SearchProps) => {
+    // const [toolTip, setToolTip] = useState<AddressData | null>(null);
     const { tilsynFormProperties, setTilsynFormProperties } = use(TilsynFormContext);
 
     // Fetch data, status and fetch function from custom fetch hook
@@ -37,10 +40,9 @@ const Search = ({ isOpen, setSidebarTabOpen }: SearchProps) => {
     useMapEvents({
         contextmenu: (e) => {
             fetchData(() => fetchPositionData(e.latlng.lat, e.latlng.lng));
-            setToolTipOpen(true);
         },
         click: () => {
-            setToolTipOpen(false);
+            setToolTip(null);
         },
     });
 
@@ -52,7 +54,10 @@ const Search = ({ isOpen, setSidebarTabOpen }: SearchProps) => {
         setTilsynFormProperties({ open: false, disabled: true });
 
         if (fetchedData.adresser.length === 1) {
-            const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressenavn, nummer } = fetchedData.adresser[0];
+            const address = fetchedData.adresser[0];
+            const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressenavn, nummer } = address;
+            
+            setToolTip(address);
 
             // Set form state values to the fetched address
             setSearchFormValues({
@@ -62,12 +67,19 @@ const Search = ({ isOpen, setSidebarTabOpen }: SearchProps) => {
                 adressenavn: adressenavn ? adressenavn : '',
                 nummer: nummer ? nummer.toString() : '',
             });
+
+            // Set the selected point to the representasjonspunkt of the fetched address
+            const { representasjonspunkt } = address;
+            if (representasjonspunkt) {
+                setSelectedPoint({ lat: representasjonspunkt.lat, lng: representasjonspunkt.lon });
+            }
+
         }
-    }, [fetchedData, setSidebarTabOpen, setTilsynFormProperties]);
+    }, [fetchedData, setSidebarTabOpen, setTilsynFormProperties, setSelectedPoint, setToolTip]);
 
     return (
         <SidebarSection isOpen={isOpen} title="Søk i eiendommer">
-            {fetchedData && <SearchLayer addressArray={fetchedData.adresser} toolTipOpen={toolTipOpen} setToolTipOpen={setToolTipOpen} />}
+            {fetchedData && fetchedData.adresser.length > 1 && <SearchLayer addressArray={fetchedData.adresser} />}
             <SearchForm searchFormValues={searchFormValues} setSearchFormValues={setSearchFormValues} fetchData={fetchData} loading={loading} />
             <div className={styles.resultsContainer}>
                 {error && <p className={styles.errorMessage}>{error}</p>}

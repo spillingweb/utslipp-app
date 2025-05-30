@@ -102,6 +102,12 @@ const TilsynForm = () => {
                 <label htmlFor="arkiv">Arkiv</label>
                 <TextArea className={styles.grid2columns} id="arkiv" value={formData.arkiv || ''} onChange={handleChange} />
             </fieldset>
+            {disabled && (
+                <div className={styles.cta}>
+                    <Button>Rediger tilsynsobjekt</Button>
+                    <Button variant="secondary">Slett</Button>
+                </div>
+            )}
             {!disabled && (
                 <div className={styles.cta}>
                     <Button>Legg til nytt tilsynsobjekt</Button>

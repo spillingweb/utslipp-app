@@ -28,7 +28,7 @@ const ResultsList = ({ addressArray, setFetchedData }: ResultsListProps) => {
                         return (
                             <li key={adressetekst}>
                                 <a href="#" onClick={() => setFetchedData({ adresser: [address] })}>{`${gardsnummer}/${bruksnummer}${
-                                    festenummer != 0 ? `/${festenummer}` : ''
+                                    festenummer != '0' ? `/${festenummer}` : ''
                                 } - ${adressetekst}`}</a>
                             </li>
                         );
