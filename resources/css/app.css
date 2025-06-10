@@ -47,8 +47,13 @@ html {
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
+  font-size: 1rem;
   color: var(--foreground);
   background-color: var(--muted);
+
+  @media screen and (max-width: 1000px){
+    font-size: 0.9rem;
+  }
 }
 
 a {
@@ -67,3 +72,4 @@ a {
 .mb-large {
     margin-bottom: 1.5rem !important;
 }
+

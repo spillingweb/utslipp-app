@@ -1,7 +1,9 @@
+import { lyrSoner } from '@/lib/layersDefinitions';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { AddressData } from '@/types';
 import { LatLngLiteral } from 'leaflet';
-import { ReactNode, use } from 'react';
+import pointInPolygon from 'point-in-polygon';
+import { ReactNode, use, useEffect, useState } from 'react';
 import { Circle, Tooltip, useMap } from 'react-leaflet';
 
 type SelectCircleProps = {
@@ -10,24 +12,51 @@ type SelectCircleProps = {
 };
 
 const SelectCircle = ({ selectedPoint, address }: SelectCircleProps) => {
+    const [zooming, setZooming] = useState(true);
     const { startNewTilsyn } = use(TilsynFormContext);
     const map = useMap();
+
     map.flyToBounds([[selectedPoint.lat, selectedPoint.lng]], { maxZoom: 18, paddingTopLeft: [350, 0] });
 
-    let toolTip: ReactNode = null;
+    useEffect(() => {
+        map.on('zoomend', () => {
+            setZooming(false);
+        });
+    }, [map]);
 
+    let zone = 0;
+
+    // Check which zone the selected point is in by iterating through the lyrSoner layer
+    lyrSoner.eachLayer((layer) => {
+        const lyrGeometry = layer.feature.geometry.coordinates[0][0];
+        if (pointInPolygon([selectedPoint.lng, selectedPoint.lat], lyrGeometry)) {
+            zone = layer.feature.properties.zone;
+        }
+    });
+    
+    let toolTip: ReactNode = null;
+    
     if (address) {
         const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst } = address;
         toolTip = (
-            <Tooltip interactive permanent direction="right">
+            <Tooltip
+            interactive
+            permanent
+            direction="right"
+            eventHandlers={{
+                click: () => {
+                    startNewTilsyn(address, zone);
+                },
+            }}
+            >
                 <b>{`${gnr}/${bnr}${fnr ? `/${fnr}` : ''} - ${adressetekst}`}</b>
                 <br />
-                <a href="#" onClick={() => startNewTilsyn(address, 3)}>
-                    Legg til tilsynsobjekt
-                </a>
+                <a href="#">Legg til tilsynsobjekt</a>
             </Tooltip>
         );
     }
+    
+    if (zooming) return null;
 
     return (
         <Circle

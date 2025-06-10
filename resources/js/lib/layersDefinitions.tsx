@@ -27,6 +27,11 @@ export const lyrSoner = L.geoJSON(soner, {
         weight: 1,
         fillOpacity: 0,
     },
+    onEachFeature: (feature: GeoJSON.Feature, layer: L.Layer) => {
+        layer.on('click', () => {
+            return layer;
+        });
+    },
 });
 
 /************ Gemini Portal WMS with authentication *************/

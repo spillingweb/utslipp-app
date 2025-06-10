@@ -20,9 +20,11 @@
     }
 }
 
-.formParagraph {
+.subtitle {
     margin: 0;
-    padding: 0.5rem;
+    padding: 0;
+    text-align: center;
+    font-style: italic;
 }
 
 .grid2columns {

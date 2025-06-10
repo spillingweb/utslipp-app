@@ -1,5 +1,6 @@
 .sidebar {
     z-index: 1000;
+    cursor: default;
     position: absolute;
     top: 0;
     left: 0;

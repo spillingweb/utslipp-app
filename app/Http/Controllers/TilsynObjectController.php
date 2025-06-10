@@ -37,4 +37,23 @@ class TilsynObjectController extends Controller
         
         return Inertia::render('Map', ['tilsynObjectsData' => $tilsynObjectsData[0]->jsonb_build_object]);
     }
+
+    // public function filter(Request $request)
+    // {
+    //     $query = Tilsyn_object::query();
+
+    //     if ($request->has('status')) {
+    //         $query->where('status', $request->input('status'));
+    //     }
+
+    //     if ($request->has('type')) {
+    //         $query->where('type', $request->input('type'));
+    //     }
+
+    //     $tilsynObjects = $query->get();
+
+    //     return Inertia::render('Deadlines/Index', [
+    //         'tilsynObjects' => TilsynObjectResource::collection($tilsynObjects),
+    //     ]);
+    // }
 }

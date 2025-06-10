@@ -1,6 +1,7 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { TilsynObject } from '@/types';
+import { LatLngLiteral } from 'leaflet';
 import { use } from 'react';
 import Button from '../ui/Button';
 import Form from '../ui/Form';
@@ -9,10 +10,11 @@ import { Input, TextArea } from '../ui/Input';
 import Select from '../ui/Select';
 import styles from './TilsynForm.module.css';
 
-const TilsynForm = () => {
-    const { setTilsynFormData, tilsynFormData: formData, tilsynFormProperties } = use(TilsynFormContext);
-
+const TilsynForm = ({ setSelectedPoint }: { setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>> }) => {
+    const { setTilsynFormData, tilsynFormData: formData, tilsynFormProperties, setTilsynFormProperties } = use(TilsynFormContext);
     const { disabled } = tilsynFormProperties;
+
+    if (tilsynFormProperties.open === false) return null;
 
     // Update state while typing in input fields
     function handleChange(e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) {
@@ -32,16 +34,21 @@ const TilsynForm = () => {
         // router.post('/login')
     }
 
+    function handleCancelTilsynForm() {
+        setTilsynFormProperties({ open: false, disabled: true });
+        setSelectedPoint(null); // Reset selected point on the map
+    }
+
     return (
         <Form onSubmit={handleSubmitTilsynForm}>
-            <Heading
-                className={styles.heading}
-                level={2}
-            >{`${formData.gnr}/${formData.bnr}${formData.fnr ? `/${formData.fnr}` : ''} ${formData.adresse}`}</Heading>
+            <div>
+                <Heading
+                    className={styles.heading}
+                    level={2}
+                >{`${formData.gnr}/${formData.bnr}${formData.fnr ? `/${formData.fnr}` : ''} ${formData.adresse}`}</Heading>
+                <p className={styles.subtitle}>Sone {formData.sone}</p>
+            </div>
             <fieldset className={styles.formGrid} disabled={disabled}>
-                <label>Sone</label>
-                <p className={styles.formParagraph}>{formData.sone}</p>
-
                 <label htmlFor="prosjekt">Prosjekt</label>
                 <Select
                     optionsArray={[
@@ -111,7 +118,9 @@ const TilsynForm = () => {
             {!disabled && (
                 <div className={styles.cta}>
                     <Button>Legg til nytt tilsynsobjekt</Button>
-                    <Button variant="secondary">Avbryt</Button>
+                    <Button variant="secondary" onClick={handleCancelTilsynForm}>
+                        Avbryt
+                    </Button>
                 </div>
             )}
         </Form>

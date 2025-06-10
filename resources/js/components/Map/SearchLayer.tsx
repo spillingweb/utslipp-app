@@ -9,7 +9,6 @@ const SearchLayer = ({ addressArray }: SearchLayerProps) => {
     const map = useMap();
 
     const coordArray: [number, number][] = [];
-    
     addressArray.forEach((address) => {
         const { representasjonspunkt } = address;
         if (representasjonspunkt) {

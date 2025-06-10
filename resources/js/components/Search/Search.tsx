@@ -10,18 +10,17 @@ import SidebarSection from '../Sidebar/SidebarSection';
 import ResultsList from './ResultsList';
 import styles from './Search.module.css';
 import SearchForm from './SearchForm';
-import TilsynForm from './TilsynForm';
 
 type SearchProps = {
     isOpen: boolean;
     setSidebarTabOpen: React.Dispatch<React.SetStateAction<'search' | 'filter' | 'legend' | null>>;
     setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
     setToolTip: React.Dispatch<React.SetStateAction<AddressData | null>>;
+    children: React.ReactNode;
 };
 
-const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: SearchProps) => {
-    // const [toolTip, setToolTip] = useState<AddressData | null>(null);
-    const { tilsynFormProperties, setTilsynFormProperties } = use(TilsynFormContext);
+const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip, children }: SearchProps) => {
+    const { setTilsynFormProperties } = use(TilsynFormContext);
 
     // Fetch data, status and fetch function from custom fetch hook
     const { loading, setFetchedData, fetchedData, error, fetchData } = useFetch<{
@@ -39,6 +38,7 @@ const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: Sea
     // Fetch address data from Kartverket when right-clicking on a point in the map
     useMapEvents({
         contextmenu: (e) => {
+            setSelectedPoint(null); // Clear any previously selected point
             fetchData(() => fetchPositionData(e.latlng.lat, e.latlng.lng));
         },
         click: () => {
@@ -56,7 +56,7 @@ const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: Sea
         if (fetchedData.adresser.length === 1) {
             const address = fetchedData.adresser[0];
             const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressenavn, nummer } = address;
-            
+
             setToolTip(address);
 
             // Set form state values to the fetched address
@@ -73,19 +73,24 @@ const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: Sea
             if (representasjonspunkt) {
                 setSelectedPoint({ lat: representasjonspunkt.lat, lng: representasjonspunkt.lon });
             }
-
         }
     }, [fetchedData, setSidebarTabOpen, setTilsynFormProperties, setSelectedPoint, setToolTip]);
 
     return (
         <SidebarSection isOpen={isOpen} title="Søk i eiendommer">
             {fetchedData && fetchedData.adresser.length > 1 && <SearchLayer addressArray={fetchedData.adresser} />}
-            <SearchForm searchFormValues={searchFormValues} setSearchFormValues={setSearchFormValues} fetchData={fetchData} loading={loading} />
+            <SearchForm
+                searchFormValues={searchFormValues}
+                setSearchFormValues={setSearchFormValues}
+                fetchData={fetchData}
+                setSelectedPoint={setSelectedPoint}
+                loading={loading}
+            />
             <div className={styles.resultsContainer}>
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {fetchedData && <ResultsList addressArray={fetchedData.adresser} setFetchedData={setFetchedData} />}
             </div>
-            {tilsynFormProperties.open && <TilsynForm />}
+            {children}
         </SidebarSection>
     );
 };

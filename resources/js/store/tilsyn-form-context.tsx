@@ -60,7 +60,7 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
 
     const { auth } = usePage<SharedData>().props;
 
-    function startNewTilsyn(address: AddressData) {
+    function startNewTilsyn(address: AddressData, zone: number) {
         const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst } = address;
 
         setTilsynFormData({
@@ -70,7 +70,7 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
             fnr: fnr,
             adresse: adressetekst,
             bygning: '',
-            sone: '',
+            sone: zone.toString(),
             status: 'T',
             saksnr: '',
             kommentar: '',
