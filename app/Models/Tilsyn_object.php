@@ -27,4 +27,9 @@ class Tilsyn_object extends Model
         'hjemmel',
         'prosjekt'
     ];
+
+    public function projects()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

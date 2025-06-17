@@ -21,9 +21,10 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         $this->call([
+            ProjectSeeder::class,
             TilsynObjectSeeder::class,
             RoleSeeder::class,
-            RoleUserSeeder::class,
+            RoleUserTableSeeder::class,
         ]);
     }
 }

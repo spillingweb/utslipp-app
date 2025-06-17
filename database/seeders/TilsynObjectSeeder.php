@@ -26,7 +26,7 @@ class TilsynObjectSeeder extends Seeder
                 'sone' => 4,
                 'status' => 'T',
                 'endret_av' => 'Karoline',
-                'prosjekt' => 1,
+                'project_id' => 1,
                 'saksbeh' => 'Karoline',
                 'frist' => now()->addDays(30),
             ],
@@ -42,7 +42,7 @@ class TilsynObjectSeeder extends Seeder
                 'sone' => 4,
                 'status' => 'T',
                 'endret_av' => 'Karoline',
-                'prosjekt' => 1,
+                'project_id' => 1,
                 'saksbeh' => 'Karoline',
                 'frist' => now()->addDays(30)
             ],
@@ -58,7 +58,7 @@ class TilsynObjectSeeder extends Seeder
                 'sone' => 4,
                 'status' => 'T',
                 'endret_av' => 'Karoline',
-                'prosjekt' => 1,
+                'project_id' => 1,
                 'saksbeh' => 'Karoline',
                 'frist' => now()->addDays(30)
             ],
@@ -74,7 +74,7 @@ class TilsynObjectSeeder extends Seeder
                 'sone' => 4,
                 'status' => 'B',
                 'endret_av' => 'Karoline',
-                'prosjekt' => 1,
+                'project_id' => 1,
                 'saksbeh' => 'Karoline',
                 'frist' => now()->addDays(30)
             ],
@@ -90,7 +90,7 @@ class TilsynObjectSeeder extends Seeder
                 'sone' => 1,
                 'status' => 'F',
                 'endret_av' => 'Karoline',
-                'prosjekt' => 2,
+                'project_id' => 2,
                 'saksbeh' => 'Karoline',
                 'frist' => now()->addDays(30)
             ],
@@ -106,7 +106,7 @@ class TilsynObjectSeeder extends Seeder
                 'sone' => 4,
                 'status' => 'T',
                 'endret_av' => 'Karoline',
-                'prosjekt' => 3,
+                'project_id' => 3,
                 'saksbeh' => 'Karoline',
                 'frist' => now()->addDays(30)
             ],
@@ -122,7 +122,7 @@ class TilsynObjectSeeder extends Seeder
                 'sone' => 5,
                 'status' => 'T',
                 'endret_av' => 'Karoline',
-                'prosjekt' => 4,
+                'project_id' => 4,
                 'saksbeh' => 'Karoline',
                 'frist' => now()->addDays(30)
             ]

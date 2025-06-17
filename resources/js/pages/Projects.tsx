@@ -1,19 +1,24 @@
 import ProjectCard from '@/components/Projects/ProjectCard';
 import AppLayout from '@/layouts/AppLayout';
+import { TilsynObject } from '@/types';
 import { Head } from '@inertiajs/react';
 import styles from './Projects.module.css';
 
-const Projects = () => {
+type Project = {
+    id: number;
+    name: string;
+    number: number;
+    tilsyn_objects: TilsynObject[];
+};
+
+const Projects = ({ projects }: { projects: Project[] }) => {
     return (
         <AppLayout>
             <Head title="Prosjekter" />
             <ul className={styles.projectsList}>
-                <ProjectCard id={5} title="Begna" noObjects={79} noDone={0} />
-                <ProjectCard id={4} title="Sentrum/Hadelandsveien" noObjects={16} noDone={0} />
-                <ProjectCard id={3} title="Tyristrand" noObjects={28} noDone={4} />
-                <ProjectCard id={2} title="Sogna" noObjects={111} noDone={56} />
-                <ProjectCard id={1} title="Steinsfjorden" noObjects={299} noDone={82} />
-                <ProjectCard id={101} title="Tilknytning" noObjects={60} noDone={30} />
+                {projects.map((project) => (
+                    <ProjectCard key={project.id} id={project.id} title={project.name} objects={project.tilsyn_objects} />
+                ))}
             </ul>
         </AppLayout>
     );

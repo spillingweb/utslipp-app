@@ -42,6 +42,7 @@ export interface User {
 }
 
 export interface TilsynObject {
+    id: number;
     updated_at: string;
     gnr: string;
     bnr: string;
@@ -82,4 +83,14 @@ export type SearchFormValues = {
     festenummer: string;
     adressenavn: string;
     nummer: string;
+};
+
+export type Data<T> = {
+    data: T[];
+};
+
+export type Role = {
+    id: number;
+    name: string;
+    description: string;
 };

@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProjectFactory> */
-    use HasFactory;
+    protected $fillable = ['number', 'name'];
+
+    public $timestamps = false;
+
+    public function tilsyn_objects()
+    {
+        return $this->hasMany(Tilsyn_object::class);
+    }
 }

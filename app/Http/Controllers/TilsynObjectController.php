@@ -34,7 +34,7 @@ class TilsynObjectController extends Controller
             ) AS feature
             FROM (SELECT * FROM tilsyn_objects) inputs) features;"
         );
-        
+
         return Inertia::render('Map', ['tilsynObjectsData' => $tilsynObjectsData[0]->jsonb_build_object]);
     }
 

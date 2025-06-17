@@ -1,3 +1,5 @@
+import { TILSYN_STATUS } from '@/lib/tilsynStatus';
+import { TilsynObject } from '@/types';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import Heading from '../ui/Heading';
 import styles from './ProjectCard.module.css';
@@ -5,17 +7,20 @@ import styles from './ProjectCard.module.css';
 type ProjectCardProps = {
     id: number;
     title: string;
-    noObjects: number;
-    noDone: number;
+    objects: TilsynObject[];
 };
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const ProjectCard = ({ id, title, objects }: ProjectCardProps) => {
+    const noObjects = objects.length;
 
-const ProjectCard = ({ id, title, noObjects, noDone }: ProjectCardProps) => {
-    const projectData = [
-        { name: 'Ferdig', value: noDone },
-        { name: 'Tilsyn påbegynt', value: noObjects - noDone },
-    ];
+    const objectsData = TILSYN_STATUS.map((status) => ({
+        status: status.value,
+        name: status.text,
+        color: status.color,
+        value: objects.filter((obj) => obj.status === status.value).length,
+    }));
+
+    console.log(title, objectsData);
 
     return (
         <li className={styles.projectCard}>
@@ -26,9 +31,9 @@ const ProjectCard = ({ id, title, noObjects, noDone }: ProjectCardProps) => {
                 <p>{`Antall tilsynsobjekter: ${noObjects}`}</p>
                 <figure className={styles.pieChart}>
                     <PieChart width={200} height={200}>
-                        <Pie data={projectData} dataKey="value" cx="50%" cy="50%" outerRadius={80} innerRadius={50}>
-                            {projectData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Pie data={objectsData} dataKey="value" cx="50%" cy="50%" outerRadius={80}>
+                            {objectsData.map((object) => (
+                                <Cell key={object.status} fill={object.color} />
                             ))}
                         </Pie>
                         <Tooltip />

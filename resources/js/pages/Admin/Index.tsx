@@ -6,25 +6,7 @@ import { Head, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import Heading from '../../components/ui/Heading';
 import styles from './Index.module.css';
-
-export type Data<T> = {
-    data: T[];
-};
-
-export type Role = {
-    id: number;
-    name: string;
-    description: string;
-};
-
-export type User = {
-    id: number;
-    name: string;
-    email: string;
-    email_verified_at: string | null;
-    created_at: string;
-    role: Role;
-};
+import { Data, Role, User } from '@/types';
 
 const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
     const [activeTab, setActiveTab] = useState('users');

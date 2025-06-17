@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TilsynObjectController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
@@ -11,9 +12,7 @@ Route::redirect('/', 'login');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [TilsynObjectController::class, 'show'])->name('utslipp');
 
-    Route::get('/prosjekter', function () {
-        return Inertia::render('Projects');
-    })->name('projects');
+    Route::get('/prosjekter', [ProjectController::class, 'index'])->name('projects');
 
     Route::get('/frister', [TilsynObjectController::class, 'index'])->name('deadlines');
 });
