@@ -5,13 +5,15 @@ import { LatLngLiteral } from 'leaflet';
 import pointInPolygon from 'point-in-polygon';
 import { ReactNode, use, useEffect, useState } from 'react';
 import { Circle, Tooltip, useMap } from 'react-leaflet';
+import { SidebarTab } from '../Sidebar/Sidebar';
 
 type SelectCircleProps = {
     selectedPoint: LatLngLiteral;
+    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
     address?: AddressData;
 };
 
-const SelectCircle = ({ selectedPoint, address }: SelectCircleProps) => {
+const SelectCircle = ({ selectedPoint, address, setSidebarTabOpen }: SelectCircleProps) => {
     const [zooming, setZooming] = useState(true);
     const { startNewTilsyn } = use(TilsynFormContext);
     const map = useMap();
@@ -33,21 +35,22 @@ const SelectCircle = ({ selectedPoint, address }: SelectCircleProps) => {
             zone = layer.feature.properties.zone;
         }
     });
-    
+
     let toolTip: ReactNode = null;
-    
+
     if (address) {
         const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst } = address;
         toolTip = (
             <Tooltip
-            interactive
-            permanent
-            direction="right"
-            eventHandlers={{
-                click: () => {
-                    startNewTilsyn(address, zone);
-                },
-            }}
+                interactive
+                permanent
+                direction="right"
+                eventHandlers={{
+                    click: () => {
+                        setSidebarTabOpen('tilsyn');
+                        startNewTilsyn(address, zone);
+                    },
+                }}
             >
                 <b>{`${gnr}/${bnr}${fnr ? `/${fnr}` : ''} - ${adressetekst}`}</b>
                 <br />
@@ -55,7 +58,7 @@ const SelectCircle = ({ selectedPoint, address }: SelectCircleProps) => {
             </Tooltip>
         );
     }
-    
+
     if (zooming) return null;
 
     return (

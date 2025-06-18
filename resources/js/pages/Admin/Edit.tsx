@@ -6,9 +6,9 @@ import Radio from '@/components/ui/Radio';
 import AppLayout from '@/layouts/AppLayout';
 import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { ROLE_RADIO_OPTIONS } from './CreateUser';
-import styles from './CreateUser.module.css';
-import { Data, Role, User } from './Index';
+import { ROLE_RADIO_OPTIONS } from './Create';
+import styles from './Create.module.css';
+import { Data, Role, User } from '@/types';
 
 type RegisterForm = {
     name: string;
@@ -16,11 +16,11 @@ type RegisterForm = {
     role: string;
 };
 
-const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
+const Edit = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
     const { data, setData, post, processing, errors } = useForm<Required<RegisterForm>>({
         name: user.data.name,
         email: user.data.email,
-        role: user.data.role,
+        role: user.data.role as string,
     });
 
     const handleSubmit: FormEventHandler = (e) => {
@@ -96,4 +96,4 @@ const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
     );
 };
 
-export default EditUser;
+export default Edit;

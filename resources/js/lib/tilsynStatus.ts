@@ -1,5 +1,5 @@
 type TilsynStatusType = {
-  value: "O" | "T" | "PB" | "I" | "B" | "GV" | "GVT" | "OK" | "V" | "P" | "FT" | "VT" | "TL" | "F";
+  value: string;
   color: string;
   text: string;
   small?: boolean;

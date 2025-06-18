@@ -24,7 +24,7 @@ const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
                 <Heading level={2}>Admin - Utslipp Ringerike</Heading>
                 <Button onClick={handleCreateUser}>+ Legg til bruker</Button>
             </div>
-            {flash.message && <div className={styles.flashMessage}>{flash.message}</div>}
+            {flash.message && <div className='flash success'>{flash.message}</div>}
             <ul className={styles.tabs}>
                 <li>
                     <button className={`${styles.tab} ${activeTab === 'users' ? styles.activeTab : ''}`} onClick={() => setActiveTab('users')}>

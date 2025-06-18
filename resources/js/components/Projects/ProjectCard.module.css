@@ -1,7 +1,7 @@
 .projectCard {
-    background-color: rgb(252, 241, 208);
-    border: 1px solid #e7e7e7;
-    border-radius: 5px;
+    background-color: var(--primary);
+    border: 1px solid var(--primary-dark);
+    border-radius: 10px;
 }
 
 .projectHeader {
@@ -29,9 +29,10 @@
     }
 }
 
-.customTooltip {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 0.5rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.pieChart {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

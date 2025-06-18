@@ -42,7 +42,7 @@ export interface User {
 }
 
 export interface TilsynObject {
-    id: number;
+    id?: number;
     updated_at: string;
     gnr: string;
     bnr: string;
@@ -61,7 +61,7 @@ export interface TilsynObject {
     kontroll: string;
     arkiv: string;
     hjemmel: string;
-    prosjekt: string;
+    project_id: string;
 };
 
 interface AddressData {

@@ -12,6 +12,8 @@ type ProjectCardProps = {
 
 const ProjectCard = ({ id, title, objects }: ProjectCardProps) => {
     const noObjects = objects.length;
+    const noFinished = objects.filter((obj) => obj.status === 'F').length;
+    const finishedPercentage = noObjects ? noFinished / noObjects * 100 : 0;
 
     const objectsData = TILSYN_STATUS.map((status) => ({
         status: status.value,
@@ -20,8 +22,6 @@ const ProjectCard = ({ id, title, objects }: ProjectCardProps) => {
         value: objects.filter((obj) => obj.status === status.value).length,
     }));
 
-    console.log(title, objectsData);
-
     return (
         <li className={styles.projectCard}>
             <div className={styles.projectHeader}>
@@ -29,8 +29,9 @@ const ProjectCard = ({ id, title, objects }: ProjectCardProps) => {
             </div>
             <div className={styles.projectData}>
                 <p>{`Antall tilsynsobjekter: ${noObjects}`}</p>
+                <p>{`Antall ferdigstilte: ${noFinished} (${finishedPercentage}%)`}</p>
                 <figure className={styles.pieChart}>
-                    <PieChart width={200} height={200}>
+                    <PieChart width={200} height={200} className={styles.pieChart}>
                         <Pie data={objectsData} dataKey="value" cx="50%" cy="50%" outerRadius={80}>
                             {objectsData.map((object) => (
                                 <Cell key={object.status} fill={object.color} />

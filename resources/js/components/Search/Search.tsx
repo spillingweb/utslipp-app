@@ -6,6 +6,7 @@ import { LatLngLiteral } from 'leaflet';
 import { use, useEffect, useState } from 'react';
 import { useMapEvents } from 'react-leaflet';
 import SearchLayer from '../Map/SearchLayer';
+import { SidebarTab } from '../Sidebar/Sidebar';
 import SidebarSection from '../Sidebar/SidebarSection';
 import ResultsList from './ResultsList';
 import styles from './Search.module.css';
@@ -13,13 +14,12 @@ import SearchForm from './SearchForm';
 
 type SearchProps = {
     isOpen: boolean;
-    setSidebarTabOpen: React.Dispatch<React.SetStateAction<'search' | 'filter' | 'legend' | null>>;
+    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
     setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
     setToolTip: React.Dispatch<React.SetStateAction<AddressData | null>>;
-    children: React.ReactNode;
 };
 
-const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip, children }: SearchProps) => {
+const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: SearchProps) => {
     const { setTilsynFormProperties } = use(TilsynFormContext);
 
     // Fetch data, status and fetch function from custom fetch hook
@@ -74,7 +74,7 @@ const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip, child
                 setSelectedPoint({ lat: representasjonspunkt.lat, lng: representasjonspunkt.lon });
             }
         }
-    }, [fetchedData, setSidebarTabOpen, setTilsynFormProperties, setSelectedPoint, setToolTip]);
+    }, [fetchedData, setTilsynFormProperties, setSidebarTabOpen, setSelectedPoint, setToolTip]);
 
     return (
         <SidebarSection isOpen={isOpen} title="Søk i eiendommer">
@@ -90,7 +90,6 @@ const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip, child
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {fetchedData && <ResultsList addressArray={fetchedData.adresser} setFetchedData={setFetchedData} />}
             </div>
-            {children}
         </SidebarSection>
     );
 };

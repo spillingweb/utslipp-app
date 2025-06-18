@@ -5,19 +5,28 @@ import SelectCircle from '@/components/Map/SelectCircle';
 import TilsynLayer from '@/components/Map/TilsynLayer';
 import Search from '@/components/Search/Search';
 import TilsynForm from '@/components/Search/TilsynForm';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import Sidebar, { SidebarTab } from '@/components/Sidebar/Sidebar';
 import AppLayout from '@/layouts/AppLayout';
 import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
 import { TilsynFormProvider } from '@/store/tilsyn-form-context';
-import { AddressData } from '@/types';
+import { AddressData, User } from '@/types';
 import { Head } from '@inertiajs/react';
 import { LatLngLiteral } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
 
-const Map = ({ tilsynObjectsData }: { tilsynObjectsData: string }) => {
-    const [sidebarTabOpen, setSidebarTabOpen] = useState<'search' | 'filter' | 'legend' | null>('search');
+type MapProps = {
+    tilsynObjectsData: string;
+    users: User[];
+    projects: {
+        name: string;
+        number: number;
+    }[];
+};
+
+const Map = ({ tilsynObjectsData }: MapProps) => {
+    const [sidebarTabOpen, setSidebarTabOpen] = useState<SidebarTab | null>('search');
     const [tilsynObjects, setTilsynObjects] = useState<GeoJSON.FeatureCollection | null>(null);
     const [selectedPoint, setSelectedPoint] = useState<LatLngLiteral | null>(null);
     const [toolTip, setToolTip] = useState<AddressData | null>(null);
@@ -55,19 +64,22 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: string }) => {
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig position="topright" />
                 <TilsynFormProvider>
-                    {tilsynObjects && <TilsynLayer features={tilsynObjects} setSelectedPoint={setSelectedPoint} />}
-                    {selectedPoint && <SelectCircle selectedPoint={selectedPoint} address={toolTip ? toolTip : undefined} />}
+                    {tilsynObjects && (
+                        <TilsynLayer features={tilsynObjects} setSelectedPoint={setSelectedPoint} setSidebarTabOpen={setSidebarTabOpen} />
+                    )}
+                    {selectedPoint && (
+                        <SelectCircle selectedPoint={selectedPoint} address={toolTip ? toolTip : undefined} setSidebarTabOpen={setSidebarTabOpen} />
+                    )}
                     <Sidebar tabOpen={sidebarTabOpen} setTabOpen={setSidebarTabOpen}>
                         <Search
                             isOpen={sidebarTabOpen === 'search'}
-                            setSidebarTabOpen={setSidebarTabOpen}
                             setSelectedPoint={setSelectedPoint}
                             setToolTip={setToolTip}
-                        >
-                            <TilsynForm setSelectedPoint={setSelectedPoint} />
-                        </Search>
+                            setSidebarTabOpen={setSidebarTabOpen}
+                        />
                         <Filter isOpen={sidebarTabOpen === 'filter'} setTilsynObjects={setTilsynObjects} />
                         <Legend isOpen={sidebarTabOpen === 'legend'} />
+                        <TilsynForm isOpen={sidebarTabOpen === 'tilsyn'} setSelectedPoint={setSelectedPoint} />
                     </Sidebar>
                 </TilsynFormProvider>
             </MapContainer>

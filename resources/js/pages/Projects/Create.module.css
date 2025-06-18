@@ -1,0 +1,21 @@
+.createProject {
+    background-color: var(--primary-foreground);
+    border: 1px solid var(--primary-dark);
+    border-radius: 10px;
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 1rem;
+}

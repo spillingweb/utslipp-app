@@ -21,7 +21,7 @@ const initialData: TilsynObject = {
     kontroll: '',
     arkiv: '',
     hjemmel: '',
-    prosjekt: '',
+    project_id: '',
 };
 
 type TilsynFormContextType = {
@@ -82,7 +82,7 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
             kontroll: '',
             arkiv: '',
             hjemmel: '',
-            prosjekt: '',
+            project_id: '',
         });
 
         setTilsynFormProperties({

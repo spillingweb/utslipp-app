@@ -35,7 +35,7 @@ class TilsynObjectResource extends JsonResource
             'kontroll' => $this->kontroll,
             'arkiv' => $this->arkiv,
             'hjemmel' => $this->hjemmel,
-            'prosjekt' => $this->prosjekt,
+            'project_id' => $this->project_id,
         ];
     }
 }

@@ -1,12 +1,14 @@
 import L from 'leaflet';
-import { Filter as FilterIcon, List as ListIcon, Search as SearchIcon } from 'lucide-react';
+import { Filter as FilterIcon, HousePlus as HouseIcon, List as ListIcon, Search as SearchIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import styles from './Sidebar.module.css';
 import SidebarLink from './SidebarLink';
 
+export type SidebarTab = 'search' | 'filter' | 'legend' | 'tilsyn';
+
 type SidebarProps = {
-    tabOpen: 'search' | 'filter' | 'legend' | null;
-    setTabOpen: React.Dispatch<React.SetStateAction<'search' | 'filter' | 'legend' | null>>;
+    tabOpen: SidebarTab | null;
+    setTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
     children: React.ReactNode;
 };
 
@@ -21,7 +23,7 @@ const Sidebar = ({ tabOpen, setTabOpen, children }: SidebarProps) => {
     }, []);
 
     // If the clicked tab is already open, close it. Otherwise, open the clicked tab.
-    const handleClickOnSidebarNav = (target: 'search' | 'filter' | 'legend') => {
+    const handleClickOnSidebarNav = (target: SidebarTab) => {
         setTabOpen((prevTab) => (prevTab === target ? null : target));
     };
 
@@ -32,6 +34,7 @@ const Sidebar = ({ tabOpen, setTabOpen, children }: SidebarProps) => {
                     <SidebarLink onClick={() => handleClickOnSidebarNav('search')} isActive={tabOpen === 'search'} icon={<SearchIcon size={20} />} />
                     <SidebarLink onClick={() => handleClickOnSidebarNav('filter')} isActive={tabOpen === 'filter'} icon={<FilterIcon size={20} />} />
                     <SidebarLink onClick={() => handleClickOnSidebarNav('legend')} isActive={tabOpen === 'legend'} icon={<ListIcon size={20} />} />
+                    <SidebarLink onClick={() => handleClickOnSidebarNav('tilsyn')} isActive={tabOpen === 'tilsyn'} icon={<HouseIcon size={20} />} />
                 </ul>
             </nav>
             <div className={styles.sidebarContent}>{children}</div>

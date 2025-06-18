@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $roles = Role::all();
 
-        return Inertia::render('Admin/CreateUser', [
+        return Inertia::render('Admin/Create', [
             'roles' => RoleResource::collection($roles),
         ]);
     }
@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         $roles = Role::all();
 
-        return Inertia::render('Admin/EditUser', [
+        return Inertia::render('Admin/Edit', [
             'user' => UserResource::make($user),
             'roles' => RoleResource::collection($roles)
         ]);

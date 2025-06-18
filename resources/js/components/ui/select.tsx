@@ -1,30 +1,15 @@
-import styles from "./Input.module.css";
-import { SelectOption } from "../../lib/filterArrays";
+import styles from './Input.module.css';
 
-interface SelectProps extends React.ComponentPropsWithoutRef<"select"> {
-  optionsArray: SelectOption[];
-};
+interface SelectProps extends React.ComponentPropsWithoutRef<'select'> {
+    children: React.ReactNode;
+}
 
-const Select = ({ optionsArray, ...props }: SelectProps) => {
-  return (
-    <select className={`${styles.input} ${styles.select}`} {...props}>
-      {optionsArray.map((option) => {
-        let text: string;
-
-        if (!option.text) {
-          text = option.value.charAt(0).toUpperCase() + option.value.slice(1);
-        } else {
-          text = option.text;
-        }
-
-        return (
-          <option key={option.value} value={option.value}>
-            {text}
-          </option>
-        );
-      })}
-    </select>
-  );
+const Select = ({ children, ...props }: SelectProps) => {
+    return (
+        <select className={`${styles.input} ${styles.select}`} {...props}>
+            {children}
+        </select>
+    );
 };
 
 export default Select;

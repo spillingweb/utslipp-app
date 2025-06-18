@@ -4,17 +4,20 @@ import { TilsynObject } from '@/types';
 import { LatLngLiteral, LeafletMouseEvent } from 'leaflet';
 import { use } from 'react';
 import { GeoJSON, useMap } from 'react-leaflet';
+import { SidebarTab } from '../Sidebar/Sidebar';
 
 type TilsynLayerProps = {
     features: GeoJSON.FeatureCollection;
     setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
+    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
 };
 
-const TilsynLayer = ({ features, setSelectedPoint }: TilsynLayerProps) => {
+const TilsynLayer = ({ features, setSelectedPoint, setSidebarTabOpen }: TilsynLayerProps) => {
     const { setTilsynFormData, setTilsynFormProperties } = use(TilsynFormContext);
     const map = useMap();
 
     const handleTilsynClick = (e: LeafletMouseEvent, feature: GeoJSON.Feature) => {
+        setSidebarTabOpen('tilsyn');
         setTilsynFormData(feature.properties as TilsynObject);
         setTilsynFormProperties({
             open: true,
