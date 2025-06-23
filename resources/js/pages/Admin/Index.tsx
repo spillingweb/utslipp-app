@@ -11,7 +11,7 @@ import { Data, Role, User } from '@/types';
 const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
     const [activeTab, setActiveTab] = useState('users');
 
-    const { flash } = usePage<{ flash: { message: string | null } }>().props;
+    const { flash } = usePage<{ flash: { success: string | null; error: string | null } }>().props;
 
     const handleCreateUser = () => {
         router.get(route('user.create'));
@@ -24,7 +24,8 @@ const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
                 <Heading level={2}>Admin - Utslipp Ringerike</Heading>
                 <Button onClick={handleCreateUser}>+ Legg til bruker</Button>
             </div>
-            {flash.message && <div className='flash success'>{flash.message}</div>}
+            {flash.success && <div className='flash success'>{flash.success}</div>}
+            {flash.error && <div className='flash error'>{flash.error}</div>}
             <ul className={styles.tabs}>
                 <li>
                     <button className={`${styles.tab} ${activeTab === 'users' ? styles.activeTab : ''}`} onClick={() => setActiveTab('users')}>

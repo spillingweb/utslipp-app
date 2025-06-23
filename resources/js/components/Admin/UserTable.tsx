@@ -1,4 +1,4 @@
-import { User } from '@/pages/Admin/Index';
+import { User } from '@/types';
 import { router } from '@inertiajs/react';
 import TextLink from '../TextLink';
 import ButtonLink from '../ui/ButtonLink';
@@ -10,9 +10,9 @@ type UserTableProps = {
 };
 
 const UserTable = ({ users }: UserTableProps) => {
-    const handleDeleteUser = (user: User) => {
-        if (confirm(`Er du sikker på at du vil slette brukeren ${user.name}? Det kan ikke angres.`)) {
-            router.delete(route('user.destroy', user.id), {
+    const handleDeleteUser = (id: number) => {
+        if (confirm(`Er du sikker på at du vil slette brukeren med id ${id}? Det kan ikke angres.`)) {
+            router.delete(route('user.destroy', id), {
                 preserveScroll: true,
             });
         }
@@ -29,7 +29,9 @@ const UserTable = ({ users }: UserTableProps) => {
                     <td>{user.email_verified_at ? 'Ja' : 'Nei'}</td>
                     <td className={styles.linkColumn}>
                         <TextLink href={route('user.edit', user.id)}>Endre</TextLink>
-                        <ButtonLink style={{'marginLeft': '1rem'}} onClick={() => handleDeleteUser(user)}>Slett</ButtonLink>
+                        <ButtonLink style={{ marginLeft: '1rem' }} onClick={() => handleDeleteUser(user.id)}>
+                            Slett
+                        </ButtonLink>
                     </td>
                 </tr>
             ))}

@@ -7,6 +7,15 @@
 .projectHeader {
     padding: 1rem;
     border-bottom: 1px solid #e7e7e7;
+    display: flex;
+    justify-content: space-between;
+}
+
+.deleteButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
 }
 
 .projectData {

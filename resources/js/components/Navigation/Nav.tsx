@@ -1,8 +1,8 @@
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { Link, usePage } from '@inertiajs/react';
+import { LogOut } from 'lucide-react';
 import LogoBrand from '../ui/LogoBrand';
 import styles from './Nav.module.css';
-import { LogOut } from 'lucide-react';
 
 const Nav = () => {
     const { url } = usePage();
@@ -19,11 +19,11 @@ const Nav = () => {
                 <Link href="/" className={setClass(url === '/')} preserveState>
                     Kart
                 </Link>
-                <Link href="/prosjekter" className={setClass(url === '/prosjekter')}>
-                    Tilsynsprosjekter
+                <Link href="/tilsynsobjekter" className={setClass(url === '/tilsynsobjekter')}>
+                    Tilsynsobjekter
                 </Link>
-                <Link href="/frister" className={setClass(url === '/frister')}>
-                    Utgåtte frister
+                <Link href="/prosjekter" className={setClass(url === '/prosjekter')}>
+                    Prosjekter
                 </Link>
                 <Link href="/admin" className={setClass(url === '/admin')}>
                     Admin

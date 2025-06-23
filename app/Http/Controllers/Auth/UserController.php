@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $roles = Role::all();
 
-        return Inertia::render('Admin/Create', [
+        return Inertia::render('Admin/CreateUser', [
             'roles' => RoleResource::collection($roles),
         ]);
     }
@@ -52,24 +52,47 @@ class UserController extends Controller
         event(new Registered($user));
 
         return to_route('admin')
-            ->with('message', 'Brukeren ble opprettet.');
+            ->with('success', 'Brukeren ble opprettet.');
     }
 
     public function edit(User $user): Response
     {
         $roles = Role::all();
 
-        return Inertia::render('Admin/Edit', [
+        return Inertia::render('Admin/EditUser', [
             'user' => UserResource::make($user),
             'roles' => RoleResource::collection($roles)
         ]);
     }
 
-    public function destroy(User $user) 
+    public function update(Request $request, $id): RedirectResponse
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        return to_route('admin')
+            ->with('success', 'Brukeren ble oppdatert.');
+    }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        if (Auth::user()->id === $user->id) {
+            return to_route('admin')
+                ->with('error', 'Du kan ikke slette deg selv.');
+        }
+
         $user->delete();
 
         return to_route('admin')
-            ->with('message', 'Brukeren ble slettet.');
+            ->with('success', 'Brukeren ble slettet.');
     }
 }

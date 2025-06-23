@@ -4,7 +4,7 @@ import LayersControlConfig from '@/components/Map/LayersControlConfig';
 import SelectCircle from '@/components/Map/SelectCircle';
 import TilsynLayer from '@/components/Map/TilsynLayer';
 import Search from '@/components/Search/Search';
-import TilsynForm from '@/components/Search/TilsynForm';
+import TilsynForm from '@/components/TilsynObjects/TilsynForm';
 import Sidebar, { SidebarTab } from '@/components/Sidebar/Sidebar';
 import AppLayout from '@/layouts/AppLayout';
 import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';

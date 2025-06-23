@@ -4,14 +4,14 @@ import Form from '@/components/ui/Form';
 import Heading from '@/components/ui/Heading';
 import { Input } from '@/components/ui/Input';
 import { useForm } from '@inertiajs/react';
-import styles from './Create.module.css';
+import styles from './CreateProject.module.css';
 
 type NewProjectForm = {
     name: string;
     number: string;
 };
 
-const Create = () => {
+const CreateProject = () => {
     const { data, setData, post, processing, errors, reset } = useForm<Required<NewProjectForm>>({
         name: '',
         number: '',
@@ -22,6 +22,7 @@ const Create = () => {
         post(route('project.store'), {
             onSuccess: () => reset(),});
     };
+
     return (
         <li className={styles.createProject}>
             <Heading level={2} className={styles.heading}>
@@ -63,4 +64,4 @@ const Create = () => {
     );
 };
 
-export default Create;
+export default CreateProject;

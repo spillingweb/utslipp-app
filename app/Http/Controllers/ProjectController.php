@@ -27,6 +27,14 @@ class ProjectController extends Controller
         Project::create($request->validated());
 
         return to_route('projects')
-            ->with('message', 'Prosjektet ble opprettet.');
+            ->with('success', 'Prosjektet ble opprettet.');
+    }
+
+    public function destroy(Project $project): RedirectResponse
+    {
+        $project->delete();
+
+        return to_route('projects')
+            ->with('success', 'Prosjektet ble slettet.');
     }
 }

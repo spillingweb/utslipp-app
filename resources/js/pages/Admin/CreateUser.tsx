@@ -6,7 +6,7 @@ import Radio from '@/components/ui/Radio';
 import AppLayout from '@/layouts/AppLayout';
 import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import styles from './Create.module.css';
+import styles from './CreateUser.module.css';
 
 type RegisterForm = {
     name: string;
@@ -60,7 +60,7 @@ const CreateUser = () => {
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                     />
-                    <InputError message={errors.name} />
+                    <InputError message={errors.name && 'Navn er obligatorisk'} />
                 </fieldset>
                 <fieldset className={styles.input}>
                     <label htmlFor="email">E-postadresse</label>

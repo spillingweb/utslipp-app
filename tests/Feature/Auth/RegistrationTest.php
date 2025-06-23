@@ -17,5 +17,5 @@ test('new users can register', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('utslipp', absolute: false));
+    $response->assertRedirect(route('map', absolute: false));
 });

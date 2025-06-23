@@ -21,7 +21,6 @@ const TilsynForm = ({ isOpen, setSelectedPoint }: TilsynFormProps) => {
     const { setTilsynFormData, tilsynFormData: formData, tilsynFormProperties, setTilsynFormProperties } = use(TilsynFormContext);
     const { disabled } = tilsynFormProperties;
     const { projects, users } = usePage<{ projects: { name: string; number: number }[]; users: User[] }>().props;
-    const title = disabled ? 'Rediger tilsynsobjekt' : 'Legg til nytt tilsynsobjekt';
 
     // Update state while typing in input fields
     function handleChange(e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) {
@@ -47,10 +46,10 @@ const TilsynForm = ({ isOpen, setSelectedPoint }: TilsynFormProps) => {
     }
 
     return (
-        <SidebarSection isOpen={isOpen} title={title}>
+        <SidebarSection isOpen={isOpen} title='Tilsynsobjekt'>
             {tilsynFormProperties.open === false && (
                 <div className={styles.emptyState}>
-                    Velg et tilsynsobjekt på kartet for å redigere, eller høyreklikk på en eiendom for å opprette et nytt tilsynsobjekt.
+                    Velg et tilsynsobjekt på kartet for å vise/redigere, eller høyreklikk på en eiendom for å opprette et nytt tilsynsobjekt.
                 </div>
             )}
             {tilsynFormProperties.open === true && (

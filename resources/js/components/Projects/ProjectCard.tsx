@@ -1,5 +1,7 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
 import { TilsynObject } from '@/types';
+import { router } from '@inertiajs/react';
+import { Trash } from 'lucide-react';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import Heading from '../ui/Heading';
 import styles from './ProjectCard.module.css';
@@ -13,7 +15,7 @@ type ProjectCardProps = {
 const ProjectCard = ({ id, title, objects }: ProjectCardProps) => {
     const noObjects = objects.length;
     const noFinished = objects.filter((obj) => obj.status === 'F').length;
-    const finishedPercentage = noObjects ? noFinished / noObjects * 100 : 0;
+    const finishedPercentage = noObjects ? (noFinished / noObjects) * 100 : 0;
 
     const objectsData = TILSYN_STATUS.map((status) => ({
         status: status.value,
@@ -22,10 +24,19 @@ const ProjectCard = ({ id, title, objects }: ProjectCardProps) => {
         value: objects.filter((obj) => obj.status === status.value).length,
     }));
 
+    const handleDeleteProject = () => {
+        if (confirm(`Er du sikker på at du vil slette prosjektet med id ${id}? Det kan ikke angres.`)) {
+            router.delete(route('project.destroy', id), {
+                preserveScroll: true,
+            });
+        }
+    };
+
     return (
         <li className={styles.projectCard}>
             <div className={styles.projectHeader}>
                 <Heading level={3}>{`${id} - ${title}`}</Heading>
+                <Trash size={24} className={styles.deleteButton} onClick={handleDeleteProject} />
             </div>
             <div className={styles.projectData}>
                 <p>{`Antall tilsynsobjekter: ${noObjects}`}</p>

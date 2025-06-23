@@ -27,6 +27,10 @@ export interface SharedData {
     quote: { message: string; author: string };
     auth: Auth;
     ziggy: Config & { location: string };
+    flash: {
+        success?: string;
+        error?: string;
+    }
     [key: string]: unknown;
 }
 
@@ -42,7 +46,7 @@ export interface User {
 }
 
 export interface TilsynObject {
-    id?: number;
+    id: number;
     updated_at: string;
     gnr: string;
     bnr: string;

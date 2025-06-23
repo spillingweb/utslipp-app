@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TilsynObjectController;
@@ -12,11 +13,10 @@ Route::redirect('/', 'login');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [MapController::class, 'index'])->name('map');
-
-    Route::get('/frister', [TilsynObjectController::class, 'index'])->name('deadlines');
 });
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/projects.php';
+require __DIR__ . '/tilsynObjects.php';
