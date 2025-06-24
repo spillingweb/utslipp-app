@@ -1,7 +1,7 @@
 import InputError from '@/components/InputError';
 import Button from '@/components/ui/Button';
 import FormCard from '@/components/ui/FormCard';
-import {Input} from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Radio from '@/components/ui/Radio';
 import AppLayout from '@/layouts/AppLayout';
 import { Head, router, useForm } from '@inertiajs/react';
@@ -23,7 +23,7 @@ export const ROLE_RADIO_OPTIONS = [
 ];
 
 const CreateUser = () => {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
+    const { data, setData, post, processing, errors, reset, cancel } = useForm<Required<RegisterForm>>({
         name: '',
         email: '',
         password: '',
@@ -42,6 +42,12 @@ const CreateUser = () => {
         if (data.role !== roleName) {
             setData('role', roleName);
         }
+    };
+
+    const handleCancel = () => {
+        reset();
+        cancel();
+        router.get(route('admin'));
     };
 
     return (
@@ -126,7 +132,7 @@ const CreateUser = () => {
                     <Button type="submit" tabIndex={5}>
                         Opprett bruker
                     </Button>
-                    <Button variant="secondary" type="reset" onClick={() => router.get(route('admin'))} tabIndex={4}>
+                    <Button variant="secondary" type="reset" onClick={() => handleCancel()} tabIndex={4}>
                         Avbryt
                     </Button>
                 </div>

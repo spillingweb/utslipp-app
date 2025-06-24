@@ -1,8 +1,9 @@
 import { AddressData, SharedData, TilsynObject } from '@/types';
-import { usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { createContext, useState } from 'react';
 
-const initialData: TilsynObject = {
+const initialValues: TilsynObject = {
+    id: '',
     updated_at: '',
     gnr: '',
     bnr: '',
@@ -14,7 +15,7 @@ const initialData: TilsynObject = {
     saksnr: '',
     kommentar: '',
     frist: '',
-    saksbehandler: '',
+    saksbeh: '',
     endret_av: '',
     svarskjema: '',
     komtek: '',
@@ -25,8 +26,8 @@ const initialData: TilsynObject = {
 };
 
 type TilsynFormContextType = {
-    tilsynFormData: TilsynObject;
-    setTilsynFormData: React.Dispatch<React.SetStateAction<TilsynObject>>;
+    data: TilsynObject;
+    setData: any;
     tilsynFormProperties: {
         open: boolean;
         disabled: boolean;
@@ -38,21 +39,29 @@ type TilsynFormContextType = {
         }>
     >;
     startNewTilsyn: (address: AddressData, zone: number) => void;
+    processing: boolean;
+    storeTilsynObject: () => void;
+    updateTilsynObject: () => void;
+    cancel: () => void;
 };
 
 const TilsynFormContext = createContext<TilsynFormContextType>({
-    tilsynFormData: initialData,
-    setTilsynFormData: () => {},
+    data: initialValues,
+    setData: () => {},
     tilsynFormProperties: {
         open: false,
         disabled: true,
     },
     setTilsynFormProperties: () => {},
     startNewTilsyn: () => {},
+    processing: false,
+    storeTilsynObject: () => {},
+    updateTilsynObject: () => {},
+    cancel: () => {},
 });
 
 const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
-    const [tilsynFormData, setTilsynFormData] = useState<TilsynObject>(initialData);
+    const { data, setData, reset, processing, post, put, cancel } = useForm<TilsynObject>(initialValues);
     const [tilsynFormProperties, setTilsynFormProperties] = useState({
         open: false,
         disabled: true,
@@ -61,21 +70,25 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
     const { auth } = usePage<SharedData>().props;
 
     function startNewTilsyn(address: AddressData, zone: number) {
+        reset(); // Reset form data before starting a new tilsyn
+
+        // Set initial values based on the provided address and zone
         const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst } = address;
 
-        setTilsynFormData({
+        setData({
+            id: '',
             updated_at: '',
             gnr: gnr,
             bnr: bnr,
             fnr: fnr,
             adresse: adressetekst,
-            bygning: '',
             sone: zone.toString(),
-            status: 'T',
+            bygning: 'B', // Default value for building type
+            status: 'T', // Default status for new tilsyn object
             saksnr: '',
             kommentar: '',
             frist: '',
-            saksbehandler: auth.user.name,
+            saksbeh: auth.user.name,
             endret_av: auth.user.name,
             svarskjema: '',
             komtek: '',
@@ -91,12 +104,41 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
         });
     }
 
+    const storeTilsynObject = () => {
+        console.log(data);
+        post(route('map.store'), {
+            onError: (errors) => {
+                console.error('Error storing tilsyn object:', errors);
+            },
+            onSuccess: () => {
+                setTilsynFormProperties({ open: false, disabled: true });
+                reset(); // Reset form data after successful submission
+            },
+        });
+    };
+
+    const updateTilsynObject = () => {
+        console.log(data);
+        put(route('map.update', data.id), {
+            onError: (errors) => {
+                console.error('Error updating tilsyn object:', errors);
+            },
+            onSuccess: () => {
+                setTilsynFormProperties({ open: false, disabled: true });
+            },
+        });
+    };
+
     const ctxValue = {
-        tilsynFormData,
-        setTilsynFormData,
+        data,
+        setData,
         tilsynFormProperties,
         setTilsynFormProperties,
         startNewTilsyn,
+        processing,
+        storeTilsynObject,
+        updateTilsynObject,
+        cancel,
     };
 
     return <TilsynFormContext value={ctxValue}>{children}</TilsynFormContext>;

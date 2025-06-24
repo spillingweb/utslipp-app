@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTilsynObjectRequest;
 use App\Models\Project;
 use App\Models\Tilsyn_object;
 use App\Models\User;
@@ -29,5 +30,34 @@ class MapController extends Controller
         return Inertia::render('Map', [
             'tilsynObjectsData' => $tilsynObjectsData[0]->jsonb_build_object,
         ]);
+    }
+
+    public function store(StoreTilsynObjectRequest $request)
+    {
+        dd($request->all());
+
+        // Validate and store the Tilsyn_object
+        $tilsynObject = Tilsyn_object::create($request->validated());
+
+        return redirect()->route('map')
+            ->with('success', 'Tilsynsobjektet ble opprettet.');
+    }
+
+
+    public function update(StoreTilsynObjectRequest $request, Tilsyn_object $tilsynObject)
+    {
+        dd($tilsynObject);
+        $tilsynObject->update($request->validated());
+
+        return redirect()->route('map')
+            ->with('success', 'Tilsynsobjektet ble oppdatert.');
+    }
+
+    public function destroy(Tilsyn_object $tilsynObject)
+    {
+        $tilsynObject->delete();
+
+        return redirect()->route('map')
+            ->with('success', 'Tilsynsobjektet ble slettet.');
     }
 }

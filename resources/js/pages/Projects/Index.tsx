@@ -22,7 +22,7 @@ const Index = ({ projects }: { projects: Project[] }) => {
             <ul className={styles.projectsList}>
                 <CreateProject />
                 {projects.map((project) => (
-                    <ProjectCard key={project.id} id={project.id} title={project.name} objects={project.tilsyn_objects} />
+                    <ProjectCard key={project.id} project={project} />
                 ))}
             </ul>
         </AppLayout>

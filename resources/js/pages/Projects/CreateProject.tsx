@@ -20,7 +20,8 @@ const CreateProject = () => {
     const handleSubmit: React.FormEventHandler = (e) => {
         e.preventDefault();
         post(route('project.store'), {
-            onSuccess: () => reset(),});
+            onSuccess: () => reset(),
+        });
     };
 
     return (
@@ -29,7 +30,7 @@ const CreateProject = () => {
                 Opprett nytt prosjekt
             </Heading>
             <Form onSubmit={handleSubmit}>
-                <fieldset className={styles.input}>
+                <fieldset className={`${styles.input} ${errors.number ? styles.error : ''}`}>
                     <label htmlFor="number">Prosjektnummer</label>
                     <Input
                         id="number"
@@ -41,20 +42,19 @@ const CreateProject = () => {
                         value={data.number}
                         onChange={(e) => setData('number', e.target.value)}
                     />
-                    <InputError message={errors.number} />
+                    <InputError message={errors.number && 'Nummeret er allerede i bruk'} />
                 </fieldset>
-                <fieldset className={styles.input}>
+                <fieldset className={`${styles.input} ${errors.number ? styles.error : ''}`}>
                     <label htmlFor="name">Navn på prosjektet</label>
                     <Input
                         id="name"
                         type="text"
-                        required
                         tabIndex={0}
                         autoComplete="name"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                     />
-                    <InputError message={errors.name} />
+                    <InputError message={errors.name && 'Vennligst oppgi et prosjektnavn'} />
                 </fieldset>
                 <Button type="submit" tabIndex={0} disabled={processing}>
                     Opprett prosjekt

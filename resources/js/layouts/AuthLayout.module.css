@@ -2,4 +2,7 @@
     height: 100vh;
     box-sizing: border-box;
     overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
 }

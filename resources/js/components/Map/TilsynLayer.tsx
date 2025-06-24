@@ -13,12 +13,12 @@ type TilsynLayerProps = {
 };
 
 const TilsynLayer = ({ features, setSelectedPoint, setSidebarTabOpen }: TilsynLayerProps) => {
-    const { setTilsynFormData, setTilsynFormProperties } = use(TilsynFormContext);
+    const { setData, setTilsynFormProperties } = use(TilsynFormContext);
     const map = useMap();
 
     const handleTilsynClick = (e: LeafletMouseEvent, feature: GeoJSON.Feature) => {
         setSidebarTabOpen('tilsyn');
-        setTilsynFormData(feature.properties as TilsynObject);
+        setData(feature.properties as TilsynObject);
         setTilsynFormProperties({
             open: true,
             disabled: true,

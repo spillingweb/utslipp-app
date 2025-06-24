@@ -46,7 +46,7 @@ export interface User {
 }
 
 export interface TilsynObject {
-    id: number;
+    id: string;
     updated_at: string;
     gnr: string;
     bnr: string;
@@ -58,7 +58,7 @@ export interface TilsynObject {
     saksnr: string;
     kommentar: string;
     frist: string;
-    saksbehandler: string;
+    saksbeh: string;
     endret_av: string;
     svarskjema: string;
     komtek: string;
@@ -66,6 +66,7 @@ export interface TilsynObject {
     arkiv: string;
     hjemmel: string;
     project_id: string;
+    [key: string]: any; // This allows for additional properties...
 };
 
 interface AddressData {
