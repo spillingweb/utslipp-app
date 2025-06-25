@@ -32,7 +32,7 @@ return new class extends Migration
             $table->text('kontroll')->nullable();
             $table->text('arkiv')->nullable();
             $table->string('hjemmel', 50)->nullable();
-            $table->integer('project_id');
+            $table->integer('project_id')->nullable();
         });
     }
 

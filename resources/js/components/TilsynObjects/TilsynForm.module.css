@@ -1,10 +1,10 @@
 .heading {
-    text-align: center;
+    text-align: right;
 }
 
 .formGrid {
     display: grid;
-    grid-template-columns: 30% 50%;
+    grid-template-columns: 25% 60%;
     gap: 0.6rem;
     align-items: center;
 
@@ -17,12 +17,15 @@
         border: none;
         background-color: transparent;
     }
+
+    select {
+        text-overflow: ellipsis;
+    }
 }
 
 .subtitle {
     margin: 0;
     padding: 0;
-    text-align: center;
     font-style: italic;
 }
 

@@ -65,7 +65,7 @@ const Map = ({ tilsynObjectsData }: MapProps) => {
                 <LayersControlConfig position="topright" />
                 <TilsynFormProvider>
                     {tilsynObjects && (
-                        <TilsynLayer key={tilsynObjects.features.length} features={tilsynObjects} setSelectedPoint={setSelectedPoint} setSidebarTabOpen={setSidebarTabOpen} />
+                        <TilsynLayer features={tilsynObjects} setSelectedPoint={setSelectedPoint} setSidebarTabOpen={setSidebarTabOpen} />
                     )}
                     {selectedPoint && (
                         <SelectCircle selectedPoint={selectedPoint} address={toolTip ? toolTip : undefined} setSidebarTabOpen={setSidebarTabOpen} />

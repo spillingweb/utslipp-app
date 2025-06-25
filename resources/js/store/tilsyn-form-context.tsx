@@ -3,6 +3,8 @@ import { useForm, usePage } from '@inertiajs/react';
 import { createContext, useState } from 'react';
 
 const initialValues: TilsynObject = {
+    lat: 0,
+    lng: 0,
     id: '',
     updated_at: '',
     gnr: '',
@@ -73,10 +75,11 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
         reset(); // Reset form data before starting a new tilsyn
 
         // Set initial values based on the provided address and zone
-        const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst } = address;
+        const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst, representasjonspunkt } = address;
 
         setData({
-            id: '',
+            lat: representasjonspunkt.lat,
+            lng: representasjonspunkt.lon,
             updated_at: '',
             gnr: gnr,
             bnr: bnr,
@@ -105,7 +108,6 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const storeTilsynObject = () => {
-        console.log(data);
         post(route('map.store'), {
             onError: (errors) => {
                 console.error('Error storing tilsyn object:', errors);
@@ -118,13 +120,12 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const updateTilsynObject = () => {
-        console.log(data);
         put(route('map.update', data.id), {
             onError: (errors) => {
                 console.error('Error updating tilsyn object:', errors);
             },
             onSuccess: () => {
-                setTilsynFormProperties({ open: false, disabled: true });
+                setTilsynFormProperties({ open: true, disabled: true });
             },
         });
     };

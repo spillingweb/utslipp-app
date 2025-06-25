@@ -12,8 +12,10 @@ type Project = {
     tilsyn_objects: TilsynObject[];
 };
 
-const Index = ({ projects }: { projects: Project[] }) => {
+const Index = ({ projects, noProjects }: { projects: Project[]; noProjects: TilsynObject[] }) => {
     const { flash } = usePage<{ flash: { success: string | null } }>().props;
+
+    console.log('No Projects:', noProjects);
 
     return (
         <AppLayout>
@@ -22,8 +24,9 @@ const Index = ({ projects }: { projects: Project[] }) => {
             <ul className={styles.projectsList}>
                 <CreateProject />
                 {projects.map((project) => (
-                    <ProjectCard key={project.id} project={project} />
+                    <ProjectCard key={project.id} id={project.id} name={project.name} number={project.number} objects={project.tilsyn_objects} />
                 ))}
+                <ProjectCard name='Uten Prosjekt' objects={noProjects} />
             </ul>
         </AppLayout>
     );

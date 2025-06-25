@@ -46,7 +46,7 @@ export interface User {
 }
 
 export interface TilsynObject {
-    id: string;
+    id?: string;
     updated_at: string;
     gnr: string;
     bnr: string;

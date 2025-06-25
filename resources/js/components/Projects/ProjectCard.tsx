@@ -6,21 +6,17 @@ import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import Heading from '../ui/Heading';
 import styles from './ProjectCard.module.css';
 
-const ProjectCard = ({
-    project,
-}: {
-    project: {
-        id: number;
-        number: number;
-        name: string;
-        tilsyn_objects: TilsynObject[];
-    };
-}) => {
-    const { id, number, name, tilsyn_objects: objects } = project;
+type ProjectCardProps = {
+    id?: number;
+    number?: number;
+    name: string;
+    objects: TilsynObject[];
+};
 
+const ProjectCard = ({ id, number, name, objects }: ProjectCardProps) => {
     const noObjects = objects.length;
     const noFinished = objects.filter((obj) => obj.status === 'F').length;
-    const finishedPercentage = noObjects ? (noFinished / noObjects) * 100 : 0;
+    const finishedPercentage = noObjects ? Math.round((noFinished / noObjects) * 100) : 0;
 
     const objectsData = TILSYN_STATUS.map((status) => ({
         status: status.value,
@@ -37,17 +33,19 @@ const ProjectCard = ({
         }
     };
 
+    const title = id ? `${number} - ${name}` : 'Uten Prosjekt';
+
     return (
         <li className={styles.projectCard}>
             <div className={styles.projectHeader}>
-                <Heading level={3}>{`${number} - ${name}`}</Heading>
-                <button className={styles.deleteButton} title='Slett prosjekt'>
+                <Heading level={3}>{title}</Heading>
+                {id &&<button className={styles.deleteButton} title="Slett prosjekt">
                     <Trash2 size={24} onClick={handleDeleteProject} />
-                </button>
+                </button>}
             </div>
             <div className={styles.projectData}>
                 <p>{`Antall tilsynsobjekter: ${noObjects}`}</p>
-                <p>{`Antall ferdigstilte: ${noFinished} (${finishedPercentage}%)`}</p>
+                <p>{`Antall ferdigstilte: ${noFinished} (${finishedPercentage} %)`}</p>
                 <figure className={styles.pieChart}>
                     <PieChart width={200} height={200} className={styles.pieChart}>
                         <Pie data={objectsData} dataKey="value" cx="50%" cy="50%" outerRadius={80}>
@@ -58,8 +56,8 @@ const ProjectCard = ({
                         <Tooltip />
                     </PieChart>
                 </figure>
-                <a href={`#table${id}`}>Se tabell</a>
-                <a href={`#map${id}`}>Vis i kart</a>
+                <a href="#">Se tabell</a>
+                <a href="#">Vis i kart</a>
             </div>
         </li>
     );

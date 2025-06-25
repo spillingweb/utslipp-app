@@ -16,9 +16,11 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with('tilsyn_objects')->orderBy('number', 'DESC')->get();
+        $noProjects = Tilsyn_object::where('project_id', null)->get();
 
         return Inertia::render('Projects/Index', [
-            'projects' => $projects
+            'projects' => $projects,
+            'noProjects' => $noProjects
         ]);
     }
 
@@ -33,6 +35,8 @@ class ProjectController extends Controller
     public function destroy(Project $project): RedirectResponse
     {
         $project->delete();
+
+        Tilsyn_object::where('project_id', $project->id)->update(['project_id' => null]);
 
         return to_route('projects')
             ->with('success', 'Prosjektet ble slettet.');

@@ -66,6 +66,7 @@ const SelectCircle = ({ selectedPoint, address, setSidebarTabOpen }: SelectCircl
             center={[selectedPoint.lat, selectedPoint.lng]}
             radius={20}
             pathOptions={{ color: 'yellow', weight: 10, opacity: 0.5, fillOpacity: 0 }}
+            interactive={false}
         >
             {toolTip}
         </Circle>

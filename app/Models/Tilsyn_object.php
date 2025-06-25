@@ -25,7 +25,7 @@ class Tilsyn_object extends Model
         'kontroll',
         'arkiv',
         'hjemmel',
-        'prosjekt'
+        'project_id'
     ];
 
     public function projects()
