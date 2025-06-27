@@ -1,7 +1,7 @@
 import { returnTilsynMarker } from '@/lib/layerStyles';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { TilsynObject } from '@/types';
-import { GeoJSON as GeoJSONtype, LatLngLiteral, LeafletMouseEvent } from 'leaflet';
+import { GeoJSON as GeoJSONtype, LatLngLiteral } from 'leaflet';
 import { use, useEffect, useRef } from 'react';
 import { GeoJSON, useMap } from 'react-leaflet';
 import { SidebarTab } from '../Sidebar/Sidebar';

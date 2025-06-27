@@ -30,7 +30,7 @@ const SearchLayer = ({ addressArray }: SearchLayerProps) => {
                 const { lat, lon } = representasjonspunkt;
 
                 return (
-                    <Marker key={index} position={[lat, lon]} eventHandlers={{ click: () => console.log('Marker clicked!') }}>
+                    <Marker key={index} position={[lat, lon]}>
                         <Tooltip>{`${gnr}/${bnr}${fnr ? `/${fnr}` : ''} - ${adressetekst}`}</Tooltip>
                     </Marker>
                 );

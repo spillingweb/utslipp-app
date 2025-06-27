@@ -1,24 +1,25 @@
 import { TilsynObject } from '@/types';
-import Table from '../ui/Table';
-import styles from './TilsynObjectsTable.module.css';
+import { router } from '@inertiajs/react';
 import TextLink from '../TextLink';
 import ButtonLink from '../ui/ButtonLink';
-import { router } from '@inertiajs/react';
+import Table from '../ui/Table';
+import styles from './TilsynObjectsTable.module.css';
 
 const TilsynObjectsTable = ({ tilsynObjects }: { tilsynObjects: TilsynObject[] }) => {
-   const handleDeleteTilsynsObject = (id: number) => {
-          if (confirm(`Er du sikker på at du vil slette tilsynsobjektet med id ${id}? Det kan ikke angres.`)) {
-              router.delete(route('tilsyn_object.destroy', id), {
-                  preserveScroll: true,
-              });
-          }
-      };
+    const handleDeleteTilsynsObject = (id: number) => {
+        if (confirm(`Er du sikker på at du vil slette tilsynsobjektet med id ${id}? Det kan ikke angres.`)) {
+            router.delete(route('tilsyn_object.destroy', id), {
+                preserveScroll: true,
+            });
+        }
+    };
+
     return (
         <Table headers={['Frist', 'Saksbehandler', 'Gnr', 'Bnr', 'Adresse', 'Status', 'Kommentar', '']}>
             {tilsynObjects.map((object) => (
                 <tr key={object.id}>
                     <td>{object.frist}</td>
-                    <td>{object.saksbehandler}</td>
+                    <td>{object.saksbeh}</td>
                     <td>{object.gnr}</td>
                     <td>{object.bnr}</td>
                     <td>{object.adresse}</td>

@@ -35,6 +35,7 @@ class StoreTilsynObjectRequest extends FormRequest
             'saksbeh' => 'nullable|string|max:50',
             'endret_av' => 'nullable|string|max:50',
             'svarskjema' => 'nullable|string',
+            'komtek' => 'nullable|string',
             'slam' => 'nullable|string',
             'kontroll' => 'nullable|string',
             'arkiv' => 'nullable|string',

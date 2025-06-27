@@ -1,9 +1,7 @@
-import { Role } from "@/pages/Admin/Index";
+import { Role } from "@/types";
 import Table from "../ui/Table";
 
 const AccessGroupTable = ({roles}: {roles: Role[]}) => {
-
-  console.log(roles);
   
   return (
     <Table headers={["Navn", "Beskrivelse", "", "", ""]}>

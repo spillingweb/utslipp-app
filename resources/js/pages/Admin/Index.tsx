@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Heading from '../../components/ui/Heading';
 import styles from './Index.module.css';
 import { Data, Role, User } from '@/types';
+import Flash from '@/components/ui/Flash';
 
 const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
     const [activeTab, setActiveTab] = useState('users');
@@ -24,8 +25,7 @@ const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
                 <Heading level={2}>Admin - Utslipp Ringerike</Heading>
                 <Button onClick={handleCreateUser}>+ Legg til bruker</Button>
             </div>
-            {flash.success && <div className='flash success'>{flash.success}</div>}
-            {flash.error && <div className='flash error'>{flash.error}</div>}
+            <Flash message={flash} />
             <ul className={styles.tabs}>
                 <li>
                     <button className={`${styles.tab} ${activeTab === 'users' ? styles.activeTab : ''}`} onClick={() => setActiveTab('users')}>

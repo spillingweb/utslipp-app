@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
 use App\Models\Role;
@@ -12,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -65,14 +67,20 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id): RedirectResponse
+    public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-        ]);
+        dd($user);
 
-        $user = User::findOrFail($id);
+        $user->validate([
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                Rule::unique(User::class)->ignore($user->id),
+            ]        ]);
 
         $user->update([
             'name' => $request->name,

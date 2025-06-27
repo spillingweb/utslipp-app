@@ -1,0 +1,46 @@
+.flash {
+    z-index: 1000;
+    display: block;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 20rem;
+    padding: 1.5rem 2rem 1.5rem 4rem;
+    background-color: var(--primary-foreground);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateY(-100%);
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.flashIcon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3rem;
+    height: 100%;
+    color: var(--primary-foreground);
+    
+    display: flex;
+    justify-content: center;
+    
+    &.success {
+        background-color: var(--success);
+    }
+
+    &.error {
+        background-color: var(--destructive);
+    }
+
+    .icon {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%); 
+    }
+}

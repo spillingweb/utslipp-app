@@ -4,17 +4,18 @@ import LayersControlConfig from '@/components/Map/LayersControlConfig';
 import SelectCircle from '@/components/Map/SelectCircle';
 import TilsynLayer from '@/components/Map/TilsynLayer';
 import Search from '@/components/Search/Search';
-import TilsynForm from '@/components/TilsynObjects/TilsynForm';
 import Sidebar, { SidebarTab } from '@/components/Sidebar/Sidebar';
+import TilsynForm from '@/components/TilsynObjects/TilsynForm';
 import AppLayout from '@/layouts/AppLayout';
 import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
 import { TilsynFormProvider } from '@/store/tilsyn-form-context';
 import { AddressData, User } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { LatLngLiteral } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
+import Flash from '@/components/ui/Flash';
 
 type MapProps = {
     tilsynObjectsData: string;
@@ -30,6 +31,8 @@ const Map = ({ tilsynObjectsData }: MapProps) => {
     const [tilsynObjects, setTilsynObjects] = useState<GeoJSON.FeatureCollection | null>(null);
     const [selectedPoint, setSelectedPoint] = useState<LatLngLiteral | null>(null);
     const [toolTip, setToolTip] = useState<AddressData | null>(null);
+
+    const { flash } = usePage<{ flash: { success: string | null; error: string | null } }>().props;
 
     // Parse the tilsynObjectsData and set it to state
     useEffect(() => {
@@ -49,6 +52,7 @@ const Map = ({ tilsynObjectsData }: MapProps) => {
                     crossOrigin=""
                 />
             </Head>
+            <Flash message={flash} />
             <MapContainer
                 center={[60.34, 10]}
                 zoom={10}

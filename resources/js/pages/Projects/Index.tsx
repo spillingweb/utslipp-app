@@ -1,4 +1,5 @@
 import ProjectCard from '@/components/Projects/ProjectCard';
+import Flash from '@/components/ui/Flash';
 import AppLayout from '@/layouts/AppLayout';
 import { TilsynObject } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
@@ -13,20 +14,17 @@ type Project = {
 };
 
 const Index = ({ projects, noProjects }: { projects: Project[]; noProjects: TilsynObject[] }) => {
-    const { flash } = usePage<{ flash: { success: string | null } }>().props;
-
-    console.log('No Projects:', noProjects);
-
+    const { flash } = usePage<{ flash: { success: string | null; error: string | null } }>().props;
     return (
         <AppLayout>
             <Head title="Prosjekter" />
-            {flash.success && <div className='flash success'>{flash.success}</div>}
+            <Flash message={flash} />
             <ul className={styles.projectsList}>
                 <CreateProject />
                 {projects.map((project) => (
                     <ProjectCard key={project.id} id={project.id} name={project.name} number={project.number} objects={project.tilsyn_objects} />
                 ))}
-                <ProjectCard name='Uten Prosjekt' objects={noProjects} />
+                <ProjectCard name="Uten Prosjekt" objects={noProjects} />
             </ul>
         </AppLayout>
     );

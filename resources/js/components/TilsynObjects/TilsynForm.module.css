@@ -2,37 +2,6 @@
     text-align: right;
 }
 
-.formGrid {
-    display: grid;
-    grid-template-columns: 25% 60%;
-    gap: 0.6rem;
-    align-items: center;
-
-    label {
-        font-weight: bold;
-    }
-
-    &:disabled > *,
-    input:disabled {
-        border: none;
-        background-color: transparent;
-    }
-
-    select {
-        text-overflow: ellipsis;
-    }
-}
-
-.subtitle {
-    margin: 0;
-    padding: 0;
-    font-style: italic;
-}
-
-.grid2columns {
-    grid-column: 1 / -1;
-}
-
 .cta {
     display: flex;
     gap: 0.5rem;

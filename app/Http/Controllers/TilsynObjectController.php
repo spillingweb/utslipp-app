@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTilsynObjectRequest;
 use App\Http\Resources\TilsynObjectResource;
 use App\Models\Tilsyn_object;
 use DB;
@@ -27,17 +28,9 @@ class TilsynObjectController extends Controller
             'tilsynObject' => TilsynObjectResource::make($tilsynObject),
         ]);
     }
-    public function update(Request $request, $id)
+    public function update(StoreTilsynObjectRequest $request, Tilsyn_object $tilsynObject)
     {
-        dd($request->all());
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'project_id' => 'required|exists:projects,id',
-        ]);
-
-        $tilsynObject = Tilsyn_object::findOrFail($id);
-        $tilsynObject->update($data);
+        $tilsynObject->update($request->validated());
 
         return redirect()->route('tilsyn_objects')
             ->with('success', 'Tilsynsobjektet ble oppdatert.');

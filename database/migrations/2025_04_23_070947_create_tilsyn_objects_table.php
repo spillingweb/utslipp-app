@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tilsyn_objects', function (Blueprint $table) {
-            $table->id();
+            $table->id()->from('8');
             $table->timestamps();
             $table->geometry('geom', 'point');
             $table->integer('gnr');
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('saksbeh', 50)->nullable();
             $table->string('endret_av', 50)->nullable();
             $table->text('svarskjema')->nullable();
+            $table->text('komtek')->nullable();
             $table->text('slam')->nullable();
             $table->text('kontroll')->nullable();
             $table->text('arkiv')->nullable();

@@ -34,9 +34,9 @@ class MapController extends Controller
 
     public function store(StoreTilsynObjectRequest $request)
     {
-        // Validate and store the Tilsyn_object
         $tilsynObject = Tilsyn_object::create(
-            ['geom' => DB::raw("ST_SetSRID(ST_GeomFromGeoJSON('{\"type\": \"Point\", \"coordinates\": [$request->lng, $request->lat]}'), 4326)"),] + $request->validated()
+            ['geom' => DB::raw("ST_SetSRID(ST_GeomFromGeoJSON('{\"type\": \"Point\", \"coordinates\": [$request->lng, $request->lat]}'), 4326)"),] 
+            + $request->validated()
         );
 
         return to_route('map')
@@ -46,7 +46,6 @@ class MapController extends Controller
 
     public function update(StoreTilsynObjectRequest $request, Tilsyn_object $tilsynObject)
     {
-        // dd($tilsynObject);
         $tilsynObject->update($request->validated());
 
         return to_route('map')

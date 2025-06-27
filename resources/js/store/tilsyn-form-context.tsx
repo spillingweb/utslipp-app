@@ -42,9 +42,10 @@ type TilsynFormContextType = {
     >;
     startNewTilsyn: (address: AddressData, zone: number) => void;
     processing: boolean;
+    cancel: () => void;
     storeTilsynObject: () => void;
     updateTilsynObject: () => void;
-    cancel: () => void;
+    deleteTilsynObject: () => void;
 };
 
 const TilsynFormContext = createContext<TilsynFormContextType>({
@@ -57,13 +58,14 @@ const TilsynFormContext = createContext<TilsynFormContextType>({
     setTilsynFormProperties: () => {},
     startNewTilsyn: () => {},
     processing: false,
+    cancel: () => {},
     storeTilsynObject: () => {},
     updateTilsynObject: () => {},
-    cancel: () => {},
+    deleteTilsynObject: () => {},
 });
 
 const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
-    const { data, setData, reset, processing, post, put, cancel } = useForm<TilsynObject>(initialValues);
+    const { data, setData, reset, processing, post, put, delete: destroy, cancel } = useForm<TilsynObject>(initialValues);
     const [tilsynFormProperties, setTilsynFormProperties] = useState({
         open: false,
         disabled: true,
@@ -130,6 +132,15 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
         });
     };
 
+    const deleteTilsynObject = () => {
+        destroy(route('map.destroy', data.id), {
+            onSuccess: () => {
+                setTilsynFormProperties({ open: false, disabled: true });
+                reset(); // Reset form data after deletion
+            },
+        });
+    };
+
     const ctxValue = {
         data,
         setData,
@@ -137,9 +148,10 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
         setTilsynFormProperties,
         startNewTilsyn,
         processing,
+        cancel,
         storeTilsynObject,
         updateTilsynObject,
-        cancel,
+        deleteTilsynObject,
     };
 
     return <TilsynFormContext value={ctxValue}>{children}</TilsynFormContext>;

@@ -17,7 +17,7 @@ type RegisterForm = {
 };
 
 const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
-    const { data, setData, post, processing, errors } = useForm<Required<RegisterForm>>({
+    const { data, setData, put, processing, errors, cancel } = useForm<Required<RegisterForm>>({
         name: user.data.name,
         email: user.data.email,
         role: user.data.role as string,
@@ -25,13 +25,16 @@ const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
 
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('user.edit'));
+        put(route('user.update', user.data.id), {
+            onError: (errors) => {
+                console.error('Error updating user:', errors);
+            }
+        });
     };
 
-    const handleRoleChange = (roleName: string) => {
-        if (data.role !== roleName) {
-            setData('role', roleName);
-        }
+    const handleCancel = () => {
+        cancel();
+        router.get(route('admin'));
     };
 
     return (
@@ -76,7 +79,7 @@ const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
                                 name="roles"
                                 id={option.value}
                                 value={option.value}
-                                onChange={() => handleRoleChange(option.value)}
+                                onChange={(e) => setData('role', e.target.value)}
                                 checked={data.role === option.value}
                             />
                         ))}
@@ -84,10 +87,10 @@ const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
                 </fieldset>
 
                 <div className={styles.cta}>
-                    <Button type="submit" tabIndex={5} disabled={processing}>
+                    <Button type="submit" disabled={processing}>
                         Oppdater bruker
                     </Button>
-                    <Button variant="secondary" tabIndex={4} disabled={processing} onClick={() => router.get(route('admin'))}>
+                    <Button type='button' variant="secondary" disabled={processing} onClick={handleCancel}>
                         Avbryt
                     </Button>
                 </div>
