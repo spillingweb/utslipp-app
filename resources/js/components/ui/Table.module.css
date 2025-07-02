@@ -8,7 +8,7 @@
     th {
         border-bottom: 1px solid #ddd;
         padding: 8px;
-        min-width: 7rem;
+        white-space: nowrap;
     }
 }
 

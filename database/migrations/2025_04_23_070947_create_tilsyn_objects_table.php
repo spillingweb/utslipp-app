@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tilsyn_objects', function (Blueprint $table) {
-            $table->id()->from('8');
+            $table->id();
             $table->timestamps();
             $table->geometry('geom', 'point');
             $table->integer('gnr');

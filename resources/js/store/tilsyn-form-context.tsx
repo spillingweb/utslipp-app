@@ -27,19 +27,17 @@ const initialValues: TilsynObject = {
     project_id: '',
 };
 
+type TilsynFormProperties = {
+    open: boolean;
+    disabled: boolean;
+    mode: 'create' | 'edit';
+};
+
 type TilsynFormContextType = {
     data: TilsynObject;
-    setData: any;
-    tilsynFormProperties: {
-        open: boolean;
-        disabled: boolean;
-    };
-    setTilsynFormProperties: React.Dispatch<
-        React.SetStateAction<{
-            open: boolean;
-            disabled: boolean;
-        }>
-    >;
+    setData: (key: keyof TilsynObject, value: TilsynObject[keyof TilsynObject]) => void;
+    tilsynFormProperties: TilsynFormProperties;
+    setTilsynFormProperties: React.Dispatch<React.SetStateAction<TilsynFormProperties>>;
     startNewTilsyn: (address: AddressData, zone: number) => void;
     processing: boolean;
     cancel: () => void;
@@ -54,6 +52,7 @@ const TilsynFormContext = createContext<TilsynFormContextType>({
     tilsynFormProperties: {
         open: false,
         disabled: true,
+        mode: 'create',
     },
     setTilsynFormProperties: () => {},
     startNewTilsyn: () => {},
@@ -66,9 +65,10 @@ const TilsynFormContext = createContext<TilsynFormContextType>({
 
 const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
     const { data, setData, reset, processing, post, put, delete: destroy, cancel } = useForm<TilsynObject>(initialValues);
-    const [tilsynFormProperties, setTilsynFormProperties] = useState({
+    const [tilsynFormProperties, setTilsynFormProperties] = useState<TilsynFormProperties>({
         open: false,
         disabled: true,
+        mode: 'create',
     });
 
     const { auth } = usePage<SharedData>().props;
@@ -106,6 +106,7 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
         setTilsynFormProperties({
             open: true,
             disabled: false,
+            mode: 'create',
         });
     }
 
@@ -115,7 +116,7 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
                 console.error('Error storing tilsyn object:', errors);
             },
             onSuccess: () => {
-                setTilsynFormProperties({ open: false, disabled: true });
+                setTilsynFormProperties({ open: false, disabled: true, mode: 'create' });
                 reset(); // Reset form data after successful submission
             },
         });
@@ -127,7 +128,7 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
                 console.error('Error updating tilsyn object:', errors);
             },
             onSuccess: () => {
-                setTilsynFormProperties({ open: true, disabled: true });
+                setTilsynFormProperties({ open: true, disabled: true, mode: 'create' });
             },
         });
     };
@@ -135,7 +136,7 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
     const deleteTilsynObject = () => {
         destroy(route('map.destroy', data.id), {
             onSuccess: () => {
-                setTilsynFormProperties({ open: false, disabled: true });
+                setTilsynFormProperties({ open: false, disabled: true, mode: 'create' });
                 reset(); // Reset form data after deletion
             },
         });

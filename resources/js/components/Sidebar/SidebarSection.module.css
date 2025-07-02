@@ -8,7 +8,8 @@
 }
 
 .sectionHeader {
-  padding: 0.5rem 1rem;
+  height: 3rem;
+  padding: 0 1rem;
   background-color: var(--primary);
   font-size: 1.2rem;
 

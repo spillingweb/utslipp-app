@@ -43,4 +43,14 @@ class StoreTilsynObjectRequest extends FormRequest
             'project_id' => 'nullable|exists:projects,id',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'status.required' => 'Status er påkrevd.',
+            'saksnr.max' => 'Saksnummer kan ikke være lengre enn 20 tegn.',
+            'frist.date' => 'Frist må være en gyldig dato.',
+            'hjemmel.max' => 'Hjemmel kan ikke være lengre enn 50 tegn.',
+        ];
+    }
 }

@@ -1,4 +1,4 @@
-import AccessGroupTable from '@/components/Admin/AccessGroupTable';
+import RolesTable from '@/components/Admin/RolesTable';
 import UserTable from '@/components/Admin/UserTable';
 import Button from '@/components/ui/Button';
 import AppLayout from '@/layouts/AppLayout';
@@ -34,11 +34,11 @@ const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
                 </li>
                 <li>
                     <button className={`${styles.tab} ${activeTab === 'access' ? styles.activeTab : ''}`} onClick={() => setActiveTab('access')}>
-                        Tilgangsgrupper
+                        Roller
                     </button>
                 </li>
             </ul>
-            {activeTab === 'users' ? <UserTable users={users.data} /> : <AccessGroupTable roles={roles.data} />}
+            {activeTab === 'users' ? <UserTable users={users.data} /> : <RolesTable roles={roles.data} />}
         </AppLayout>
     );
 };

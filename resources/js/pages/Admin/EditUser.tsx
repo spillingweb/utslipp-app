@@ -2,11 +2,9 @@ import InputError from '@/components/InputError';
 import Button from '@/components/ui/Button';
 import FormCard from '@/components/ui/FormCard';
 import {Input} from '@/components/ui/Input';
-import Radio from '@/components/ui/Radio';
 import AppLayout from '@/layouts/AppLayout';
 import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { ROLE_RADIO_OPTIONS } from './CreateUser';
 import styles from './CreateUser.module.css';
 import { Data, Role, User } from '@/types';
 
@@ -68,24 +66,6 @@ const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
                     />
                     <InputError message={errors.email} />
                 </fieldset>
-
-                <fieldset>
-                    <legend>Velg rolle for brukeren</legend>
-                    <div className={styles.radioBtns}>
-                        {ROLE_RADIO_OPTIONS.map((option) => (
-                            <Radio
-                                key={option.value}
-                                label={option.label}
-                                name="roles"
-                                id={option.value}
-                                value={option.value}
-                                onChange={(e) => setData('role', e.target.value)}
-                                checked={data.role === option.value}
-                            />
-                        ))}
-                    </div>
-                </fieldset>
-
                 <div className={styles.cta}>
                     <Button type="submit" disabled={processing}>
                         Oppdater bruker

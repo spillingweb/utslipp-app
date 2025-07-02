@@ -1,15 +1,25 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
+import { TilsynObject, User } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { Input, TextArea } from '../ui/Input';
 import Select from '../ui/Select';
 import styles from './TilsynFormFieldset.module.css';
-import { TilsynObject, User } from '@/types';
 
-const TilsynFormFieldset = ({disabled, data, setData}: {disabled: boolean; data: TilsynObject; setData: any}) => {
+const TilsynFormFieldset = ({
+    disabled,
+    data,
+    setData,
+}: {
+    disabled: boolean;
+    data: TilsynObject;
+    setData: (field: keyof TilsynObject, value: unknown) => void;
+}) => {
     const { projects, users } = usePage<{ projects: { name: string; number: number; id: number }[]; users: User[] }>().props;
 
     return (
         <fieldset className={styles.formGrid} disabled={disabled}>
+            <label htmlFor="sone">Sone</label>
+            <Input id="sone" type="string" value={data.sone || ''} readOnly />
             <label htmlFor="project_id">Prosjekt</label>
             <Select id="project_id" value={data.project_id || ''} onChange={(e) => setData('project_id', e.target.value)}>
                 <option value="">Ingen prosjekt</option>

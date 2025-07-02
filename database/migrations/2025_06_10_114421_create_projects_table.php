@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->id()->from(5);
+            $table->id();
             $table->string('name', 30)->unique();
             $table->integer('number', false, true)->unique();
         });

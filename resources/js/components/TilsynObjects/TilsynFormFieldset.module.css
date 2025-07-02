@@ -19,6 +19,14 @@
     }
 }
 
+input[readOnly] {
+    border: none;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
 .grid2columns {
     grid-column: 1 / -1;
 }

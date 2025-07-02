@@ -1,11 +1,15 @@
 .navLink {
-  display: block;
-  padding: 0.7rem;
+  height: 3rem;
+  width: 3rem;
   text-align: center;
   color: var(--foreground);
   cursor: pointer;
   border: none;
   background-color: transparent;
+/* 
+  display: flex;
+  justify-content: center;
+  align-items: center; */
 
   &:hover {
     background-color: var(--muted);

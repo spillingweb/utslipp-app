@@ -17,18 +17,18 @@ class RoleSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => Role::ROLES['Admin'],
-                'description' => 'Rolle som tillater administrering av brukere og tilgangsgrupper',
+                'description' => 'Redigering av tilsynsobjekter og administrering av brukere og roller',
             ],
             [
                 'id' => 2,
                 'name' => Role::ROLES['Edit'],
-                'description' => 'Rolle som tillater redigering av datasettet i utslippsdatabasen',
+                'description' => 'Redigering av tilsynsobjekter',
 
             ],
             [
                 'id' => 3,
                 'name' => Role::ROLES['View'],
-                'description' => 'Rolle som tillater innsyn og søk i datasettet til utslippsdatabasen',
+                'description' => 'Innsyn og søk i tilsynsobjekter',
 
             ]
         ];

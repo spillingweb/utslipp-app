@@ -35,7 +35,7 @@ const CreateProject = () => {
                     <Input
                         id="number"
                         type="number"
-                        required
+                        aria-required
                         autoFocus
                         tabIndex={0}
                         autoComplete="number"

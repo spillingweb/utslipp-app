@@ -39,7 +39,7 @@ export default function Login() {
                     <Input
                         id="email"
                         type="email"
-                        required
+                        aria-required
                         autoFocus
                         tabIndex={1}
                         autoComplete="email"
@@ -60,7 +60,7 @@ export default function Login() {
                     <Input
                         id="password"
                         type="password"
-                        required
+                        aria-required
                         tabIndex={2}
                         autoComplete="current-password"
                         value={data.password}

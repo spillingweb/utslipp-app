@@ -59,4 +59,13 @@ class MapController extends Controller
         return to_route('map')
             ->with('success', 'Tilsynsobjektet ble slettet.');
     }
+
+    // public function filterByProject(Project $project)
+    // {
+    //     $tilsynObjects = Tilsyn_object::where('project_id', $project->id)->get();
+
+    //     return Inertia::render('Map', [
+    //         'tilsynObjectsData' => $tilsynObjects,
+    //     ]);
+    // }
 }

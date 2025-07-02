@@ -1,6 +1,6 @@
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { LatLngLiteral } from 'leaflet';
-import { use, useState } from 'react';
+import { use } from 'react';
 import SidebarSection from '../Sidebar/SidebarSection';
 import Button from '../ui/Button';
 import Form from '../ui/Form';
@@ -16,18 +16,22 @@ type TilsynFormProps = {
 
 const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint }: TilsynFormProps) => {
     // Access the TilsynFormContext to get form data and properties
-    const { data, setData, tilsynFormProperties, setTilsynFormProperties, storeTilsynObject, updateTilsynObject, deleteTilsynObject, processing, cancel } = use(TilsynFormContext);
-    const { disabled, open } = tilsynFormProperties;
-    const [formMode, setFormMode] = useState<'create' | 'edit'>('create');
-
-    const handleStartEdit = () => {
-        setFormMode('edit');
-        setTilsynFormProperties({ open: true, disabled: false });
-    };
+    const {
+        data,
+        setData,
+        tilsynFormProperties,
+        setTilsynFormProperties,
+        storeTilsynObject,
+        updateTilsynObject,
+        deleteTilsynObject,
+        processing,
+        cancel,
+    } = use(TilsynFormContext);
+    const { disabled, open, mode } = tilsynFormProperties;
 
     const handleCancelTilsynForm = () => {
         cancel(); // Reset form data
-        setTilsynFormProperties({ open: false, disabled: true });
+        setTilsynFormProperties({ open: false, disabled: true, mode: 'create' }); // Reset form properties
         setSelectedPoint(null); // Reset selected point on the map
     };
 
@@ -40,16 +44,14 @@ const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint }: TilsynFormProps
 
     const handleSubmitForm = (e: React.FormEvent) => {
         e.preventDefault();
-        if (formMode === 'create') {
+        if (mode === 'create') {
             storeTilsynObject();
         } else {
-            console.log(data)
             updateTilsynObject();
-            setFormMode('create');
         }
     };
 
-    const title = open ? `${data.gnr}/${data.bnr}${data.fnr ? `/${data.fnr}` : ''} ${data.adresse} - Sone ${data.sone}` : 'Tilsynsobjekt';
+    const title = open ? `${data.gnr}/${data.bnr}${data.fnr ? `/${data.fnr}` : ''} ${data.adresse}` : 'Tilsynsobjekt';
 
     return (
         <SidebarSection isOpen={isOpen} title={title}>
@@ -57,7 +59,7 @@ const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint }: TilsynFormProps
                 <div>Velg et tilsynsobjekt på kartet for å vise/redigere, eller høyreklikk på en eiendom for å opprette et nytt tilsynsobjekt.</div>
             )}
             {open === true && (
-                <Form onSubmit={handleSubmitForm} >
+                <Form onSubmit={handleSubmitForm}>
                     <div hidden>
                         <label htmlFor="lat">Latitude</label>
                         <Input id="lat" type="number" value={selectedPoint?.lat || ''} readOnly disabled />
@@ -68,28 +70,30 @@ const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint }: TilsynFormProps
                     <TilsynFormFieldset data={data} disabled={disabled} setData={setData} />
                     {disabled && (
                         <div className={styles.cta}>
-                            <Button type='button' onClick={handleStartEdit}>Rediger</Button>
-                            <Button type='button' onClick={handleDeleteTilsynObject} variant="secondary">
+                            <Button type="button" onClick={() => setTilsynFormProperties({ open: true, disabled: false, mode: 'edit' })}>
+                                Rediger
+                            </Button>
+                            <Button type="button" onClick={handleDeleteTilsynObject} variant="secondary">
                                 Slett
                             </Button>
                         </div>
                     )}
-                    {!disabled && formMode == 'create' && (
+                    {!disabled && mode == 'create' && (
                         <div className={styles.cta}>
                             <Button type="submit" disabled={processing}>
                                 Legg til nytt tilsynsobjekt
                             </Button>
-                            <Button type='reset' variant="secondary" onClick={handleCancelTilsynForm}>
+                            <Button type="reset" variant="secondary" onClick={handleCancelTilsynForm}>
                                 Avbryt
                             </Button>
                         </div>
                     )}
-                    {!disabled && formMode == 'edit' && (
+                    {!disabled && mode == 'edit' && (
                         <div className={styles.cta}>
                             <Button type="submit" disabled={processing}>
                                 Lagre endringer
                             </Button>
-                            <Button type='reset' variant="secondary" onClick={handleCancelTilsynForm}>
+                            <Button type="reset" variant="secondary" onClick={handleCancelTilsynForm}>
                                 Avbryt
                             </Button>
                         </div>

@@ -23,4 +23,26 @@ class AdminController extends Controller
             'roles' => RoleResource::collection($roles),
         ]);
     }
+
+    public function showRole(Role $role)
+    {
+        $users = User::whereHas('roles', function ($query) use ($role) {
+            $query->where('id', $role->id);
+        })->get();
+
+        return Inertia::render('Admin/ManageRole', [
+            'role' => new RoleResource($role),
+            'users' => UserResource::collection($users),
+        ]);
+    }
+
+     public function updateRole(Request $request, Role $role) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+        ]);
+
+        $role->update($request->only('name', 'description'));
+
+        return redirect()->route('admin.role.show', $role)->with('success', 'Rollen ble oppdatert.');}
 }

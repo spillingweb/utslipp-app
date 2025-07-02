@@ -4,7 +4,7 @@ import styles from './Legend.module.css';
 
 const Legend = ({ isOpen }: { isOpen: boolean }) => {
     return (
-        <SidebarSection title="Legend" isOpen={isOpen}>
+        <SidebarSection title="Tegnforklaring" isOpen={isOpen}>
             <ul className={styles.legend}>
                 {TILSYN_STATUS.map((status) => (
                     <li key={status.value}>

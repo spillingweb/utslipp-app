@@ -21,4 +21,34 @@ class UserUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                'lowercase',
+                'max:255',
+                Rule::unique(User::class)->ignore($this->user->id),
+            ],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Vennligst oppgi et navn.',
+            'email.required' => 'Vennligst oppgi en e-postadresse.',
+            'email.email' => 'E-post må være en gyldig e-postadresse.',
+            'email.unique' => 'E-postadressen er allerede i bruk.',
+            'email.lowercase' => 'E-post må være i små bokstaver.',
+        ];
+    }
 }

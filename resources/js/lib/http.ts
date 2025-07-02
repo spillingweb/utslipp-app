@@ -1,10 +1,12 @@
+import { AddressData } from "@/types";
+
 export async function fetchAddressData(searchParams: {
   gardsnummer: string;
   bruksnummer: string;
   festenummer: string;
   adressenavn: string;
   nummer: string;
-}): Promise<any> {
+}): Promise<AddressData> {
   const url = new URL(
     "https://ws.geonorge.no/adresser/v1/sok?kommunenavn=Ringerike&treffPerSide=20&side=0&asciiKompatibel=true"
   );
@@ -25,7 +27,7 @@ export async function fetchAddressData(searchParams: {
   return await response.json();
 }
 
-export async function fetchPositionData(lat: number, lon: number): Promise<any> {
+export async function fetchPositionData(lat: number, lon: number): Promise<AddressData> {
   const url = new URL(
     `https://ws.geonorge.no/adresser/v1/punktsok?lat=${lat}&lon=${lon}&radius=10&koordsys=4258&utkoordsys=4258&treffPerSide=10&side=0&asciiKompatibel=true`
   );

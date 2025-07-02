@@ -15,4 +15,6 @@ Route::middleware('auth')->group(function () {
     
     Route::delete('admin/delete/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
+    Route::get('admin/rolle/{rolle}', [AdminController::class, 'showRole'])->name('admin.role.show');
+    Route::put('admin/rolle/{rolle}', [AdminController::class, 'updateRole'])->name('admin.role.update');
 });

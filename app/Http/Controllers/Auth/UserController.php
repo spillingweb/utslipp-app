@@ -69,23 +69,13 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
-        dd($user);
+        $user->fill($request->validated());
 
-        $user->validate([
-            'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'string',
-                'lowercase',
-                'email',
-                'max:255',
-                Rule::unique(User::class)->ignore($user->id),
-            ]        ]);
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
+        $user->save();
 
         return to_route('admin')
             ->with('success', 'Brukeren ble oppdatert.');
