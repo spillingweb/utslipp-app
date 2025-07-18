@@ -13,11 +13,10 @@ const AND_OR_NOT_BUTTONS = [
 
 type FilterProps = {
     isOpen: boolean;
-    setTilsynObjects: React.Dispatch<React.SetStateAction<GeoJSON.FeatureCollection | null>>;
+    tilsynObjects: GeoJSON.FeatureCollection | null;
 };
 
-
-const Filter = ({ isOpen, setTilsynObjects }: FilterProps) => {
+const Filter = ({ isOpen, tilsynObjects }: FilterProps) => {
     const handleFilterObjects = (value: string) => {
         console.log(value);
     };
@@ -62,13 +61,15 @@ const Filter = ({ isOpen, setTilsynObjects }: FilterProps) => {
                 </fieldset>
 
                 <FilterForm index={2} />
-                <Button type="submit" onClick={() => console.log('Filter')}>
-                    Filtrer i database
-                </Button>
-                <Button onClick={() => console.log('Filter')}>Sentrer filtrerte objekter</Button>
+                <div className={styles.buttons}>
+                    <Button type="submit" onClick={() => console.log('Filter')}>
+                        Filtrer i database
+                    </Button>
+                    <Button onClick={() => console.log('Filter')}>Sentrer</Button>
+                </div>
             </form>
             <p className={styles.filterInfo}>
-                Antall filtrerte objekter: <span>6</span>
+                Antall filtrerte objekter: <span>{tilsynObjects?.features.length}</span>
             </p>
         </SidebarSection>
     );

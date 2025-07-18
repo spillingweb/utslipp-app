@@ -5,6 +5,8 @@
   color: var(--dark-grey);
   border: 1px solid #ced4da;
   border-radius: 5px;
+  text-overflow: ellipsis;
+  max-width: 23rem;
   
   &:focus {
     border-color: #80bdff;

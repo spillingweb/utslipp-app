@@ -6,7 +6,7 @@ import Table from '../ui/Table';
 
 const TilsynObjectsTable = ({ tilsynObjects }: { tilsynObjects: TilsynObject[] }) => {
     const handleDeleteTilsynsObject = (id: string) => {
-        if (confirm(`Er du sikker på at du vil slette tilsynsobjektet med id ${id}? Det kan ikke angres.`)) {
+        if (confirm(`Er du sikker på at du vil slette tilsynsobjektet? Det kan ikke angres.`)) {
             router.delete(route('tilsyn_object.destroy', id), {
                 preserveScroll: true,
             });

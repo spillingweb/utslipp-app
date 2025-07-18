@@ -16,10 +16,38 @@ const TilsynFormFieldset = ({
 }) => {
     const { projects, users } = usePage<{ projects: { name: string; number: number; id: number }[]; users: User[] }>().props;
 
+    let sone = data.sone.toString();
+
+    switch (sone) {
+        case '1':
+            sone += ' - Steinsfjorden';
+            break;
+        case '2':
+            sone += ' - Sogna';
+            break;
+        case '3':
+            sone += ' - Tyrifjorden';
+            break;
+        case '4':
+            sone += ' - Randselva/Storelva';
+            break;
+        case '5':
+            sone += ' - Begna';
+            break;
+        case '6':
+            sone += ' - Lysakervassdraget';
+            break;
+        case '7':
+            sone += ' - Sandviksvassdraget';
+            break;
+        default:
+            sone = '';
+    }
+
     return (
         <fieldset className={styles.formGrid} disabled={disabled}>
             <label htmlFor="sone">Sone</label>
-            <Input id="sone" type="string" value={data.sone || ''} readOnly />
+            <Input id="sone" type="string" value={sone || ''} readOnly />
             <label htmlFor="project_id">Prosjekt</label>
             <Select id="project_id" value={data.project_id || ''} onChange={(e) => setData('project_id', e.target.value)}>
                 <option value="">Ingen prosjekt</option>
@@ -58,7 +86,14 @@ const TilsynFormFieldset = ({
             </Select>
 
             <label htmlFor="hjemmel">Hjemmel</label>
-            <Input id="hjemmel" value={data.hjemmel || ''} onChange={(e) => setData('hjemmel', e.target.value)} />
+            <Select id="hjemmel" value={data.hjemmel || ''} onChange={(e) => setData('hjemmel', e.target.value)}>
+                <option value="">Velg hjemmel</option>
+                <option value="27-2">§ 27-2 i plan- og bygningsloven (tilknytningsplikt)</option>
+                <option value="7">§ 7 i forurensningsloven (ulovlig forurensning)</option>
+                <option value="18">§ 18 i forurensningsloven (trekke tilbake tillatelse)</option>
+                <option value="12-16">§ 12-16 i forurensningsforskriften (ulovliggjøre utslipp)</option>
+                <option value="other">Annen hjemmel</option>
+            </Select>
 
             <label htmlFor="saksnr">Saksnr.</label>
             <Input id="saksnr" value={data.saksnr || ''} onChange={(e) => setData('saksnr', e.target.value)} />

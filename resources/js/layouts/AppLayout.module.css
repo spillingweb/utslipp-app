@@ -1,16 +1,18 @@
+.appLayout {
+    display: flex;
+    flex-direction: column;
+}
+
 .header {
     z-index: 200;
     width: 100%;
     padding: 0 2rem;
-    position: fixed;
     background-color: var(--background);
     border-bottom: 1px solid var(--border);
 }
 
 .mainContainer {
-    position: relative;
-    top: 52.8px;
-    height: calc(100vh - 52.8px);
+    flex: 1;
 }
 
 .padding {

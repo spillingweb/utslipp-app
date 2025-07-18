@@ -30,6 +30,7 @@ const TilsynLayer = ({ features, setSelectedPoint, setSidebarTabOpen }: TilsynLa
         setTilsynFormProperties({
             open: true,
             disabled: true,
+            mode: 'edit',
         });
 
         // Make yellow circle around the clicked point

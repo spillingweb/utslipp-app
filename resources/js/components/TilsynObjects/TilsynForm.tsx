@@ -36,7 +36,7 @@ const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint }: TilsynFormProps
     };
 
     const handleDeleteTilsynObject = () => {
-        if (confirm(`Er du sikker på at du vil slette tilsynsobjektet med id ${data.id}? Det kan ikke angres.`)) {
+        if (confirm(`Er du sikker på at du vil slette tilsynsobjektet? Det kan ikke angres.`)) {
             deleteTilsynObject();
             setSelectedPoint(null); // Reset selected point on the map
         }

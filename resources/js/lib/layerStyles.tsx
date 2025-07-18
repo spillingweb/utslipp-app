@@ -114,7 +114,6 @@ export const VannNettPopupContent = (data: { features: VannNettDataFeature[] }) 
     return htmlContent;
 };
 
-
 // Grunnforurensning popup
 
 type GrunnforurensningFeature = {
@@ -163,6 +162,36 @@ export const GrunnforurensningPopupContent = (data: { features: Grunnforurensnin
                             </tr>
                         </tbody>
                     </table>
+                );
+            })}
+        </>
+    );
+
+    // Render the JSX content to a static HTML string
+    const htmlContent = renderToStaticMarkup(JSXContent);
+
+    return htmlContent;
+};
+
+type VannmiljoFeature = {
+    properties: {
+        Navn: string;
+        Faktaark: string;
+    };
+};
+
+export const VannmiljoPopupContent = (data: { features: VannmiljoFeature[] }) => {
+    console.log('VannmiljoPopupContent', data);
+    const JSXContent = (
+        <>
+            {data.features.map((feature) => {
+                const { Navn, Faktaark } = feature.properties;
+
+                return (
+                    <div key={Navn}>
+                        <b>{Navn}</b>
+                        <p style={{ margin: 0 }}><a target='_blank' href={Faktaark}>{Faktaark}</a></p>
+                    </div>
                 );
             })}
         </>

@@ -1,11 +1,16 @@
 .formGrid {
     display: grid;
-    grid-template-columns: 25% 60%;
+    grid-template-columns: 1fr 2fr;
     gap: 0.6rem;
     align-items: center;
 
     label {
         font-weight: bold;
+    }
+
+    input,
+    select {
+        width: 100%;
     }
 
     &:disabled > *,

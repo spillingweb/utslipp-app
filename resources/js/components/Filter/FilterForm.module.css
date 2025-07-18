@@ -1,8 +1,15 @@
 .filterForm {
+    max-width: 23rem;
     display: flex;
     gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .capitalize {
-    text-transform: capitalize;
+    display: inline-block;
+}
+
+.capitalize::first-letter {
+    text-transform: uppercase;
 }

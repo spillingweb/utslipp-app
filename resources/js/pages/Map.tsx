@@ -81,7 +81,7 @@ const Map = ({ tilsynObjectsData }: MapProps) => {
                             setToolTip={setToolTip}
                             setSidebarTabOpen={setSidebarTabOpen}
                         />
-                        <Filter isOpen={sidebarTabOpen === 'filter'} setTilsynObjects={setTilsynObjects} />
+                        <Filter isOpen={sidebarTabOpen === 'filter'} tilsynObjects={tilsynObjects} />
                         <Legend isOpen={sidebarTabOpen === 'legend'} />
                         <TilsynForm isOpen={sidebarTabOpen === 'tilsyn'} setSelectedPoint={setSelectedPoint} selectedPoint={selectedPoint} />
                     </Sidebar>

@@ -1,3 +1,7 @@
+@view-transition {
+  navigation: auto;
+}
+
 .mapWrapper {
     position: relative;
     width: 100%;

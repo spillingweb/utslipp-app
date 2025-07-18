@@ -7,7 +7,7 @@ import { randsoner } from './geoJSON/randsoner';
 import { soner } from './geoJSON/soner';
 import { trase } from './geoJSON/trase';
 import { vaBuffer } from './geoJSON/vaBuffer';
-import { GrunnforurensningPopupContent, VannNettPopupContent, returnKumMarker } from './layerStyles';
+import { GrunnforurensningPopupContent, VannNettPopupContent, VannmiljoPopupContent, returnKumMarker } from './layerStyles';
 import WMSLayer from './WMSLayer';
 
 /******** Inital layers used on map inititialization (not on layer control) *********/
@@ -269,7 +269,10 @@ export const LAYERS: {
                     options={{
                         layers: 'vannlokaliteter_pkt',
                         attribution: '<a href="http://www.miljodirektoratet.no/" target="_blank">Miljødirektoratet</a>',
+                        identify: true,
+                        info_format: 'application/geojson',
                     }}
+                    makePopupContent={VannmiljoPopupContent}
                 />
             ),
         },

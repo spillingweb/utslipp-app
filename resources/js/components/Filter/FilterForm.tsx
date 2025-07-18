@@ -28,10 +28,30 @@ const FilterForm = ({ index }: FilterFormProps) => {
         },
         { value: 'prosjekt', options: projects.map((project) => ({ value: project.number, text: `${project.number} - ${project.name}` })) },
         { value: 'status', options: TILSYN_STATUS.map((status) => ({ value: status.value, text: status.text })) },
-        { value: 'hjemmel' },
+        {
+            value: 'hjemmel',
+            options: [
+                { value: '27-2', text: '§ 27-2 i plan- og bygningsloven (tilknytningsplikt)' },
+                { value: '7', text: '§ 7 i forurensningsloven (ulovlig forurensning)' },
+                { value: '18', text: '§ 18 i forurensningsloven (trekke tilbake tillatelse)' },
+                { value: '12-16', text: '§ 12-16 i forurensningsforskriften (ulovliggjøre utslipp)' },
+                { value: 'other', text: 'Annen hjemmel' },
+            ],
+        },
         { value: 'saksbeh', text: 'Saksbehandler', options: users.map((user) => ({ value: user.name, text: user.name })) },
         { value: 'frist' },
-        { value: 'sone' },
+        {
+            value: 'sone',
+            options: [
+                { value: '1', text: '1 - Steinsfjorden' },
+                { value: '2', text: '2 - Sogna' },
+                { value: '3', text: '3 - Tyrifjorden' },
+                { value: '4', text: '4 - Randselva/Storelva' },
+                { value: '5', text: '5 - Begna' },
+                { value: '6', text: '6 - Lysakervassdraget' },
+                { value: '7', text: '7 - Sandviksvassdraget' },
+            ],
+        },
     ];
 
     let secondFilter: React.ReactNode = null;
@@ -42,9 +62,9 @@ const FilterForm = ({ index }: FilterFormProps) => {
         const filterOptions = FILTER_SELECT_OPTIONS.find((option) => option.value === selectedField)?.options || [];
 
         secondFilter = (
-            <Select name={`filterVerdi${index}`} id={`filterVerdi${index}`}>
+            <Select name={`filterVerdi${index}`} id={`filterVerdi${index}`} className={styles.capitalize}>
                 {filterOptions.map((option) => (
-                    <option key={option.value} value={option.value} className={styles.capitalize}>
+                    <option key={option.value} value={option.value}>
                         {option.text || option.value}
                     </option>
                 ))}
@@ -54,9 +74,14 @@ const FilterForm = ({ index }: FilterFormProps) => {
 
     return (
         <fieldset id={`filterForm${index}`} className={styles.filterForm}>
-            <Select name={`filterFelt${index}`} id={`filterFelt${index}`} onChange={(e) => setSelectedField(e.target.value)}>
+            <Select
+                name={`filterFelt${index}`}
+                id={`filterFelt${index}`}
+                onChange={(e) => setSelectedField(e.target.value)}
+                className={styles.capitalize}
+            >
                 {FILTER_SELECT_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value} className={styles.capitalize}>
+                    <option key={option.value} value={option.value}>
                         {option.text || option.value}
                     </option>
                 ))}
