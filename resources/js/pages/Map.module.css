@@ -10,7 +10,7 @@
 
 .mapContainer {
     z-index: 1;
-    position: absolute;
+    position: relative;
     height: 100%;
     width: 100%;
 }

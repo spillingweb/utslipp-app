@@ -1,0 +1,16 @@
+.paginationContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paginationButtons {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.active {
+    background-color: var(--primary-dark);
+    color: var(--foreground);
+}

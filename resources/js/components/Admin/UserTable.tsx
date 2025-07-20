@@ -1,6 +1,6 @@
 import { User } from '@/types';
 import { router } from '@inertiajs/react';
-import TextLink from '../TextLink';
+import TextLink from '../ui/TextLink';
 import ButtonLink from '../ui/ButtonLink';
 import Table from '../ui/Table';
 

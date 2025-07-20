@@ -2,7 +2,6 @@ import InputError from '@/components/InputError';
 import Button from '@/components/ui/Button';
 import FormCard from '@/components/ui/FormCard';
 import { Input } from '@/components/ui/Input';
-import Radio from '@/components/ui/Radio';
 import AppLayout from '@/layouts/AppLayout';
 import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
@@ -15,12 +14,6 @@ type RegisterForm = {
     password_confirmation: string;
     role: string;
 };
-
-export const ROLE_RADIO_OPTIONS = [
-    { label: 'Administrator og redigering', value: 'admin' },
-    { label: 'Kun redigering', value: 'redigering' },
-    { label: 'Kun innsyn', value: 'innsyn' },
-];
 
 const CreateUser = () => {
     const { data, setData, post, processing, errors, reset, cancel } = useForm<Required<RegisterForm>>({
@@ -36,12 +29,6 @@ const CreateUser = () => {
         post(route('user.store'), {
             onFinish: () => reset('password', 'password_confirmation'),
         });
-    };
-
-    const handleRoleChange = (roleName: string) => {
-        if (data.role !== roleName) {
-            setData('role', roleName);
-        }
     };
 
     const handleCancel = () => {
@@ -109,23 +96,6 @@ const CreateUser = () => {
                         disabled={processing}
                     />
                     <InputError message={errors.password_confirmation} />
-                </fieldset>
-
-                <fieldset>
-                    <legend>Velg rolle for brukeren</legend>
-                    <div className={styles.radioBtns}>
-                        {ROLE_RADIO_OPTIONS.map((option) => (
-                            <Radio
-                                key={option.value}
-                                label={option.label}
-                                name="roles"
-                                id={option.value}
-                                value={option.value}
-                                onChange={() => handleRoleChange(option.value)}
-                                checked={data.role === option.value}
-                            />
-                        ))}
-                    </div>
                 </fieldset>
 
                 <div className={styles.cta}>

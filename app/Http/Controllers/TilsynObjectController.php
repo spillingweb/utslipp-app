@@ -11,12 +11,14 @@ use Inertia\Inertia;
 
 class TilsynObjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tilsynObjects = Tilsyn_object::all();
+        $tilsynObjects = Tilsyn_object::search($request)->orderBy('frist')->paginate(10);
 
         return Inertia::render('TilsynObjects/Index', [
             'tilsynObjects' => TilsynObjectResource::collection($tilsynObjects),
+            'project_id' => $request->project_id ?? '',
+            'search' => $request->search ?? '',
         ]);
     }
 

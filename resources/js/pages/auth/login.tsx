@@ -2,7 +2,7 @@ import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
 import InputError from '@/components/InputError';
-import TextLink from '@/components/TextLink';
+import TextLink from '@/components/ui/TextLink';
 import Button from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 

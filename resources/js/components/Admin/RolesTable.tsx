@@ -1,5 +1,5 @@
 import { Role } from '@/types';
-import TextLink from '../TextLink';
+import TextLink from '../ui/TextLink';
 import Table from '../ui/Table';
 
 const RolesTable = ({ roles }: { roles: Role[] }) => {

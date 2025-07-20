@@ -1,11 +1,10 @@
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
-import { Link, usePage } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { LogOut } from 'lucide-react';
 import LogoBrand from '../ui/LogoBrand';
 import styles from './Nav.module.css';
 
 const Nav = () => {
-    const { url } = usePage();
     const cleanup = useMobileNavigation();
 
     function setClass(isActive: boolean) {
@@ -16,16 +15,16 @@ const Nav = () => {
         <nav className={styles.nav} aria-label="Main navigation">
             <LogoBrand />
             <ul className={styles.navTabs}>
-                <Link href="/" className={setClass(url === '/')} preserveState>
+                <Link href="/" className={setClass(route().current('map'))} preserveState>
                     Kart
                 </Link>
-                <Link href="/tilsynsobjekter" className={setClass(url === '/tilsynsobjekter')}>
+                <Link  href="/tilsynsobjekter" className={setClass(route().current('tilsyn_objects'))}>
                     Tilsynsobjekter
                 </Link>
-                <Link href="/prosjekter" className={setClass(url === '/prosjekter')}>
+                <Link href="/prosjekter" className={setClass(route().current('projects'))}>
                     Prosjekter
                 </Link>
-                <Link href="/admin" className={setClass(url === '/admin')}>
+                <Link href="/admin" className={setClass(route().current('admin'))}>
                     Admin
                 </Link>
             </ul>

@@ -16,7 +16,6 @@
 .tabs {
   list-style-type: none;
   margin: 0;
-  margin-top: 1rem;
   padding: 0;
   font-weight: 600;
 
@@ -38,4 +37,8 @@
 
 .activeTab {
   background-color: rgb(252, 241, 208);
+}
+
+.createButton {
+  margin-bottom: 0.5rem;
 }

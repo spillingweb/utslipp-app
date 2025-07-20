@@ -1,0 +1,18 @@
+.tableContainer {
+    overflow-y: auto;
+    width: 100%;
+}
+
+.textWrap {
+    text-wrap: wrap;
+    min-width: 15rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.center {
+    text-align: center;
+}

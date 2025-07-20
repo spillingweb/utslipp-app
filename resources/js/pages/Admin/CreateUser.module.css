@@ -12,14 +12,6 @@
     }
 }
 
-.radioBtns {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: .5rem;
-}
-
 .cta {
     display: flex;
     justify-content: space-between;
