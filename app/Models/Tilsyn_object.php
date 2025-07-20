@@ -38,7 +38,7 @@ class Tilsyn_object extends Model
     public function scopeSearch(Builder $query, Request $request)
     {
         return $query->when($request->search, function ($query) use ($request) {
-                return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar'], 'ilike', '%' . $request->search . '%');
+                return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'], 'ilike', '%' . $request->search . '%');
             })->when($request->project_id, function ($query) use ($request) {
                 if ($request->project_id === 'null') {
                     return $query->whereNull('project_id');

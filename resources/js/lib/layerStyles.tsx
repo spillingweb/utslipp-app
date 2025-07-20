@@ -181,7 +181,6 @@ type VannmiljoFeature = {
 };
 
 export const VannmiljoPopupContent = (data: { features: VannmiljoFeature[] }) => {
-    console.log('VannmiljoPopupContent', data);
     const JSXContent = (
         <>
             {data.features.map((feature) => {

@@ -66,8 +66,6 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
         return () => clearTimeout(handler);
     }, [inputValue, searchTerm]);
 
-    console.log(tilsynObjects);
-
     return (
         <AppLayout>
             <Head title="Tilsynsobjekter" />

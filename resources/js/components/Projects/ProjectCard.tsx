@@ -1,6 +1,6 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
 import { TilsynObject } from '@/types';
-import { router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { Trash2 } from 'lucide-react';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import Heading from '../ui/Heading';
@@ -56,7 +56,7 @@ const ProjectCard = ({ id, number, name, objects }: ProjectCardProps) => {
                         <Tooltip />
                     </PieChart>
                 </figure>
-                <a href="#">Se tabell</a>
+                <Link href={`tilsynsobjekter?project_id=${id ? id : 'null'}`}>Se tabell</Link>
                 <a href="#">Vis i kart</a>
             </div>
         </li>

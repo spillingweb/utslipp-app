@@ -1,13 +1,11 @@
 .sidebar {
     z-index: 1000;
     cursor: default;
-    position: absolute;
-    top: 0;
-    left: 0;
-    max-height: 96vh;
+    position: relative;
+    max-height: calc(100% - 1rem);
     border: 2px solid rgba(0, 0, 0, 0.2);
-    width: auto;
-    margin: 0.5rem;
+    width: fit-content;
+    margin: .5rem;
     border-radius: 0.5rem;
     overflow: hidden;
     background-color: var(--background);
