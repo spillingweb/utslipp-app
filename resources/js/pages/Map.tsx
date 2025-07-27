@@ -1,4 +1,5 @@
 import Filter from '@/components/Filter/Filter';
+import FilterByProject from '@/components/Filter/FilterByProject';
 import Legend from '@/components/Legend/Legend';
 import LayersControlConfig from '@/components/Map/LayersControlConfig';
 import SelectCircle from '@/components/Map/SelectCircle';
@@ -6,6 +7,7 @@ import TilsynLayer from '@/components/Map/TilsynLayer';
 import Search from '@/components/Search/Search';
 import Sidebar, { SidebarTab } from '@/components/Sidebar/Sidebar';
 import TilsynForm from '@/components/TilsynObjects/TilsynForm';
+import Flash from '@/components/ui/Flash';
 import AppLayout from '@/layouts/AppLayout';
 import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
 import { TilsynFormProvider } from '@/store/tilsyn-form-context';
@@ -15,7 +17,6 @@ import { LatLngLiteral } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
-import Flash from '@/components/ui/Flash';
 
 type MapProps = {
     tilsynObjectsData: string;
@@ -27,10 +28,11 @@ type MapProps = {
 };
 
 const Map = ({ tilsynObjectsData }: MapProps) => {
-    const [sidebarTabOpen, setSidebarTabOpen] = useState<SidebarTab | null>('search');
     const [tilsynObjects, setTilsynObjects] = useState<GeoJSON.FeatureCollection | null>(null);
+    const [sidebarTabOpen, setSidebarTabOpen] = useState<SidebarTab | null>('search');
     const [selectedPoint, setSelectedPoint] = useState<LatLngLiteral | null>(null);
     const [toolTip, setToolTip] = useState<AddressData | null>(null);
+    const [selectedProject, setSelectedProject] = useState<string>('');
 
     const { flash } = usePage<{ flash: { success: string | null; error: string | null } }>().props;
 
@@ -67,6 +69,10 @@ const Map = ({ tilsynObjectsData }: MapProps) => {
             >
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig position="topright" />
+                <div className={styles.filterSelect}>
+                    <FilterByProject selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
+                </div>
+
                 <TilsynFormProvider>
                     {tilsynObjects && (
                         <TilsynLayer features={tilsynObjects} setSelectedPoint={setSelectedPoint} setSidebarTabOpen={setSidebarTabOpen} />

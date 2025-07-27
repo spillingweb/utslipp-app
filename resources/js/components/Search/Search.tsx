@@ -51,7 +51,7 @@ const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: Sea
         if (!fetchedData) return;
 
         setSidebarTabOpen('search');
-        setTilsynFormProperties({ open: false, disabled: true });
+        setTilsynFormProperties({ open: false, disabled: true, mode: 'create' });
 
         if (fetchedData.adresser.length === 1) {
             const address = fetchedData.adresser[0];

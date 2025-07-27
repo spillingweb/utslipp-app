@@ -5,13 +5,28 @@ import Table from '../ui/Table';
 import TextLink from '../ui/TextLink';
 import styles from './TilsynObjectsTable.module.css';
 
-const TilsynObjectsTable = ({ tilsynObjects }: { tilsynObjects: TilsynObject[] }) => {
+type TilsynObjectsTableProps = {
+    tilsynObjects: TilsynObject[];
+    sortColumn: string;
+    setSortColumn: React.Dispatch<React.SetStateAction<string>>;
+    setSortDirection: React.Dispatch<React.SetStateAction<'asc' | 'desc'>>;
+};
+
+const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortDirection }: TilsynObjectsTableProps) => {
     const handleDeleteTilsynsObject = (id: string) => {
         if (confirm(`Er du sikker på at du vil slette tilsynsobjektet? Det kan ikke angres.`)) {
             router.delete(route('tilsyn_object.destroy', id), {
                 preserveScroll: true,
             });
         }
+    };
+
+    // Handle sorting when a header is clicked, logic in the parent component
+    const handleHeaderClick = (header: string) => {
+        if (sortColumn === header.toLowerCase()) {
+            setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+        }
+        setSortColumn(header.toLowerCase());
     };
 
     return (
@@ -34,6 +49,8 @@ const TilsynObjectsTable = ({ tilsynObjects }: { tilsynObjects: TilsynObject[] }
                     'Arkiv',
                     '',
                 ]}
+                sortable
+                onHeaderClick={handleHeaderClick}
             >
                 {tilsynObjects.map((object) => (
                     <tr key={object.id}>

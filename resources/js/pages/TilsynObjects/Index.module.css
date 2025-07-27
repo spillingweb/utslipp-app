@@ -1,15 +1,29 @@
 @view-transition {
-  navigation: auto;
+    navigation: auto;
 }
 
 .searchAndExport {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  
-  select {
-    margin-right: auto;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    select {
+        margin-right: auto;
+    }
+}
+
+.clearIcon {
+    cursor: pointer;
+    transition: transform 0.2s;
+    color: var(--muted-foreground);
+    background-color: white;
+    margin-left: -2rem;
+    margin-right: 0.5rem;
+
+    &:hover {
+        transform: scale(1.2);
+    }
 }

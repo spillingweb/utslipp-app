@@ -7,11 +7,6 @@
     min-width: 15rem;
 }
 
-.actions {
-    display: flex;
-    gap: 1rem;
-}
-
 .center {
     text-align: center;
 }

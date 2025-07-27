@@ -21,6 +21,32 @@ const Filter = ({ isOpen, tilsynObjects }: FilterProps) => {
         console.log(value);
     };
 
+    // const [filterValue, setFilterValue] = useState<string>('default');
+
+    //    const tilsynObjectsUrl = useMemo(() => {
+    //         const url = new URL(route('map'));
+    //         url.searchParams.append("page", pageNumber);
+    //         if (selectedProject) {
+    //             url.searchParams.append('project_id', selectedProject);
+    //         }
+    //         if (searchTerm) {
+    //             url.searchParams.append('search', searchTerm);
+    //         }
+    //         return url.toString();
+    //     }, [searchTerm, pageNumber, selectedProject]);
+    
+    //     useEffect(() => {
+    //         if (isInitialRender.current) {
+    //             isInitialRender.current = false;
+    //             return;
+    //         }
+    //         router.visit(tilsynObjectsUrl, {
+    //             preserveState: true,
+    //             preserveScroll: true,
+    //             // replace: true,
+    //         });
+    //     }, [tilsynObjectsUrl]);
+
     return (
         <SidebarSection title="Filtrer objekter" isOpen={isOpen}>
             <div className={styles.filterRadio}>
