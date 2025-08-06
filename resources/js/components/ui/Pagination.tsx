@@ -11,7 +11,7 @@ const Pagination = ({
     return (
         <div className={styles.paginationContainer}>
             <div className={styles.showingResults}>
-                Viser {meta.from} til {meta.to} av {meta.total} resultater
+                Viser {meta.from || 0} til {meta.to} av {meta.total} resultater
             </div>
             <div className={styles.paginationButtons}>
                 {meta.links.map((link, index) => (

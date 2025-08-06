@@ -8,13 +8,13 @@ import styles from './CreateProject.module.css';
 
 type NewProjectForm = {
     name: string;
-    number: string;
+    id: string;
 };
 
 const CreateProject = () => {
     const { data, setData, post, processing, errors, reset } = useForm<Required<NewProjectForm>>({
         name: '',
-        number: '',
+        id: '',
     });
 
     const handleSubmit: React.FormEventHandler = (e) => {
@@ -30,27 +30,25 @@ const CreateProject = () => {
                 Opprett nytt prosjekt
             </Heading>
             <Form onSubmit={handleSubmit}>
-                <fieldset className={`${styles.input} ${errors.number ? styles.error : ''}`}>
-                    <label htmlFor="number">Prosjektnummer</label>
+                <fieldset className={`${styles.input} ${errors.id ? styles.error : ''}`}>
+                    <label htmlFor="id">Prosjektnummer</label>
                     <Input
-                        id="number"
+                        id="id"
                         type="number"
                         aria-required
                         autoFocus
                         tabIndex={0}
-                        autoComplete="number"
-                        value={data.number}
-                        onChange={(e) => setData('number', e.target.value)}
+                        value={data.id}
+                        onChange={(e) => setData('id', e.target.value)}
                     />
-                    <InputError message={errors.number && 'Nummeret er allerede i bruk'} />
+                    <InputError message={errors.id && 'ID-en er allerede i bruk'} />
                 </fieldset>
-                <fieldset className={`${styles.input} ${errors.number ? styles.error : ''}`}>
+                <fieldset className={`${styles.input} ${errors.name ? styles.error : ''}`}>
                     <label htmlFor="name">Navn på prosjektet</label>
                     <Input
                         id="name"
                         type="text"
                         tabIndex={0}
-                        autoComplete="name"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                     />

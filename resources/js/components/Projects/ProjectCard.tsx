@@ -8,12 +8,11 @@ import styles from './ProjectCard.module.css';
 
 type ProjectCardProps = {
     id?: number;
-    number?: number;
     name: string;
     objects: TilsynObject[];
 };
 
-const ProjectCard = ({ id, number, name, objects }: ProjectCardProps) => {
+const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
     const noObjects = objects.length;
     const noFinished = objects.filter((obj) => obj.status === 'F').length;
     const finishedPercentage = noObjects ? Math.round((noFinished / noObjects) * 100) : 0;
@@ -26,14 +25,14 @@ const ProjectCard = ({ id, number, name, objects }: ProjectCardProps) => {
     }));
 
     const handleDeleteProject = () => {
-        if (confirm(`Er du sikker på at du vil slette prosjekt ${number} - ${name}? Det kan ikke angres.`)) {
+        if (confirm(`Er du sikker på at du vil slette prosjekt ${id} - ${name}? Det kan ikke angres.`)) {
             router.delete(route('project.destroy', id), {
                 preserveScroll: true,
             });
         }
     };
 
-    const title = id ? `${number} - ${name}` : 'Uten Prosjekt';
+    const title = id ? `${id} - ${name}` : 'Uten Prosjekt';
 
     return (
         <li className={styles.projectCard}>

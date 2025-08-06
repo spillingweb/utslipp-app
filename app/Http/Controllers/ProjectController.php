@@ -15,7 +15,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with('tilsyn_objects')->orderBy('number', 'DESC')->get();
+        $projects = Project::with('tilsyn_objects')->orderBy('id', 'DESC')->get();
         $noProjects = Tilsyn_object::where('project_id', null)->get();
 
         return Inertia::render('Projects/Index', [

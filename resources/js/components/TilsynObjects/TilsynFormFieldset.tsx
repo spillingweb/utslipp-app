@@ -14,7 +14,7 @@ const TilsynFormFieldset = ({
     data: TilsynObject;
     setData: (field: keyof TilsynObject, value: unknown) => void;
 }) => {
-    const { projects, users } = usePage<{ projects: { name: string; number: number; id: number }[]; users: User[] }>().props;
+    const { projects, users } = usePage<{ projects: { name: string; id: number }[]; users: User[] }>().props;
 
     let sone = data.sone.toString();
 
@@ -53,7 +53,7 @@ const TilsynFormFieldset = ({
                 <option value="">Ingen prosjekt</option>
                 {projects.map((project) => (
                     <option key={project.id} value={project.id}>
-                        {`${project.number} - ${project.name}`}
+                        {`${project.id} - ${project.name}`}
                     </option>
                 ))}
             </Select>

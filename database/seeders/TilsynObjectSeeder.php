@@ -25,9 +25,9 @@ class TilsynObjectSeeder extends Seeder
                 'bygning' => 'B',
                 'sone' => 4,
                 'status' => 'T',
-                'endret_av' => 'Karoline',
+                'endret_av' => 'Karoline Hildre Spilling',
                 'project_id' => 1,
-                'saksbeh' => 'Karoline',
+                'saksbeh' => 'Karoline Hildre Spilling',
                 'frist' => now()->addDays(30),
             ],
             [
@@ -41,9 +41,9 @@ class TilsynObjectSeeder extends Seeder
                 'bygning' => 'B',
                 'sone' => 4,
                 'status' => 'T',
-                'endret_av' => 'Karoline',
+                'endret_av' => 'Karoline Hildre Spilling',
                 'project_id' => 1,
-                'saksbeh' => 'Karoline',
+                'saksbeh' => 'Karoline Hildre Spilling',
                 'frist' => now()->addDays(30)
             ],
             [
@@ -57,9 +57,9 @@ class TilsynObjectSeeder extends Seeder
                 'bygning' => 'B',
                 'sone' => 4,
                 'status' => 'T',
-                'endret_av' => 'Karoline',
+                'endret_av' => 'Karoline Hildre Spilling',
                 'project_id' => 1,
-                'saksbeh' => 'Karoline',
+                'saksbeh' => 'Karoline Hildre Spilling',
                 'frist' => now()->addDays(30)
             ],
             [
@@ -73,9 +73,9 @@ class TilsynObjectSeeder extends Seeder
                 'bygning' => 'B',
                 'sone' => 4,
                 'status' => 'B',
-                'endret_av' => 'Karoline',
+                'endret_av' => 'Karoline Hildre Spilling',
                 'project_id' => 1,
-                'saksbeh' => 'Karoline',
+                'saksbeh' => 'Karoline Hildre Spilling',
                 'frist' => now()->addDays(30)
             ],
             [
@@ -89,9 +89,9 @@ class TilsynObjectSeeder extends Seeder
                 'bygning' => 'H',
                 'sone' => 1,
                 'status' => 'F',
-                'endret_av' => 'Karoline',
+                'endret_av' => 'Karoline Hildre Spilling',
                 'project_id' => 2,
-                'saksbeh' => 'Karoline',
+                'saksbeh' => 'Karoline Hildre Spilling',
                 'frist' => now()->addDays(30)
             ],
             [
@@ -105,9 +105,9 @@ class TilsynObjectSeeder extends Seeder
                 'bygning' => 'B',
                 'sone' => 4,
                 'status' => 'T',
-                'endret_av' => 'Karoline',
+                'endret_av' => 'Karoline Hildre Spilling',
                 'project_id' => 3,
-                'saksbeh' => 'Karoline',
+                'saksbeh' => 'Karoline Hildre Spilling',
                 'frist' => now()->addDays(30)
             ],
             [
@@ -121,9 +121,9 @@ class TilsynObjectSeeder extends Seeder
                 'bygning' => 'B',
                 'sone' => 5,
                 'status' => 'T',
-                'endret_av' => 'Karoline',
+                'endret_av' => 'Karoline Hildre Spilling',
                 'project_id' => 4,
-                'saksbeh' => 'Karoline',
+                'saksbeh' => 'Karoline Hildre Spilling',
                 'frist' => now()->addDays(30)
             ]
         ];

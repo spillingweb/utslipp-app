@@ -6,12 +6,8 @@ import { Input } from '../ui/Input';
 import Select from '../ui/Select';
 import styles from './FilterForm.module.css';
 
-type FilterFormProps = {
-    index: number;
-};
-
-const FilterForm = ({ index }: FilterFormProps) => {
-    const { projects, users } = usePage<{ projects: { name: string; number: number }[]; users: User[] }>().props;
+const FilterForm = ({ index }: {index: number}) => {
+    const { projects, users } = usePage<{ projects: { name: string; id: number }[]; users: User[] }>().props;
     const [selectedField, setSelectedField] = useState('');
 
     const FILTER_SELECT_OPTIONS = [
@@ -26,7 +22,7 @@ const FilterForm = ({ index }: FilterFormProps) => {
                 { value: 'I', text: 'Ingen bygning' },
             ],
         },
-        { value: 'prosjekt', options: projects.map((project) => ({ value: project.number, text: `${project.number} - ${project.name}` })) },
+        { value: 'prosjekt', options: projects.map((project) => ({ value: project.id, text: `${project.id} - ${project.name}` })) },
         { value: 'status', options: TILSYN_STATUS.map((status) => ({ value: status.value, text: status.text })) },
         {
             value: 'hjemmel',

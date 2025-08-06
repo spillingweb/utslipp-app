@@ -27,3 +27,7 @@
         transform: scale(1.2);
     }
 }
+
+.noResults {
+    color: var(--muted-foreground);
+}

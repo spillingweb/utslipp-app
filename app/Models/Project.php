@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $fillable = ['number', 'name'];
+    protected $fillable = ['id', 'name'];
 
     public $timestamps = false;
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false; 
 
     public function tilsyn_objects()
     {

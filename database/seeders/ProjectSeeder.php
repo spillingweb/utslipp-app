@@ -17,25 +17,19 @@ class ProjectSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'Hadelandsveien',
-                'number' => 1,
             ],
             [
                 'id' => 2,
                 'name' => 'Hytteprosjekt',
-                'number' => 2,
 
             ],
             [
                 'id' => 3,
                 'name' => 'Steinsfjorden',
-                'number' => 3,
-
             ],
             [
                 'id' => 4,
                 'name' => 'Sentrum',
-                'number' => 4,
-
             ]
         ];
 
