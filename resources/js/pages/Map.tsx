@@ -16,17 +16,17 @@ import { useEffect, useState } from 'react';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
 
-const Map = ({ tilsynObjectsData }: { tilsynObjectsData: string }) => {
+const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollection | null }) => {
     const [tilsynObjects, setTilsynObjects] = useState<GeoJSON.FeatureCollection | null>(null);
     const [sidebarTabOpen, setSidebarTabOpen] = useState<SidebarTab | null>('search');
     const [selectedPoint, setSelectedPoint] = useState<LatLngLiteral | null>(null);
     const [toolTip, setToolTip] = useState<AddressData | null>(null);
 
-    // Parse the tilsynObjectsData and set it to state
     useEffect(() => {
-        if (tilsynObjectsData && tilsynObjectsData.length > 0) {
-            const parsedData = JSON.parse(tilsynObjectsData) as GeoJSON.FeatureCollection;
-            setTilsynObjects(parsedData);
+        if (tilsynObjectsData) {
+            setTilsynObjects(tilsynObjectsData);
+            setSelectedPoint(null);
+            setToolTip(null);
         }
     }, [tilsynObjectsData]);
 

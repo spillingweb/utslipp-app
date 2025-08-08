@@ -7,35 +7,60 @@ use App\Models\Project;
 use App\Models\Tilsyn_object;
 use App\Models\User;
 use DB;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class MapController extends Controller
 {
-    public function index(Tilsyn_object $tilsynObject)
+    // public function index(Tilsyn_object $tilsynObject)
+    // {
+    //     $tilsynObjectsData = DB::select("SELECT jsonb_build_object(
+    //             'type',     'FeatureCollection',
+    //             'features', jsonb_agg(features.feature)
+    //         )
+    //         FROM (
+    //         SELECT jsonb_build_object(
+    //             'type',       'Feature',
+    //             'id',         id,
+    //             'geometry',   ST_AsGeoJSON(geom)::jsonb,
+    //             'properties', to_jsonb(inputs) - 'geom'
+    //         ) AS feature
+    //         FROM (SELECT * FROM tilsyn_objects) inputs) features;"
+    //     );
+
+    //     return Inertia::render('Map', [
+    //         'tilsynObjectsData' => $tilsynObjectsData[0]->jsonb_build_object,
+    //     ]);
+    // }
+
+    public function index(Request $request)
     {
-        $tilsynObjectsData = DB::select("SELECT jsonb_build_object(
-                'type',     'FeatureCollection',
-                'features', jsonb_agg(features.feature)
-            )
-            FROM (
-            SELECT jsonb_build_object(
-                'type',       'Feature',
-                'id',         id,
-                'geometry',   ST_AsGeoJSON(geom)::jsonb,
-                'properties', to_jsonb(inputs) - 'geom'
-            ) AS feature
-            FROM (SELECT * FROM tilsyn_objects) inputs) features;"
-        );
+        $tilsynObjects = Tilsyn_object::filter($request)->get();
+
+        $features = $tilsynObjects->map(function ($item) {
+            $geometry = DB::select("SELECT ST_AsGeoJSON(?) AS geojson", [$item->geom])[0]->geojson;
+            $properties = $item->toArray();
+            unset($properties['geom']);
+
+            return [
+                'type' => 'Feature',
+                'geometry' => json_decode($geometry),
+                'properties' => $properties,
+            ];
+        });
 
         return Inertia::render('Map', [
-            'tilsynObjectsData' => $tilsynObjectsData[0]->jsonb_build_object,
+            'tilsynObjectsData' => [
+                'type' => 'FeatureCollection',
+                'features' => $features,
+            ],
         ]);
     }
 
     public function store(StoreTilsynObjectRequest $request)
     {
         $tilsynObject = Tilsyn_object::create(
-            ['geom' => DB::raw("ST_SetSRID(ST_GeomFromGeoJSON('{\"type\": \"Point\", \"coordinates\": [$request->lng, $request->lat]}'), 4326)"),] 
+            ['geom' => DB::raw("ST_SetSRID(ST_GeomFromGeoJSON('{\"type\": \"Point\", \"coordinates\": [$request->lng, $request->lat]}'), 4326)"),]
             + $request->validated()
         );
 

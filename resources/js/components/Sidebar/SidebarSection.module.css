@@ -23,6 +23,10 @@
   }
 }
 
+.toggleIcon {
+  cursor: pointer;
+}
+
 .sectionContent {
   padding: 1rem;
   max-height: 85vh;

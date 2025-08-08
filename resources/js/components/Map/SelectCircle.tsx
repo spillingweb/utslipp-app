@@ -18,13 +18,12 @@ const SelectCircle = ({ selectedPoint, address, setSidebarTabOpen }: SelectCircl
     const { startNewTilsyn } = use(TilsynFormContext);
     const map = useMap();
 
-    map.flyToBounds([[selectedPoint.lat, selectedPoint.lng]], { maxZoom: 18, paddingTopLeft: [350, 0] });
-
     useEffect(() => {
+        map.flyToBounds([[selectedPoint.lat, selectedPoint.lng]], { maxZoom: 18, paddingTopLeft: [350, 0] });
         map.on('zoomend', () => {
             setZooming(false);
         });
-    }, [map]);
+    }, [map, selectedPoint]);
 
     let zone = 0;
 
@@ -68,7 +67,7 @@ const SelectCircle = ({ selectedPoint, address, setSidebarTabOpen }: SelectCircl
             pathOptions={{ color: 'yellow', weight: 10, opacity: 0.5, fillOpacity: 0 }}
             interactive={false}
         >
-            {toolTip}
+            {!zooming &&toolTip}
         </Circle>
     );
 };

@@ -1,5 +1,6 @@
 import Heading from '../ui/Heading';
 import styles from './SidebarSection.module.css';
+import {ChevronLeft} from 'lucide-react';
 
 type SidebarSectionProps = {
     isOpen: boolean;
@@ -17,7 +18,8 @@ const SidebarSection = ({ isOpen, title, children }: SidebarSectionProps) => {
     return (
         <section className={sectionClass}>
             <div className={styles.sectionHeader}>
-                <Heading level={2}>{title}</Heading>
+                <Heading className={styles.sectionTitle} level={2}>{title}</Heading>
+                <ChevronLeft size={20} className={styles.toggleIcon} onClick={() => {}} />
             </div>
             <div className={styles.sectionContent}>{children}</div>
         </section>

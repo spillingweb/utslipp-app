@@ -38,8 +38,9 @@ class Tilsyn_object extends Model
     public function scopeSearch(Builder $query, Request $request)
     {
         return $query->when($request->input('search'), function ($query) use ($request) {
-                return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'], 'ilike', '%' . $request->input('search') . '%');
-            })->when($request->input('project_id'), function ($query) use ($request) {
+            return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'], 'ilike', '%' . $request->input('search') . '%');
+        })
+            ->when($request->input('project_id'), function ($query) use ($request) {
                 if ($request->input('project_id') === 'null') {
                     return $query->whereNull('project_id');
                 }
@@ -47,12 +48,19 @@ class Tilsyn_object extends Model
             });
     }
 
-    // public function scopeFilter(Builder $query, Request $request)
-    // {
-    //     return $query->when($request->filter, function ($query) use ($request) {
-    //             return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'], 'ilike', '%' . $request->filter . '%');
-    //         })->when($request->project_id, function ($query) use ($request) {
-    //             return $query->where('project_id', $request->project_id);
-    //         });
-    // }
+    public function scopeFilter(Builder $query, Request $request)
+    {
+        if (!$request->has('filter')) {
+            return $query->where('status', '!=', 'O');
+        }
+
+        return $query->when($request->input('filter'), function ($query) use ($request) {
+            return match ($request->input('filter')) {
+                'alle' => $query,
+                'tilsyn' => $query->where('status', '!=', 'O'),
+                'frist' => $query->where('status', '!=', 'O')->where('frist', '<=', now()),
+                default => $query->where('status', '!=', 'O'),
+            };
+        });
+    }
 }

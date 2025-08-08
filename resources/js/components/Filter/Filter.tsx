@@ -1,3 +1,5 @@
+import { router } from '@inertiajs/react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import SidebarSection from '../Sidebar/SidebarSection';
 import Button from '../ui/Button';
 import Heading from '../ui/Heading';
@@ -17,35 +19,29 @@ type FilterProps = {
 };
 
 const Filter = ({ isOpen, tilsynObjects }: FilterProps) => {
-    const handleFilterObjects = (value: string) => {
-        console.log(value);
-    };
+    const isInitialRender = useRef(true);
 
-    // const [filterValue, setFilterValue] = useState<string>('default');
+    const [filterValue, setFilterValue] = useState<string>('');
 
-    //    const tilsynObjectsUrl = useMemo(() => {
-    //         const url = new URL(route('map'));
-    //         url.searchParams.append("page", pageNumber);
-    //         if (selectedProject) {
-    //             url.searchParams.append('project_id', selectedProject);
-    //         }
-    //         if (searchTerm) {
-    //             url.searchParams.append('search', searchTerm);
-    //         }
-    //         return url.toString();
-    //     }, [searchTerm, pageNumber, selectedProject]);
-    
-    //     useEffect(() => {
-    //         if (isInitialRender.current) {
-    //             isInitialRender.current = false;
-    //             return;
-    //         }
-    //         router.visit(tilsynObjectsUrl, {
-    //             preserveState: true,
-    //             preserveScroll: true,
-    //             // replace: true,
-    //         });
-    //     }, [tilsynObjectsUrl]);
+    const filterUrl = useMemo(() => {
+        const url = new URL(route('map'));
+        if (filterValue) {
+            url.searchParams.append('filter', filterValue);
+        }
+        return url.toString();
+    }, [filterValue]);
+
+    useEffect(() => {
+        if (isInitialRender.current) {
+            isInitialRender.current = false;
+            return;
+        }
+        router.visit(filterUrl, {
+            preserveState: true,
+            preserveScroll: true,
+            // replace: true,
+        });
+    }, [filterUrl]);
 
     return (
         <SidebarSection title="Filtrer objekter" isOpen={isOpen}>
@@ -53,9 +49,9 @@ const Filter = ({ isOpen, tilsynObjects }: FilterProps) => {
                 <Radio
                     label="Vis bare tilsynsobjekter"
                     name="filterTilsyn"
-                    id="filterDefault"
-                    value="deafult"
-                    onChange={() => handleFilterObjects('default')}
+                    id="filterTilsyn"
+                    value="tilsyn"
+                    onChange={() => setFilterValue('tilsyn')}
                     checked
                 />
                 <Radio
@@ -63,14 +59,14 @@ const Filter = ({ isOpen, tilsynObjects }: FilterProps) => {
                     name="filterTilsyn"
                     id="filterAll"
                     value="all"
-                    onChange={() => handleFilterObjects('all')}
+                    onChange={() => setFilterValue('alle')}
                 />
                 <Radio
                     label="Vis tilsynsobjekter der hvor fristen har gått ut"
                     name="filterTilsyn"
                     id="filterDeadline"
                     value="deadline"
-                    onChange={() => handleFilterObjects('deadline')}
+                    onChange={() => setFilterValue('frist')}
                 />
             </div>
             <hr className={styles.horizontalLine} />

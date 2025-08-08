@@ -1,4 +1,4 @@
-import FilterByProject from '@/components/Filter/FilterByProject';
+import FilterByProject from '@/components/TilsynObjects/FilterByProject';
 import TilsynObjectsTable from '@/components/TilsynObjects/TilsynObjectsTable';
 import Button from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
