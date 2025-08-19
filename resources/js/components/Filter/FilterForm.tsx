@@ -1,14 +1,31 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
 import { User } from '@/types';
 import { usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '../ui/Input';
 import Select from '../ui/Select';
 import styles from './FilterForm.module.css';
 
-const FilterForm = ({ index }: {index: number}) => {
+type FilterFormProps = {
+    index: number;
+    formData: {
+        filterField1: string;
+        filterRelOp1: string;
+        filterValue1: string;
+        filterField2: string;
+        filterRelOp2: string;
+        filterValue2: string;
+    };
+    setData: (field: string, value: string) => void;
+};
+
+const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
     const { projects, users } = usePage<{ projects: { name: string; id: number }[]; users: User[] }>().props;
-    const [selectedField, setSelectedField] = useState('');
+    const [selectedField, setSelectedField] = useState<string>('');
+
+    const filterField = `filterField${index}`;
+    const filterRelOp = `filterRelOp${index}`;
+    const filterValue = `filterValue${index}`;
 
     const FILTER_SELECT_OPTIONS = [
         { value: 'null', text: 'Velg felt' },
@@ -22,7 +39,11 @@ const FilterForm = ({ index }: {index: number}) => {
                 { value: 'I', text: 'Ingen bygning' },
             ],
         },
-        { value: 'prosjekt', options: projects.map((project) => ({ value: project.id, text: `${project.id} - ${project.name}` })) },
+        {
+            value: 'project_id',
+            text: 'Prosjekt',
+            options: projects.map((project) => ({ value: project.id, text: `${project.id} - ${project.name}` })),
+        },
         { value: 'status', options: TILSYN_STATUS.map((status) => ({ value: status.value, text: status.text })) },
         {
             value: 'hjemmel',
@@ -50,45 +71,64 @@ const FilterForm = ({ index }: {index: number}) => {
         },
     ];
 
-    let secondFilter: React.ReactNode = null;
+    useEffect(() => {
+        const fieldInput = index === 1 ? formData.filterField1 : formData.filterField2;
+        if (fieldInput === '') {
+            setSelectedField('');
+        }
+    }, [formData, index])
 
-    if (selectedField === 'frist') {
-        secondFilter = <Input type="date" />;
-    } else {
-        const filterOptions = FILTER_SELECT_OPTIONS.find((option) => option.value === selectedField)?.options || [];
+    const selectedFieldOptions = FILTER_SELECT_OPTIONS.find((option) => option.value === selectedField)?.options || [];
 
-        secondFilter = (
-            <Select name={`filterVerdi${index}`} id={`filterVerdi${index}`} className={styles.capitalize}>
-                {filterOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.text || option.value}
-                    </option>
-                ))}
-            </Select>
-        );
-    }
+    const handleSelectField = (value: string) => {
+        setSelectedField(value);
+        setData(filterField, value);
+        setData(filterRelOp, '=');
+    };
 
     return (
         <fieldset id={`filterForm${index}`} className={styles.filterForm}>
-            <Select
-                name={`filterFelt${index}`}
-                id={`filterFelt${index}`}
-                onChange={(e) => setSelectedField(e.target.value)}
-                className={styles.capitalize}
-            >
+            <Select name={filterField} id={filterField} value={index === 1 ? formData.filterField1 : formData.filterField2} onChange={(e) => handleSelectField(e.target.value)} className={styles.capitalize}>
                 {FILTER_SELECT_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option key={option.value} value={option.value} className={styles.capitalize}>
                         {option.text || option.value}
                     </option>
                 ))}
             </Select>
-            <Select name={`filterLogOp${index}`} id={`filterLogOp${index}`}>
+            <Select
+                name={filterRelOp}
+                id={filterRelOp}
+                onChange={(e) => setData(filterRelOp, e.target.value)}
+                value={index === 1 ? formData.filterRelOp1 : formData.filterRelOp2}
+            >
                 <option value="=">=</option>
                 <option value="!=">!=</option>
                 <option value=">">&gt;</option>
                 <option value="<">&lt;</option>
             </Select>
-            {secondFilter}
+            {selectedField ? (
+                selectedField === 'frist' ? (
+                    <Input name={filterValue} id={filterValue} type="date" />
+                ) : (
+                    <Select
+                        name={filterValue}
+                        id={filterValue}
+                        className={styles.capitalize}
+                        value={index === 1 ? formData.filterValue1 : formData.filterValue2}
+                        onChange={(e) => setData(filterValue, e.target.value)}
+                    >
+                        <option value="">Velg verdi</option>
+                        {selectedField === 'project_id' && <option value="null">Ingen prosjekt</option>}
+                        {selectedFieldOptions.map((option) => {
+                            return (
+                                <option key={option.value} value={option.value} className={styles.capitalize}>
+                                    {option.text || option.value}
+                                </option>
+                            );
+                        })}
+                    </Select>
+                )
+            ) : null}
         </fieldset>
     );
 };

@@ -12,30 +12,56 @@ use Inertia\Inertia;
 
 class MapController extends Controller
 {
-    // public function index(Tilsyn_object $tilsynObject)
-    // {
-    //     $tilsynObjectsData = DB::select("SELECT jsonb_build_object(
-    //             'type',     'FeatureCollection',
-    //             'features', jsonb_agg(features.feature)
-    //         )
-    //         FROM (
-    //         SELECT jsonb_build_object(
-    //             'type',       'Feature',
-    //             'id',         id,
-    //             'geometry',   ST_AsGeoJSON(geom)::jsonb,
-    //             'properties', to_jsonb(inputs) - 'geom'
-    //         ) AS feature
-    //         FROM (SELECT * FROM tilsyn_objects) inputs) features;"
-    //     );
-
-    //     return Inertia::render('Map', [
-    //         'tilsynObjectsData' => $tilsynObjectsData[0]->jsonb_build_object,
-    //     ]);
-    // }
-
     public function index(Request $request)
     {
         $tilsynObjects = Tilsyn_object::filter($request)->get();
+
+        $features = $tilsynObjects->map(function ($item) {
+            $geometry = DB::select("SELECT ST_AsGeoJSON(?) AS geojson", [$item->geom])[0]->geojson;
+            $properties = $item->toArray();
+            unset($properties['geom']);
+
+            return [
+                'type' => 'Feature',
+                'geometry' => json_decode($geometry),
+                'properties' => $properties,
+            ];
+        });
+
+        return Inertia::render('Map', [
+            'tilsynObjectsData' => [
+                'type' => 'FeatureCollection',
+                'features' => $features,
+            ],
+        ]);
+    }
+
+    public function filter(Request $request)
+    {
+        $filterField1 = $request->input('filterField1');
+        $filterRelOp1 = $request->input('filterRelOp1');
+        $filterValue1 = $request->input('filterValue1');
+        $filterField2 = $request->input('filterField2');
+        $filterRelOp2 = $request->input('filterRelOp2');
+        $filterValue2 = $request->input('filterValue2');
+        $logicalOperator = $request->input('logicalOp');
+
+        $query = Tilsyn_object::query();
+
+        if ($logicalOperator === 'AND') {
+            $query->where($filterField1, $filterRelOp1, $filterValue1)
+                ->where($filterField2, $filterRelOp2, $filterValue2);
+        } elseif ($logicalOperator === 'OR') {
+            $query->where($filterField1, $filterRelOp1, $filterValue1)
+                ->orWhere($filterField2, $filterRelOp2, $filterValue2);
+        } elseif ($logicalOperator === 'AND NOT') {
+            $query->where($filterField1, $filterRelOp1, $filterValue1)
+                ->whereNot($filterField2, $filterRelOp2, $filterValue2);
+        } elseif ($logicalOperator === '') {
+            $query = Tilsyn_object::where($filterField1, $filterRelOp1, $filterValue1);
+        }
+
+        $tilsynObjects = $query->get();
 
         $features = $tilsynObjects->map(function ($item) {
             $geometry = DB::select("SELECT ST_AsGeoJSON(?) AS geojson", [$item->geom])[0]->geojson;

@@ -1,27 +1,37 @@
-import { router } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
+import { LatLngBounds } from 'leaflet';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMap } from 'react-leaflet';
 import SidebarSection from '../Sidebar/SidebarSection';
-import Button from '../ui/Button';
+import ButtonLink from '../ui/ButtonLink';
 import Heading from '../ui/Heading';
 import Radio from '../ui/Radio';
+import CustomFilterForm from './CustomFilterForm';
 import styles from './Filter.module.css';
-import FilterForm from './FilterForm';
-
-const AND_OR_NOT_BUTTONS = [
-    { label: 'OG', id: 'radioAND', value: 'AND' },
-    { label: 'ELLER', id: 'radioOR', value: 'OR' },
-    { label: 'OG IKKE', id: 'radioNOT', value: 'AND NOT' },
-];
 
 type FilterProps = {
     isOpen: boolean;
     tilsynObjects: GeoJSON.FeatureCollection | null;
+    tilsynLayerBounds: LatLngBounds | null;
 };
 
-const Filter = ({ isOpen, tilsynObjects }: FilterProps) => {
+const Filter = ({ isOpen, tilsynObjects, tilsynLayerBounds }: FilterProps) => {
     const isInitialRender = useRef(true);
+    const map = useMap();
 
-    const [filterValue, setFilterValue] = useState<string>('');
+    // initialize custom filter form
+        const { data, setData, post, reset } = useForm({
+        filterField1: '',
+        filterRelOp1: '',
+        filterValue1: '',
+        logicalOp: '',
+        filterField2: '',
+        filterRelOp2: '',
+        filterValue2: '',
+    });
+
+
+    const [filterValue, setFilterValue] = useState<'' | 'tilsyn' | 'alle' | 'frist'>('tilsyn');
 
     const filterUrl = useMemo(() => {
         const url = new URL(route('map'));
@@ -36,12 +46,24 @@ const Filter = ({ isOpen, tilsynObjects }: FilterProps) => {
             isInitialRender.current = false;
             return;
         }
+
+        // Update the URL with the new filter parameters
         router.visit(filterUrl, {
             preserveState: true,
             preserveScroll: true,
-            // replace: true,
         });
-    }, [filterUrl]);
+    }, [filterUrl, reset]);
+
+    const handleChangeFilter = (value: '' | 'tilsyn' | 'alle' | 'frist') => {
+        setFilterValue(value);
+        reset(); // Reset custom filter form data
+    };
+
+    const handleCenterObjects = () => {
+        if (tilsynLayerBounds) {
+            map.fitBounds(tilsynLayerBounds, { paddingTopLeft: [350, 0] });
+        }
+    };
 
     return (
         <SidebarSection title="Filtrer objekter" isOpen={isOpen}>
@@ -51,48 +73,35 @@ const Filter = ({ isOpen, tilsynObjects }: FilterProps) => {
                     name="filterTilsyn"
                     id="filterTilsyn"
                     value="tilsyn"
-                    onChange={() => setFilterValue('tilsyn')}
-                    checked
+                    onChange={() => handleChangeFilter('tilsyn')}
+                    checked={filterValue === 'tilsyn'}
                 />
                 <Radio
                     label="Vis både tilsynsobjekter og bygninger knytta til kommunalt avløp"
                     name="filterTilsyn"
                     id="filterAll"
                     value="all"
-                    onChange={() => setFilterValue('alle')}
+                    onChange={() => handleChangeFilter('alle')}
+                    checked={filterValue === 'alle'}
                 />
                 <Radio
                     label="Vis tilsynsobjekter der hvor fristen har gått ut"
                     name="filterTilsyn"
                     id="filterDeadline"
                     value="deadline"
-                    onChange={() => setFilterValue('frist')}
+                    onChange={() => handleChangeFilter('frist')}
+                    checked={filterValue === 'frist'}
                 />
             </div>
             <hr className={styles.horizontalLine} />
             <Heading level={3}>Egendefinerte filtre:</Heading>
-            <form className={styles.filterCustom}>
-                <FilterForm index={1} />
-                <fieldset className={styles.andOrNotFieldset}>
-                    {AND_OR_NOT_BUTTONS.map((button) => (
-                        <label className={styles.andOrNot} key={button.id} htmlFor={button.id}>
-                            {button.label}
-                            <input type="radio" id={button.id} name="radioOp" value={button.value} />
-                        </label>
-                    ))}
-                </fieldset>
-
-                <FilterForm index={2} />
-                <div className={styles.buttons}>
-                    <Button type="submit" onClick={() => console.log('Filter')}>
-                        Filtrer i database
-                    </Button>
-                    <Button onClick={() => console.log('Filter')}>Sentrer</Button>
-                </div>
-            </form>
-            <p className={styles.filterInfo}>
-                Antall filtrerte objekter: <span>{tilsynObjects?.features.length}</span>
-            </p>
+            <CustomFilterForm setRadioFilterValue={setFilterValue} data={data} setData={setData} post={post} />
+            <div className={styles.flex}>
+                <p className={styles.filterInfo}>
+                    Antall filtrerte objekter: <span>{tilsynObjects?.features.length}</span>
+                </p>
+                <ButtonLink onClick={handleCenterObjects}>Sentrer</ButtonLink>
+            </div>
         </SidebarSection>
     );
 };

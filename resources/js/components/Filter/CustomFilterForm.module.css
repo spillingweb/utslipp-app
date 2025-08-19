@@ -1,0 +1,23 @@
+.filterCustom {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.logOpFieldset {
+    display: flex;
+}
+
+.logOp {
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+
+    input {
+        display: none;
+    }
+
+    &:has(> input:checked) {
+        background-color: rgb(252, 241, 208);
+    }
+}

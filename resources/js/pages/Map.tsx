@@ -11,7 +11,7 @@ import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
 import { TilsynFormProvider } from '@/store/tilsyn-form-context';
 import { AddressData } from '@/types';
 import { Head } from '@inertiajs/react';
-import { LatLngLiteral } from 'leaflet';
+import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
@@ -21,6 +21,7 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
     const [sidebarTabOpen, setSidebarTabOpen] = useState<SidebarTab | null>('search');
     const [selectedPoint, setSelectedPoint] = useState<LatLngLiteral | null>(null);
     const [toolTip, setToolTip] = useState<AddressData | null>(null);
+    const [tilsynLayerBounds, setTilsynLayerBounds] = useState<LatLngBounds | null>(null);
 
     useEffect(() => {
         if (tilsynObjectsData) {
@@ -56,7 +57,7 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
                 <LayersControlConfig position="topright" />
                 <TilsynFormProvider>
                     {tilsynObjects && (
-                        <TilsynLayer features={tilsynObjects} setSelectedPoint={setSelectedPoint} setSidebarTabOpen={setSidebarTabOpen} />
+                        <TilsynLayer setTilsynLayerBounds={setTilsynLayerBounds} features={tilsynObjects} setSelectedPoint={setSelectedPoint} setSidebarTabOpen={setSidebarTabOpen} />
                     )}
                     {selectedPoint && (
                         <SelectCircle selectedPoint={selectedPoint} address={toolTip ? toolTip : undefined} setSidebarTabOpen={setSidebarTabOpen} />
@@ -68,7 +69,7 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
                             setToolTip={setToolTip}
                             setSidebarTabOpen={setSidebarTabOpen}
                         />
-                        <Filter isOpen={sidebarTabOpen === 'filter'} tilsynObjects={tilsynObjects} />
+                        <Filter isOpen={sidebarTabOpen === 'filter'} tilsynObjects={tilsynObjects} tilsynLayerBounds={tilsynLayerBounds} />
                         <Legend isOpen={sidebarTabOpen === 'legend'} />
                         <TilsynForm isOpen={sidebarTabOpen === 'tilsyn'} setSelectedPoint={setSelectedPoint} selectedPoint={selectedPoint} />
                     </Sidebar>
