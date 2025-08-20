@@ -127,7 +127,7 @@ const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
                         value={index === 1 ? formData.filterValue1 : formData.filterValue2}
                         onChange={(e) => setData(filterValue, e.target.value)}
                     >
-                        <option value="">Velg verdi</option>
+                        <option value="">{selectedField === 'project_id' ? 'Ingen prosjekt' : 'Velg verdi'}</option>
                         {selectedFieldOptions.map((option) => {
                             return (
                                 <option key={option.value} value={option.value}>
@@ -135,7 +135,6 @@ const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
                                 </option>
                             );
                         })}
-                        {selectedField === 'project_id' && <option value="null">Ingen prosjekt</option>}
                     </Select>
                 )
             ) : null}

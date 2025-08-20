@@ -29,7 +29,7 @@
 
 .sectionContent {
   padding: 1rem;
-  max-height: 85vh;
+  max-height: calc(100vh - 7rem);
   overflow-y: auto;
   overflow-x: hidden;
 }

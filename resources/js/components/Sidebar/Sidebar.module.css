@@ -22,3 +22,7 @@
     margin: 0;
     list-style: none;
 }
+
+.sidebarContent {
+    max-height: 100%;;
+}
