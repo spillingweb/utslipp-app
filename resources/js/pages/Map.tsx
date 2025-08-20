@@ -57,7 +57,12 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
                 <LayersControlConfig position="topright" />
                 <TilsynFormProvider>
                     {tilsynObjects && (
-                        <TilsynLayer setTilsynLayerBounds={setTilsynLayerBounds} features={tilsynObjects} setSelectedPoint={setSelectedPoint} setSidebarTabOpen={setSidebarTabOpen} />
+                        <TilsynLayer
+                            setTilsynLayerBounds={setTilsynLayerBounds}
+                            features={tilsynObjects}
+                            setSelectedPoint={setSelectedPoint}
+                            setSidebarTabOpen={setSidebarTabOpen}
+                        />
                     )}
                     {selectedPoint && (
                         <SelectCircle selectedPoint={selectedPoint} address={toolTip ? toolTip : undefined} setSidebarTabOpen={setSidebarTabOpen} />
@@ -69,9 +74,19 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
                             setToolTip={setToolTip}
                             setSidebarTabOpen={setSidebarTabOpen}
                         />
-                        <Filter isOpen={sidebarTabOpen === 'filter'} tilsynObjects={tilsynObjects} tilsynLayerBounds={tilsynLayerBounds} />
-                        <Legend isOpen={sidebarTabOpen === 'legend'} />
-                        <TilsynForm isOpen={sidebarTabOpen === 'tilsyn'} setSelectedPoint={setSelectedPoint} selectedPoint={selectedPoint} />
+                        <TilsynForm
+                            isOpen={sidebarTabOpen === 'tilsyn'}
+                            setSelectedPoint={setSelectedPoint}
+                            selectedPoint={selectedPoint}
+                            setSidebarTabOpen={setSidebarTabOpen}
+                        />
+                        <Filter
+                            isOpen={sidebarTabOpen === 'filter'}
+                            tilsynObjects={tilsynObjects}
+                            tilsynLayerBounds={tilsynLayerBounds}
+                            setSidebarTabOpen={setSidebarTabOpen}
+                        />
+                        <Legend isOpen={sidebarTabOpen === 'legend'} setSidebarTabOpen={setSidebarTabOpen} />
                     </Sidebar>
                 </TilsynFormProvider>
             </MapContainer>

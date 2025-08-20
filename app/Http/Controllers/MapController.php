@@ -46,24 +46,22 @@ class MapController extends Controller
         $filterValue2 = $request->input('filterValue2');
         $logicalOperator = $request->input('logicalOp');
 
-        $query = Tilsyn_object::query();
+        $filteredTilsynObjects = Tilsyn_object::where('status', '!=', 'O')
+            ->where(function ($query) use ($filterField1, $filterRelOp1, $filterValue1, $logicalOperator, $filterField2, $filterRelOp2, $filterValue2) {
+                $query->where($filterField1, $filterRelOp1, $filterValue1);
 
-        if ($logicalOperator === 'AND') {
-            $query->where($filterField1, $filterRelOp1, $filterValue1)
-                ->where($filterField2, $filterRelOp2, $filterValue2);
-        } elseif ($logicalOperator === 'OR') {
-            $query->where($filterField1, $filterRelOp1, $filterValue1)
-                ->orWhere($filterField2, $filterRelOp2, $filterValue2);
-        } elseif ($logicalOperator === 'AND NOT') {
-            $query->where($filterField1, $filterRelOp1, $filterValue1)
-                ->whereNot($filterField2, $filterRelOp2, $filterValue2);
-        } elseif ($logicalOperator === '') {
-            $query = Tilsyn_object::where($filterField1, $filterRelOp1, $filterValue1);
-        }
+                if ($logicalOperator && $filterField2 && $filterValue2) {
+                    if ($logicalOperator === 'AND') {
+                        $query->where($filterField2, $filterRelOp2, $filterValue2);
+                    } elseif ($logicalOperator === 'OR') {
+                        $query->orWhere($filterField2, $filterRelOp2, $filterValue2);
+                    } elseif ($logicalOperator === 'AND NOT') {
+                        $query->whereNot($filterField2, $filterRelOp2, $filterValue2);
+                    }
+                }
+            })->get();
 
-        $tilsynObjects = $query->get();
-
-        $features = $tilsynObjects->map(function ($item) {
+        $features = $filteredTilsynObjects->map(function ($item) {
             $geometry = DB::select("SELECT ST_AsGeoJSON(?) AS geojson", [$item->geom])[0]->geojson;
             $properties = $item->toArray();
             unset($properties['geom']);

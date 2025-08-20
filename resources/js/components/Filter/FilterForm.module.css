@@ -5,11 +5,3 @@
     flex-wrap: wrap;
     align-items: center;
 }
-
-.capitalize {
-    display: inline-block;
-}
-
-.capitalize::first-letter {
-    text-transform: uppercase;
-}

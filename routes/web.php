@@ -13,9 +13,9 @@ Route::redirect('/', 'login');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [MapController::class, 'index'])->name('map');
-    Route::post('/', [MapController::class, 'store'])->name('map.store');
     Route::post('/', [MapController::class, 'filter'])->name('map.filter');
-
+    
+    Route::post('/store', [MapController::class, 'store'])->name('map.store');
     Route::put('/update/{tilsyn_object}', [MapController::class, 'update'])->name('map.update');
     Route::delete('/delete/{tilsyn_object}', [MapController::class, 'destroy'])->name('map.destroy');
 });

@@ -14,16 +14,26 @@ type CustomFilterFormProps = {
         filterValue2: string;
     };
     setData: (field: string, value: string) => void;
-    post: (url: string, options?: { preserveState?: boolean; preserveScroll?: boolean; replace?: boolean } | undefined) => void;
+    post: (url: string, options?: { preserveState?: boolean; preserveScroll?: boolean; replace?: boolean, onSuccess?: () => void } | undefined) => void;
 };
 
 const CustomFilterForm = ({ setRadioFilterValue, data, setData, post }: CustomFilterFormProps) => {
 
     const handleCustomFilter = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(data);
-        setRadioFilterValue('');
-        post(route('map.filter'));
+
+        // Client-side validation
+        if (!data.filterField1 || !data.filterValue1) {
+            alert('Vennligst oppgi et gyldig filter');
+            return;
+        }
+
+        // Filter objects
+        post(route('map.filter'), {
+            onSuccess: () => {
+                setRadioFilterValue('');
+            }
+        });
     };
 
     return (
@@ -32,15 +42,36 @@ const CustomFilterForm = ({ setRadioFilterValue, data, setData, post }: CustomFi
             <fieldset className={styles.logOpFieldset}>
                 <label className={styles.logOp} htmlFor="and">
                     OG
-                    <input type="radio" id="and" name="logicalOp" value="AND" onChange={() => setData('logicalOp', 'AND')} />
+                    <input
+                        type="radio"
+                        id="and"
+                        name="logicalOp"
+                        value="AND"
+                        onChange={() => setData('logicalOp', 'AND')}
+                        checked={data.logicalOp === 'AND'}
+                    />
                 </label>
                 <label className={styles.logOp} htmlFor="or">
                     ELLER
-                    <input type="radio" id="or" name="logicalOp" value="OR" onChange={() => setData('logicalOp', 'OR')} />
+                    <input
+                        type="radio"
+                        id="or"
+                        name="logicalOp"
+                        value="OR"
+                        onChange={() => setData('logicalOp', 'OR')}
+                        checked={data.logicalOp === 'OR'}
+                    />
                 </label>
                 <label className={styles.logOp} htmlFor="and-not">
                     OG IKKE
-                    <input type="radio" id="and-not" name="logicalOp" value="AND NOT" onChange={() => setData('logicalOp', 'AND NOT')} />
+                    <input
+                        type="radio"
+                        id="and-not"
+                        name="logicalOp"
+                        value="AND NOT"
+                        onChange={() => setData('logicalOp', 'AND NOT')}
+                        checked={data.logicalOp === 'AND NOT'}
+                    />
                 </label>
             </fieldset>
             <FilterForm index={2} setData={setData} formData={data} />

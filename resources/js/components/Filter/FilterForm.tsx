@@ -44,9 +44,10 @@ const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
             text: 'Prosjekt',
             options: projects.map((project) => ({ value: project.id, text: `${project.id} - ${project.name}` })),
         },
-        { value: 'status', options: TILSYN_STATUS.map((status) => ({ value: status.value, text: status.text })) },
+        { value: 'status', text: 'Status', options: TILSYN_STATUS.map((status) => ({ value: status.value, text: status.text })) },
         {
             value: 'hjemmel',
+            text: 'Hjemmel',
             options: [
                 { value: '27-2', text: '§ 27-2 i plan- og bygningsloven (tilknytningsplikt)' },
                 { value: '7', text: '§ 7 i forurensningsloven (ulovlig forurensning)' },
@@ -56,9 +57,10 @@ const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
             ],
         },
         { value: 'saksbeh', text: 'Saksbehandler', options: users.map((user) => ({ value: user.name, text: user.name })) },
-        { value: 'frist' },
+        { value: 'frist', text: 'Frist' },
         {
             value: 'sone',
+            text: 'Sone',
             options: [
                 { value: '1', text: '1 - Steinsfjorden' },
                 { value: '2', text: '2 - Sogna' },
@@ -76,7 +78,7 @@ const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
         if (fieldInput === '') {
             setSelectedField('');
         }
-    }, [formData, index])
+    }, [formData, index]);
 
     const selectedFieldOptions = FILTER_SELECT_OPTIONS.find((option) => option.value === selectedField)?.options || [];
 
@@ -88,9 +90,14 @@ const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
 
     return (
         <fieldset id={`filterForm${index}`} className={styles.filterForm}>
-            <Select name={filterField} id={filterField} value={index === 1 ? formData.filterField1 : formData.filterField2} onChange={(e) => handleSelectField(e.target.value)} className={styles.capitalize}>
+            <Select
+                name={filterField}
+                id={filterField}
+                value={index === 1 ? formData.filterField1 : formData.filterField2}
+                onChange={(e) => handleSelectField(e.target.value)}
+            >
                 {FILTER_SELECT_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value} className={styles.capitalize}>
+                    <option key={option.value} value={option.value}>
                         {option.text || option.value}
                     </option>
                 ))}
@@ -103,29 +110,32 @@ const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
             >
                 <option value="=">=</option>
                 <option value="!=">!=</option>
-                <option value=">">&gt;</option>
-                <option value="<">&lt;</option>
+                {selectedField === 'frist' && (
+                    <>
+                        <option value=">">&gt;</option>
+                        <option value="<">&lt;</option>
+                    </>
+                )}
             </Select>
             {selectedField ? (
                 selectedField === 'frist' ? (
-                    <Input name={filterValue} id={filterValue} type="date" />
+                    <Input name={filterValue} id={filterValue} type="date" onChange={(e) => setData(filterValue, e.target.value)} />
                 ) : (
                     <Select
                         name={filterValue}
                         id={filterValue}
-                        className={styles.capitalize}
                         value={index === 1 ? formData.filterValue1 : formData.filterValue2}
                         onChange={(e) => setData(filterValue, e.target.value)}
                     >
                         <option value="">Velg verdi</option>
-                        {selectedField === 'project_id' && <option value="null">Ingen prosjekt</option>}
                         {selectedFieldOptions.map((option) => {
                             return (
-                                <option key={option.value} value={option.value} className={styles.capitalize}>
+                                <option key={option.value} value={option.value}>
                                     {option.text || option.value}
                                 </option>
                             );
                         })}
+                        {selectedField === 'project_id' && <option value="null">Ingen prosjekt</option>}
                     </Select>
                 )
             ) : null}

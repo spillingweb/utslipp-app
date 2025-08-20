@@ -8,14 +8,16 @@ import Heading from '../ui/Heading';
 import Radio from '../ui/Radio';
 import CustomFilterForm from './CustomFilterForm';
 import styles from './Filter.module.css';
+import { SidebarTab } from '../Sidebar/Sidebar';
 
 type FilterProps = {
     isOpen: boolean;
     tilsynObjects: GeoJSON.FeatureCollection | null;
     tilsynLayerBounds: LatLngBounds | null;
+    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
 };
 
-const Filter = ({ isOpen, tilsynObjects, tilsynLayerBounds }: FilterProps) => {
+const Filter = ({ isOpen, tilsynObjects, tilsynLayerBounds, setSidebarTabOpen }: FilterProps) => {
     const isInitialRender = useRef(true);
     const map = useMap();
 
@@ -47,12 +49,14 @@ const Filter = ({ isOpen, tilsynObjects, tilsynLayerBounds }: FilterProps) => {
             return;
         }
 
+        if (filterValue === '') return;
+
         // Update the URL with the new filter parameters
         router.visit(filterUrl, {
             preserveState: true,
             preserveScroll: true,
         });
-    }, [filterUrl, reset]);
+    }, [filterUrl, reset, filterValue]);
 
     const handleChangeFilter = (value: '' | 'tilsyn' | 'alle' | 'frist') => {
         setFilterValue(value);
@@ -66,10 +70,10 @@ const Filter = ({ isOpen, tilsynObjects, tilsynLayerBounds }: FilterProps) => {
     };
 
     return (
-        <SidebarSection title="Filtrer objekter" isOpen={isOpen}>
+        <SidebarSection title="Filtrer objekter" isOpen={isOpen} setSidebarTabOpen={setSidebarTabOpen}>
             <div className={styles.filterRadio}>
                 <Radio
-                    label="Vis bare tilsynsobjekter"
+                    label="Vis alle tilsynsobjekter (standard)"
                     name="filterTilsyn"
                     id="filterTilsyn"
                     value="tilsyn"

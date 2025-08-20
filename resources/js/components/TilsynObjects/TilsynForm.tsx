@@ -7,14 +7,16 @@ import Form from '../ui/Form';
 import { Input } from '../ui/Input';
 import styles from './TilsynForm.module.css';
 import TilsynFormFieldset from './TilsynFormFieldset';
+import { SidebarTab } from '../Sidebar/Sidebar';
 
 type TilsynFormProps = {
     isOpen: boolean;
     selectedPoint: LatLngLiteral | null;
     setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
+    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
 };
 
-const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint }: TilsynFormProps) => {
+const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint, setSidebarTabOpen }: TilsynFormProps) => {
     // Access the TilsynFormContext to get form data and properties
     const {
         data,
@@ -54,7 +56,7 @@ const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint }: TilsynFormProps
     const title = open ? `${data.gnr}/${data.bnr}${data.fnr ? `/${data.fnr}` : ''} ${data.adresse}` : 'Tilsynsobjekt';
 
     return (
-        <SidebarSection isOpen={isOpen} title={title}>
+        <SidebarSection isOpen={isOpen} title={title} setSidebarTabOpen={setSidebarTabOpen}>
             {open === false && (
                 <div>Velg et tilsynsobjekt på kartet for å vise/redigere, eller høyreklikk på en eiendom for å opprette et nytt tilsynsobjekt.</div>
             )}

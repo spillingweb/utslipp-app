@@ -1,10 +1,11 @@
 import { TILSYN_STATUS } from '../../lib/tilsynStatus';
+import { SidebarTab } from '../Sidebar/Sidebar';
 import SidebarSection from '../Sidebar/SidebarSection';
 import styles from './Legend.module.css';
 
-const Legend = ({ isOpen }: { isOpen: boolean }) => {
+const Legend = ({ isOpen, setSidebarTabOpen }: { isOpen: boolean, setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>> }) => {
     return (
-        <SidebarSection title="Tegnforklaring" isOpen={isOpen}>
+        <SidebarSection title="Tegnforklaring" isOpen={isOpen} setSidebarTabOpen={setSidebarTabOpen}>
             <ul className={styles.legend}>
                 {TILSYN_STATUS.map((status) => (
                     <li key={status.value}>

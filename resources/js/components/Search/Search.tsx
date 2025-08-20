@@ -77,7 +77,7 @@ const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: Sea
     }, [fetchedData, setTilsynFormProperties, setSidebarTabOpen, setSelectedPoint, setToolTip]);
 
     return (
-        <SidebarSection isOpen={isOpen} title="Søk i eiendommer">
+        <SidebarSection isOpen={isOpen} title="Søk i eiendommer" setSidebarTabOpen={setSidebarTabOpen}>
             {fetchedData && fetchedData.adresser.length > 1 && <SearchLayer addressArray={fetchedData.adresser} />}
             <SearchForm
                 searchFormValues={searchFormValues}
