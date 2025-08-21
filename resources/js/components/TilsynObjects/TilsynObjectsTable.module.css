@@ -2,11 +2,18 @@
     overflow-y: auto;
 }
 
-.textWrap {
-    text-wrap: wrap;
+.wrapText {
+    overflow-wrap: break-word;
     min-width: 15rem;
 }
 
 .center {
     text-align: center;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    align-items: center;
 }

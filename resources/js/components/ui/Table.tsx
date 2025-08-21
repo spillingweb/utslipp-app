@@ -2,30 +2,33 @@ import { ChevronsUpDown } from 'lucide-react';
 import styles from './Table.module.css';
 
 type TableProps = {
-    headers: string[];
-    sortable: boolean;
+    headers: { text: string; sortable: boolean }[];
+    id?: string;
+    ref?: React.RefObject<HTMLTableElement | null>;
     onHeaderClick?: (header: string) => void;
     children: React.ReactNode;
 };
 
-const Table = ({ headers, sortable = false, onHeaderClick, children }: TableProps) => {
+const Table = ({ headers, id, ref, onHeaderClick, children }: TableProps) => {
     return (
-        <table className={styles.table}>
+        <table className={styles.table} id={id} ref={ref}>
             <thead className={styles.thead}>
                 <tr>
                     {headers.map((header, i) => {
                         // If sortable is true and onHeaderClick is provided, add click handler
-                        if (sortable && onHeaderClick && header !== '') {
+                        if (header.sortable && onHeaderClick) {
                             return (
-                                <th key={i} onClick={() => onHeaderClick(header)} className={styles.sortable}>
-                                    <span>{header}</span>
-                                    <ChevronsUpDown size={14} className={styles.sortIcon} />
+                                <th key={i} onClick={() => onHeaderClick(header.text)} className={styles.sortable}>
+                                    <div>
+                                        {header.text}
+                                        <ChevronsUpDown size={14} className={styles.sortIcon} />
+                                    </div>
                                 </th>
                             );
                         }
-                        
+
                         // If not sortable, just return the header
-                        return <th key={i}>{header}</th>;
+                        return <th key={i}>{header.text}</th>;
                     })}
                 </tr>
             </thead>

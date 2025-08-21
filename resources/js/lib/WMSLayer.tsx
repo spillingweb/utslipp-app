@@ -58,6 +58,7 @@ const WMSLayer = ({ url, options, makePopupContent }: { url: string; options: WM
             .then((response) => (INFO_FORMATS_TEXT.includes(info_format) ? response.text() : response.json()))
             .then((data) => {
                 if (INFO_FORMATS_JSON.includes(info_format) && data.features.length === 0) return; // No features found
+                if (INFO_FORMATS_TEXT.includes(info_format) && data === '') return; // No data returned
 
                 if (info_format === 'application/vnd.ogc.gml') {
                     const geoJson: GeoJsonObject = parseGML(data);

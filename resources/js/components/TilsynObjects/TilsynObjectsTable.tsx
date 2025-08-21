@@ -10,9 +10,10 @@ type TilsynObjectsTableProps = {
     sortColumn: string;
     setSortColumn: React.Dispatch<React.SetStateAction<string>>;
     setSortDirection: React.Dispatch<React.SetStateAction<'asc' | 'desc'>>;
+    ref: React.RefObject<HTMLTableElement | null>;
 };
 
-const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortDirection }: TilsynObjectsTableProps) => {
+const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortDirection, ref }: TilsynObjectsTableProps) => {
     const handleDeleteTilsynsObject = (id: string) => {
         if (confirm(`Er du sikker på at du vil slette tilsynsobjektet? Det kan ikke angres.`)) {
             router.delete(route('tilsyn_object.destroy', id), {
@@ -32,24 +33,25 @@ const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortD
     return (
         <div className={styles.tableContainer}>
             <Table
+                ref={ref}
+                id="tilsynObjectsTable"
                 headers={[
-                    'Frist',
-                    'Saksbehandler',
-                    'Sone',
-                    'Prosjekt',
-                    'Gnr',
-                    'Bnr',
-                    'Adresse',
-                    'Status',
-                    'Hjemmel',
-                    'Kommentar',
-                    'Svarskjema',
-                    'KomTek',
-                    'Kontroll',
-                    'Arkiv',
-                    '',
+                    { text: 'Frist', sortable: true },
+                    { text: 'Saksbehandler', sortable: true },
+                    { text: 'Sone', sortable: true },
+                    { text: 'Prosjekt', sortable: true },
+                    { text: 'Gnr', sortable: true },
+                    { text: 'Bnr', sortable: true },
+                    { text: 'Adresse', sortable: true },
+                    { text: 'Status', sortable: true },
+                    { text: 'Hjemmel', sortable: true },
+                    { text: 'Kommentar', sortable: false },
+                    { text: 'Svarskjema', sortable: false },
+                    { text: 'KomTek', sortable: false },
+                    { text: 'Kontroll', sortable: false },
+                    { text: 'Arkiv', sortable: false },
+                    { text: '', sortable: false },
                 ]}
-                sortable
                 onHeaderClick={handleHeaderClick}
             >
                 {tilsynObjects.map((object) => (
@@ -68,11 +70,13 @@ const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortD
                         <td className={styles.wrapText}>{object.komtek}</td>
                         <td className={styles.wrapText}>{object.kontroll}</td>
                         <td className={styles.wrapText}>{object.arkiv}</td>
-                        <td className={styles.actions}>
-                            <TextLink href={route('tilsyn_object.edit', object.id)}>Endre</TextLink>
-                            <ButtonLink style={{ marginLeft: '1rem' }} onClick={() => handleDeleteTilsynsObject(object.id)}>
-                                Slett
-                            </ButtonLink>
+                        <td>
+                            <div className={styles.actions}>
+                                <TextLink href={route('tilsyn_object.edit', object.id)}>Endre</TextLink>
+                                <ButtonLink onClick={() => handleDeleteTilsynsObject(object.id)}>
+                                    Slett
+                                </ButtonLink>
+                            </div>
                         </td>
                     </tr>
                 ))}

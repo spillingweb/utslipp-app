@@ -1,6 +1,5 @@
 import FilterByProject from '@/components/TilsynObjects/FilterByProject';
 import TilsynObjectsTable from '@/components/TilsynObjects/TilsynObjectsTable';
-import Button from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import Pagination from '@/components/ui/Pagination';
 import AppLayout from '@/layouts/AppLayout';
@@ -9,6 +8,7 @@ import { Head, router } from '@inertiajs/react';
 import { X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './Index.module.css';
+import TableButtons from './TableButtons';
 
 type TilsynObjectsProps = {
     tilsynObjects: {
@@ -21,6 +21,7 @@ type TilsynObjectsProps = {
 
 const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps) => {
     const isInitialRender = useRef(true);
+    const tableRef = useRef<HTMLTableElement | null>(null);
 
     const [inputValue, setInputValue] = useState<string>(search);
     const [searchTerm, setSearchTerm] = useState<string>(search);
@@ -80,9 +81,7 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
                 <Input name="search" placeholder="Søk" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
                 <X size={16} className={styles.clearIcon} onClick={() => setInputValue('')} />
                 <FilterByProject selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
-                <Button onClick={() => console.log('Empty')}>Kopier til utklippstavle</Button>
-                <Button onClick={() => console.log('Empty')}>Eksporter til Excel</Button>
-                <Button onClick={() => console.log('Empty')}>Skriv ut</Button>
+                <TableButtons tilsynObjects={tilsynObjects.data} tableRef={tableRef} />
             </div>
             {tilsynObjects.data.length === 0 && (
                 <div className={styles.noResults}>
@@ -91,6 +90,7 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
             )}
             {tilsynObjects.data.length > 0 && (
                 <TilsynObjectsTable
+                    ref={tableRef}
                     tilsynObjects={tilsynObjects.data}
                     sortColumn={sortColumn}
                     setSortColumn={setSortColumn}

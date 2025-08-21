@@ -21,7 +21,7 @@ const CustomFilterForm = ({ setRadioFilterValue, data, setData, post }: CustomFi
 
     const handleCustomFilter = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(data);
+
         // Client-side validation
         if (!data.filterField1) {
             alert('Vennligst oppgi et gyldig filter');
