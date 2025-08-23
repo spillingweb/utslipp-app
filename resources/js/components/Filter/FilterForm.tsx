@@ -1,5 +1,5 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
-import { User } from '@/types';
+import { Data, User } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { Input } from '../ui/Input';
@@ -20,7 +20,7 @@ type FilterFormProps = {
 };
 
 const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
-    const { projects, users } = usePage<{ projects: { name: string; id: number }[]; users: User[] }>().props;
+    const { projects, users } = usePage<{ projects: { name: string; id: number }[]; users: Data<User> }>().props;
     const [selectedField, setSelectedField] = useState<string>('');
 
     const filterField = `filterField${index}`;
@@ -56,7 +56,7 @@ const FilterForm = ({ index, setData, formData }: FilterFormProps) => {
                 { value: 'other', text: 'Annen hjemmel' },
             ],
         },
-        { value: 'saksbeh', text: 'Saksbehandler', options: users.map((user) => ({ value: user.name, text: user.name })) },
+        { value: 'saksbeh', text: 'Saksbehandler', options: users.data.map((user) => ({ value: user.name, text: user.name })) },
         { value: 'frist', text: 'Frist' },
         {
             value: 'sone',

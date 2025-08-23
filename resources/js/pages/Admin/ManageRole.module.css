@@ -1,0 +1,11 @@
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.removeLink {
+    text-align: right;
+}

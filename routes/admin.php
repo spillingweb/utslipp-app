@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -9,12 +10,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('admin/opprett_bruker', [UserController::class, 'create'])->name('user.create');
     Route::post('admin/opprett_bruker', [UserController::class, 'store'])->name('user.store');
-
     Route::get('admin/rediger_bruker/{user}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('admin/rediger_bruker/{user}', [UserController::class, 'update'])->name('user.update');
-    
     Route::delete('admin/delete/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
-    Route::get('admin/rolle/{rolle}', [AdminController::class, 'showRole'])->name('admin.role.show');
-    Route::put('admin/rolle/{rolle}', [AdminController::class, 'updateRole'])->name('admin.role.update');
+    Route::get('admin/rolle/{role}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('admin/rolle/{role}/{user}', [RoleController::class, 'update'])->name('role.update');
+    Route::delete('admin/rolle/{role}/{user}', [RoleController::class, 'destroy'])->name('role.destroy');
 });

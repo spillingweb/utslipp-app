@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\UserResource;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Inspiring;
@@ -57,7 +58,7 @@ class HandleInertiaRequests extends Middleware
                 'error' => fn() => $request->session()->get('error'),
             ],
             'projects' => Project::all(),
-            'users' => User::all(),
+            'users' => UserResource::collection(User::all()),
 
         ];
     }

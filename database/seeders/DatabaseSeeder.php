@@ -13,18 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Karoline Hildre Spilling',
-            'email' => 'khspilling@gmail.com',
-        ]);
-        
-        User::factory(10)->create();
-
         $this->call([
+            UserSeeder::class,
             ProjectSeeder::class,
             TilsynObjectSeeder::class,
             RoleSeeder::class,
+            PermissionSeeder::class,
             RoleUserTableSeeder::class,
+            PermissionRoleTableSeeder::class,
         ]);
     }
 }

@@ -2,12 +2,12 @@ import RolesTable from '@/components/Admin/RolesTable';
 import UserTable from '@/components/Admin/UserTable';
 import Button from '@/components/ui/Button';
 import AppLayout from '@/layouts/AppLayout';
-import { Data, Role, User } from '@/types';
+import { Data, Role } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 import styles from './Index.module.css';
 
-const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
+const Index = ({ roles }: { roles: Data<Role> }) => {
     const [activeTab, setActiveTab] = useState('users');
 
     const handleCreateUser = () => {
@@ -34,7 +34,7 @@ const Index = ({ roles, users }: { roles: Data<Role>; users: Data<User> }) => {
                     + Legg til bruker
                 </Button>
             </div>
-            {activeTab === 'users' ? <UserTable users={users.data} /> : <RolesTable roles={roles.data} />}
+            {activeTab === 'users' ? <UserTable roles={roles.data} /> : <RolesTable roles={roles.data} />}
         </AppLayout>
     );
 };
