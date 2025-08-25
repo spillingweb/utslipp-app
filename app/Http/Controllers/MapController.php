@@ -3,22 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTilsynObjectRequest;
+use App\Http\Resources\TilsynObjectResource;
 use App\Models\Project;
 use App\Models\Tilsyn_object;
 use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class MapController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('tilsyn_object_show');
+
         $tilsynObjects = Tilsyn_object::filter($request)->get();
 
         $features = $tilsynObjects->map(function ($item) {
             $geometry = DB::select("SELECT ST_AsGeoJSON(?) AS geojson", [$item->geom])[0]->geojson;
-            $properties = $item->toArray();
+            $properties = (new TilsynObjectResource($item))->toArray(request());
             unset($properties['geom']);
 
             return [
@@ -38,6 +42,8 @@ class MapController extends Controller
 
     public function filter(Request $request)
     {
+        Gate::authorize('tilsyn_object_show');
+
         $filterField1 = $request->input('filterField1');
         $filterRelOp1 = $request->input('filterRelOp1');
         $filterValue1 = $request->input('filterValue1');
@@ -63,7 +69,7 @@ class MapController extends Controller
 
         $features = $filteredTilsynObjects->map(function ($item) {
             $geometry = DB::select("SELECT ST_AsGeoJSON(?) AS geojson", [$item->geom])[0]->geojson;
-            $properties = $item->toArray();
+            $properties = (new TilsynObjectResource($item))->toArray(request());
             unset($properties['geom']);
 
             return [
@@ -83,6 +89,8 @@ class MapController extends Controller
 
     public function store(StoreTilsynObjectRequest $request)
     {
+        Gate::authorize('tilsyn_object_edit');
+
         $tilsynObject = Tilsyn_object::create(
             ['geom' => DB::raw("ST_SetSRID(ST_GeomFromGeoJSON('{\"type\": \"Point\", \"coordinates\": [$request->lng, $request->lat]}'), 4326)"),]
             + $request->validated()
@@ -95,6 +103,8 @@ class MapController extends Controller
 
     public function update(StoreTilsynObjectRequest $request, Tilsyn_object $tilsynObject)
     {
+        Gate::authorize('tilsyn_object_edit');
+
         $tilsynObject->update($request->validated());
 
         return to_route('map')
@@ -103,18 +113,11 @@ class MapController extends Controller
 
     public function destroy(Tilsyn_object $tilsynObject)
     {
+        Gate::authorize('tilsyn_object_edit');
+
         $tilsynObject->delete();
 
         return to_route('map')
             ->with('success', 'Tilsynsobjektet ble slettet.');
     }
-
-    // public function filterByProject(Project $project)
-    // {
-    //     $tilsynObjects = Tilsyn_object::where('project_id', $project->id)->get();
-
-    //     return Inertia::render('Map', [
-    //         'tilsynObjectsData' => $tilsynObjects,
-    //     ]);
-    // }
 }

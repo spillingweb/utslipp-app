@@ -12,6 +12,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
@@ -25,6 +26,8 @@ class UserController extends Controller
      */
     public function create(): Response
     {
+        Gate::authorize('user_access');
+
         $roles = Role::all();
 
         return Inertia::render('Admin/CreateUser', [
@@ -39,6 +42,8 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        Gate::authorize('user_access');
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
@@ -59,6 +64,8 @@ class UserController extends Controller
 
     public function edit(User $user): Response
     {
+        Gate::authorize('user_access');
+
         $roles = Role::all();
 
         return Inertia::render('Admin/EditUser', [
@@ -69,6 +76,8 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
+        Gate::authorize('user_access');
+
         $user->fill($request->validated());
 
         if ($user->isDirty('email')) {
@@ -83,6 +92,8 @@ class UserController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
+        Gate::authorize('user_access');
+
         if (Auth::user()->id === $user->id) {
             return to_route('admin')
                 ->with('error', 'Du kan ikke slette deg selv.');

@@ -64,7 +64,7 @@ const TilsynFormContext = createContext<TilsynFormContextType>({
 });
 
 const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
-    const { data, setData, reset, processing, post, put, delete: destroy, cancel } = useForm<TilsynObject>(initialValues);
+    const { data, setData, reset, processing, post, put, delete: destroy, cancel, transform } = useForm<TilsynObject>(initialValues);
     const [tilsynFormProperties, setTilsynFormProperties] = useState<TilsynFormProperties>({
         open: false,
         disabled: true,
@@ -123,6 +123,10 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const updateTilsynObject = () => {
+        transform((data) => ({
+            ...data,
+            endret_av: auth.user.name,
+        }));
         put(route('map.update', data.id), {
             onError: (errors) => {
                 console.error('Error updating tilsyn object:', errors);

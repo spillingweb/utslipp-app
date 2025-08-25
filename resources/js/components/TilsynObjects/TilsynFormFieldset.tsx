@@ -1,5 +1,5 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
-import { TilsynObject, User } from '@/types';
+import { SharedData, TilsynObject } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { Input, TextArea } from '../ui/Input';
 import Select from '../ui/Select';
@@ -14,7 +14,7 @@ const TilsynFormFieldset = ({
     data: TilsynObject;
     setData: (field: keyof TilsynObject, value: unknown) => void;
 }) => {
-    const { projects, users } = usePage<{ projects: { name: string; id: number }[]; users: User[] }>().props;
+    const { projects, users } = usePage<SharedData>().props;
 
     let sone = data.sone.toString();
 
@@ -78,7 +78,7 @@ const TilsynFormFieldset = ({
 
             <label htmlFor="saksbeh">Saksbeh.</label>
             <Select id="saksbeh" value={data.saksbeh || ''} onChange={(e) => setData('saksbeh', e.target.value)}>
-                {users.map((user) => (
+                {users.data.map((user) => (
                     <option key={user.id} value={user.name}>
                         {user.name}
                     </option>

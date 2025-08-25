@@ -30,7 +30,16 @@ export interface SharedData {
     flash: {
         success?: string;
         error?: string;
-    }
+    };
+    projects: { name: string; id: number }[];
+    users: Data<User>;
+    can: {
+        project_show: boolean;
+        project_edit: boolean;
+        tilsyn_object_show: boolean;
+        tilsyn_object_edit: boolean;
+        user_access: boolean;
+    };
     [key: string]: unknown;
 }
 
@@ -67,7 +76,7 @@ export interface TilsynObject {
     hjemmel: string;
     project_id: string;
     [key: string]: unknown; // This allows for additional properties...
-};
+}
 
 interface AddressData {
     adressetekst: string;
@@ -80,7 +89,7 @@ interface AddressData {
         lat: number;
         lon: number;
     };
-};
+}
 
 export type SearchFormValues = {
     gardsnummer: string;

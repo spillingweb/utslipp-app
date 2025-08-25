@@ -15,22 +15,7 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             [
-                'name' => 'user_create',
-            ],
-            [
-                'name' => 'user_show',
-            ],
-            [
-                'name' => 'user_edit',
-            ],
-            [
-                'name' => 'user_delete',
-            ],
-            [
                 'name' => 'user_access',
-            ],
-            [
-                'name' => 'tilsyn_object_create',
             ],
             [
                 'name' => 'tilsyn_object_show',
@@ -39,7 +24,10 @@ class PermissionSeeder extends Seeder
                 'name' => 'tilsyn_object_edit',
             ],
             [
-                'name' => 'tilsyn_object_delete',
+                'name' => 'project_show',
+            ],
+            [
+                'name' => 'project_edit',
             ],
         ];
 

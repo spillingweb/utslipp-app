@@ -7,12 +7,15 @@ use App\Http\Resources\TilsynObjectResource;
 use App\Models\Tilsyn_object;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class TilsynObjectController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('tilsyn_object_show');
+
         $orderColumn = request('sort_by', 'frist'); // Default sort column
         $orderDirection = request('sort_direction', 'asc'); // Default sort direction
 
@@ -37,6 +40,8 @@ class TilsynObjectController extends Controller
 
     public function edit($id)
     {
+        Gate::authorize('tilsyn_object_edit');
+
         $tilsynObject = Tilsyn_object::findOrFail($id);
 
         return Inertia::render('TilsynObjects/EditTilsynObject', [
@@ -45,6 +50,8 @@ class TilsynObjectController extends Controller
     }
     public function update(StoreTilsynObjectRequest $request, Tilsyn_object $tilsynObject)
     {
+        Gate::authorize('tilsyn_object_edit');
+
         $tilsynObject->update($request->validated());
 
         return redirect()->route('tilsyn_objects')
@@ -53,6 +60,8 @@ class TilsynObjectController extends Controller
 
     public function destroy(Tilsyn_object $tilsynObject)
     {
+        Gate::authorize('tilsyn_object_edit');
+
         $tilsynObject->delete();
 
         return redirect()->route('tilsyn_objects')

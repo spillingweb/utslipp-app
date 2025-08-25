@@ -17,12 +17,13 @@ class PermissionRoleTableSeeder extends Seeder
         $adminPermissions = Permission::all();
         $editPermissions = Permission::whereIn('name', [
             'tilsyn_object_show',
-            'tilsyn_object_create',
             'tilsyn_object_edit',
-            'tilsyn_object_delete',
+            'project_show',
+            'project_edit',
         ])->get();
         $viewPermissions = Permission::whereIn('name', [
             'tilsyn_object_show',
+            'project_show',
         ])->get();
 
         Role::find(1)->permissions()->attach($adminPermissions);

@@ -7,12 +7,15 @@ use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class RoleController extends Controller
 {
     public function edit(Role $role)
     {
+        Gate::authorize('user_access');
+
         // Fetch users associated with the role
         $roleUsers = User::whereHas('roles', fn($query) => $query->where('roles.id', $role->id))->get();
         $otherUsers = User::whereDoesntHave('roles', fn($query) => $query->where('roles.id', $role->id))->get();
@@ -26,6 +29,8 @@ class RoleController extends Controller
 
     public function update(Request $request, Role $role, User $user)
     {
+        Gate::authorize('user_access');
+
         // Make sure you don't give yourself a different role
         if ($user->id === auth()->id()) {
             return redirect()->route('role.edit', $role)->with('error', 'Du kan ikke gi deg selv en annen rolle.');
@@ -42,6 +47,8 @@ class RoleController extends Controller
 
     public function destroy(Role $role, User $user)
     {
+        Gate::authorize('user_access');
+
         // Make sure you don't detach yourself
         if ($user->id === auth()->id()) {
             return redirect()->route('role.edit', $role)->with('error', 'Du kan ikke fjerne deg selv fra rollen.');
