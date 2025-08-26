@@ -12,7 +12,7 @@ const TilsynFormFieldset = ({
 }: {
     disabled: boolean;
     data: TilsynObject;
-    setData: (field: keyof TilsynObject, value: unknown) => void;
+    setData: (field: keyof TilsynObject, value: string | number | undefined) => void;
 }) => {
     const { projects, users } = usePage<SharedData>().props;
 

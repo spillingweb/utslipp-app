@@ -35,7 +35,7 @@ type TilsynFormProperties = {
 
 type TilsynFormContextType = {
     data: TilsynObject;
-    setData: (key: keyof TilsynObject, value: TilsynObject[keyof TilsynObject]) => void;
+    setData: (field: keyof TilsynObject, value: string | number | undefined) => void;
     tilsynFormProperties: TilsynFormProperties;
     setTilsynFormProperties: React.Dispatch<React.SetStateAction<TilsynFormProperties>>;
     startNewTilsyn: (address: AddressData, zone: number) => void;
@@ -80,6 +80,7 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
         const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst, representasjonspunkt } = address;
 
         setData({
+            id: '', // Add id property to satisfy TilsynObject type
             lat: representasjonspunkt.lat,
             lng: representasjonspunkt.lon,
             updated_at: '',
@@ -132,6 +133,8 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
                 console.error('Error updating tilsyn object:', errors);
             },
             onSuccess: () => {
+                setData('updated_at', new Date().toLocaleDateString());
+                setData('endret_av', auth.user.name);
                 setTilsynFormProperties({ open: true, disabled: true, mode: 'create' });
             },
         });

@@ -75,7 +75,7 @@ export interface TilsynObject {
     arkiv: string;
     hjemmel: string;
     project_id: string;
-    [key: string]: unknown; // This allows for additional properties...
+    [key: string]: string | number | undefined; // This allows for additional properties...
 }
 
 interface AddressData {

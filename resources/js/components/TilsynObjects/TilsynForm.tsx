@@ -93,11 +93,16 @@ const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint, setSidebarTabOpen
 
     return (
         <SidebarSection isOpen={isOpen} title={title} setSidebarTabOpen={setSidebarTabOpen}>
-            {open === false && (
-                <div>Velg et tilsynsobjekt på kartet for å vise/redigere, eller høyreklikk på en eiendom for å opprette et nytt tilsynsobjekt.</div>
-            )}
+            {open === false &&
+                (can.tilsyn_object_edit ? (
+                    <div>
+                        Velg et tilsynsobjekt på kartet for å vise/redigere, eller høyreklikk på en eiendom for å opprette et nytt tilsynsobjekt.
+                    </div>
+                ) : (
+                    <div>Klikk på et tilsynsobjekt på kartet for å se informasjon om eiendommen.</div>
+                ))}
             {open === true && (
-                <Form onSubmit={handleSubmitForm} >
+                <Form onSubmit={handleSubmitForm}>
                     <div hidden>
                         <label htmlFor="lat">Latitude</label>
                         <Input id="lat" type="number" value={selectedPoint?.lat || ''} readOnly disabled />

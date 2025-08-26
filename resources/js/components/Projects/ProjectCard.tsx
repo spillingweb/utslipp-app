@@ -1,6 +1,6 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
-import { TilsynObject } from '@/types';
-import { Link, router } from '@inertiajs/react';
+import { SharedData, TilsynObject } from '@/types';
+import { Link, router, usePage } from '@inertiajs/react';
 import { Trash2 } from 'lucide-react';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import Heading from '../ui/Heading';
@@ -13,6 +13,8 @@ type ProjectCardProps = {
 };
 
 const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
+    const { can } = usePage<SharedData>().props;
+
     const noObjects = objects.length;
     const noFinished = objects.filter((obj) => obj.status === 'F').length;
     const finishedPercentage = noObjects ? Math.round((noFinished / noObjects) * 100) : 0;
@@ -38,9 +40,11 @@ const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
         <li className={styles.projectCard}>
             <div className={styles.projectHeader}>
                 <Heading level={3}>{title}</Heading>
-                {id &&<button className={styles.deleteButton} title="Slett prosjekt">
-                    <Trash2 size={24} onClick={handleDeleteProject} />
-                </button>}
+                {can.project_edit &&id && (
+                    <button className={styles.deleteButton} title="Slett prosjekt">
+                        <Trash2 size={24} onClick={handleDeleteProject} />
+                    </button>
+                )}
             </div>
             <div className={styles.projectData}>
                 <p>{`Antall tilsynsobjekter: ${noObjects}`}</p>

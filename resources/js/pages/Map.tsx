@@ -55,7 +55,7 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
             >
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig position="topright" />
-                <TilsynFormProvider>
+                <TilsynFormProvider >
                     {tilsynObjects && (
                         <TilsynLayer
                             setTilsynLayerBounds={setTilsynLayerBounds}

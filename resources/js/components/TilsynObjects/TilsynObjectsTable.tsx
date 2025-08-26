@@ -1,5 +1,5 @@
-import { TilsynObject } from '@/types';
-import { router } from '@inertiajs/react';
+import { SharedData, TilsynObject } from '@/types';
+import { router, usePage } from '@inertiajs/react';
 import ButtonLink from '../ui/ButtonLink';
 import Table from '../ui/Table';
 import TextLink from '../ui/TextLink';
@@ -14,6 +14,8 @@ type TilsynObjectsTableProps = {
 };
 
 const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortDirection, ref }: TilsynObjectsTableProps) => {
+    const { can } = usePage<SharedData>().props;
+
     const handleDeleteTilsynsObject = (id: string) => {
         if (confirm(`Er du sikker på at du vil slette tilsynsobjektet? Det kan ikke angres.`)) {
             router.delete(route('tilsyn_object.destroy', id), {
@@ -70,14 +72,14 @@ const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortD
                         <td className={styles.wrapText}>{object.komtek}</td>
                         <td className={styles.wrapText}>{object.kontroll}</td>
                         <td className={styles.wrapText}>{object.arkiv}</td>
-                        <td>
-                            <div className={styles.actions}>
-                                <TextLink href={route('tilsyn_object.edit', object.id)}>Endre</TextLink>
-                                <ButtonLink onClick={() => handleDeleteTilsynsObject(object.id)}>
-                                    Slett
-                                </ButtonLink>
-                            </div>
-                        </td>
+                        {can.tilsyn_object_edit && (
+                            <td>
+                                <div className={styles.actions}>
+                                    <TextLink href={route('tilsyn_object.edit', object.id)}>Endre</TextLink>
+                                    <ButtonLink onClick={() => handleDeleteTilsynsObject(object.id)}>Slett</ButtonLink>
+                                </div>
+                            </td>
+                        )}
                     </tr>
                 ))}
             </Table>
