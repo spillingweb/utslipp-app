@@ -27,7 +27,7 @@ const Nav = () => {
                     Prosjekter
                 </Link>
                 {can.user_access && (
-                    <Link href="/admin" className={setClass(route().current('admin'))}>
+                    <Link href="/admin" className={setClass(route().current('admin.users') || route().current('admin.roles'))}>
                         Admin
                     </Link>
                 )}

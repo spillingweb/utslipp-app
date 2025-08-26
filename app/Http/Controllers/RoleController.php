@@ -44,19 +44,4 @@ class RoleController extends Controller
 
         return redirect()->route('role.edit', $role)->with('success', 'Brukeren ble lagt til i rollen ' . $role->name . '.');
     }
-
-    public function destroy(Role $role, User $user)
-    {
-        Gate::authorize('user_access');
-
-        // Make sure you don't detach yourself
-        if ($user->id === auth()->id()) {
-            return redirect()->route('role.edit', $role)->with('error', 'Du kan ikke fjerne deg selv fra rollen.');
-        }
-
-        // Detach the user from the role
-        $role->users()->detach($user->id);
-
-        return redirect()->route('role.edit', $role)->with('success', 'Brukeren ble fjernet fra rollen ' . $role->name . '.');
-    }
 }

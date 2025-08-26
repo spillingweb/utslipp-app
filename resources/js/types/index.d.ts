@@ -28,8 +28,8 @@ export interface SharedData {
     auth: Auth;
     ziggy: Config & { location: string };
     flash: {
-        success?: string;
-        error?: string;
+        success: string | undefined;
+        error: string | undefined;
     };
     projects: { name: string; id: number }[];
     users: Data<User>;

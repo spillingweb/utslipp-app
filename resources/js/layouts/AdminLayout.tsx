@@ -1,15 +1,9 @@
-import RolesTable from '@/components/Admin/RolesTable';
-import UserTable from '@/components/Admin/UserTable';
 import Button from '@/components/ui/Button';
 import AppLayout from '@/layouts/AppLayout';
-import { Data, Role } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { useState } from 'react';
-import styles from './Index.module.css';
+import styles from './AdminLayout.module.css';
 
-const Index = ({ roles }: { roles: Data<Role> }) => {
-    const [activeTab, setActiveTab] = useState('users');
-
+const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     const handleCreateUser = () => {
         router.get(route('user.create'));
     };
@@ -20,12 +14,18 @@ const Index = ({ roles }: { roles: Data<Role> }) => {
             <div className={styles.flexHeader}>
                 <ul className={styles.tabs}>
                     <li>
-                        <button className={`${styles.tab} ${activeTab === 'users' ? styles.activeTab : ''}`} onClick={() => setActiveTab('users')}>
+                        <button
+                            className={`${styles.tab} ${route().current('admin.users') ? styles.activeTab : ''}`}
+                            onClick={() => router.get(route('admin.users'))}
+                        >
                             Brukere
                         </button>
                     </li>
                     <li>
-                        <button className={`${styles.tab} ${activeTab === 'access' ? styles.activeTab : ''}`} onClick={() => setActiveTab('access')}>
+                        <button
+                            className={`${styles.tab} ${route().current('admin.roles') ? styles.activeTab : ''}`}
+                            onClick={() => router.get(route('admin.roles'))}
+                        >
                             Roller
                         </button>
                     </li>
@@ -34,9 +34,9 @@ const Index = ({ roles }: { roles: Data<Role> }) => {
                     + Legg til bruker
                 </Button>
             </div>
-            {activeTab === 'users' ? <UserTable roles={roles.data} /> : <RolesTable roles={roles.data} />}
+            {children}
         </AppLayout>
     );
 };
 
-export default Index;
+export default AdminLayout;

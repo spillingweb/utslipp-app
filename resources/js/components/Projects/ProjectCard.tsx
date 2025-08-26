@@ -60,7 +60,7 @@ const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
                     </PieChart>
                 </figure>
                 <Link href={`tilsynsobjekter?project_id=${id ? id : 'null'}`}>Se tabell</Link>
-                <a href="#">Vis i kart</a>
+                <Link href={`/?filter=${id ? `project:${id}` : 'ingen_prosjekt'}`}>Vis i kart</Link>
             </div>
         </li>
     );

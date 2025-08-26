@@ -9,12 +9,6 @@ import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 import styles from './ManageRole.module.css';
 
-// const ROLE_RADIO_OPTIONS = [
-//     { label: 'Administrator og redigering', value: 'admin' },
-//     { label: 'Kun redigering', value: 'redigering' },
-//     { label: 'Kun innsyn', value: 'innsyn' },
-// ];
-
 const ManageRole = ({ role, roleUsers, otherUsers }: { role: { data: Role }; roleUsers: Data<User>; otherUsers: Data<User> }) => {
     const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
@@ -24,44 +18,41 @@ const ManageRole = ({ role, roleUsers, otherUsers }: { role: { data: Role }; rol
         router.put(route('role.update', { role: role.data.id, user: selectedUser }));
     };
 
-    const handleRemoveUserFromRole = (userId: number) => {
-        router.delete(route('role.destroy', { role: role.data.id, user: userId }));
-    };
-
     return (
         <AppLayout>
             <Head title={`Rolle ${role.data.name}`} />
-            <Heading level={2} className="mb-large">
-                {role.data.name} - administrer brukere i rollen
+            <Heading level={2} className="mb-medium">
+                {role.data.name} - administrer brukere
             </Heading>
-            <Table
-                headers={[
-                    { text: 'Navn', sortable: false },
-                    { text: 'E-post', sortable: false },
-                    { text: '', sortable: false },
-                ]}
-            >
-                {roleUsers.data.map((user) => (
-                    <tr key={user.id}>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td className={styles.removeLink}>
-                            <ButtonLink onClick={() => handleRemoveUserFromRole(user.id)}>Fjern fra rolle</ButtonLink>
-                        </td>
-                    </tr>
-                ))}
-            </Table>
-            <form className={styles.selectContainer} onSubmit={handleAddUserToRole}>
-                <Select onChange={(e) => setSelectedUser(e.target.value)}>
-                    <option value="">Velg bruker</option>
-                    {otherUsers.data.map((user) => (
-                        <option key={user.id} value={user.id}>
-                            {user.name}
-                        </option>
+            <div className={styles.back}>
+                <ButtonLink onClick={() => router.visit(route('admin.roles'))}>Tilbake til roller</ButtonLink>
+            </div>
+            <div className={styles.flexContainer}>
+                <Table
+                    headers={[
+                        { text: 'Navn', sortable: false },
+                        { text: 'E-post', sortable: false },
+                    ]}
+                >
+                    {roleUsers.data.map((user) => (
+                        <tr key={user.id}>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                        </tr>
                     ))}
-                </Select>
-                <Button>Legg til i rollen {role.data.name}</Button>
-            </form>
+                </Table>
+                <form className={styles.selectContainer} onSubmit={handleAddUserToRole}>
+                    <Select onChange={(e) => setSelectedUser(e.target.value)} required>
+                        <option value="">Velg bruker</option>
+                        {otherUsers.data.map((user) => (
+                            <option key={user.id} value={user.id}>
+                                {user.name}
+                            </option>
+                        ))}
+                    </Select>
+                    <Button>Legg til i rollen {role.data.name}</Button>
+                </form>
+            </div>
         </AppLayout>
     );
 };

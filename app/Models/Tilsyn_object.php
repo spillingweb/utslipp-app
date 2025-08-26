@@ -63,4 +63,15 @@ class Tilsyn_object extends Model
             };
         });
     }
+
+    public function scopeProject(Builder $query, Request $request)
+    {
+        if (!$request->has('project_id')) {
+            return $query->where('status', '!=', 'O');
+        }
+
+        return $query->when($request->input('project_id'), function ($query) use ($request) {
+           return $query->where('project_id', $request->input('project_id'));
+        });
+    }
 }

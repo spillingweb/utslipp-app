@@ -31,10 +31,10 @@ const Sidebar = ({ tabOpen, setTabOpen, children }: SidebarProps) => {
         <div className={styles.sidebar} ref={sidebarRef}>
             <nav aria-label="Map sidebar navigation">
                 <ul className={styles.navTabs}>
-                    <SidebarLink onClick={() => handleClickOnSidebarNav('search')} isActive={tabOpen === 'search'} icon={<SearchIcon size={20} />} />
-                    <SidebarLink onClick={() => handleClickOnSidebarNav('tilsyn')} isActive={tabOpen === 'tilsyn'} icon={<HouseIcon size={20} />} />
-                    <SidebarLink onClick={() => handleClickOnSidebarNav('filter')} isActive={tabOpen === 'filter'} icon={<FilterIcon size={20} />} />
-                    <SidebarLink onClick={() => handleClickOnSidebarNav('legend')} isActive={tabOpen === 'legend'} icon={<ListIcon size={20} />} />
+                    <SidebarLink tabIndex={0} onClick={() => handleClickOnSidebarNav('search')} isActive={tabOpen === 'search'} icon={<SearchIcon size={20} />} />
+                    <SidebarLink tabIndex={1} onClick={() => handleClickOnSidebarNav('tilsyn')} isActive={tabOpen === 'tilsyn'} icon={<HouseIcon size={20} />} />
+                    <SidebarLink tabIndex={2} onClick={() => handleClickOnSidebarNav('filter')} isActive={tabOpen === 'filter'} icon={<FilterIcon size={20} />} />
+                    <SidebarLink tabIndex={3} onClick={() => handleClickOnSidebarNav('legend')} isActive={tabOpen === 'legend'} icon={<ListIcon size={20} />} />
                 </ul>
             </nav>
             <div className={styles.sidebarContent}>{children}</div>

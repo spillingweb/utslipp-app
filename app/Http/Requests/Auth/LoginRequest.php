@@ -32,6 +32,15 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Vennligst oppgi en e-postadresse.',
+            'email.email' => 'Vennligst oppgi en gyldig e-postadresse.',
+            'password.required' => 'Vennligst oppgi et passord.',
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *
@@ -45,7 +54,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => 'Det ser ikke ut som om e-postadressen og passordet stemmer overens med våre registre. Vennligst prøv igjen.',
             ]);
         }
 

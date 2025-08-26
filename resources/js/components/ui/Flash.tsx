@@ -6,8 +6,8 @@ const Flash = ({
     message,
 }: {
     message: {
-        success: string | null;
-        error: string | null;
+        success: string | undefined;
+        error: string | undefined;
     };
 }) => {
     const [flashVisible, setFlashVisible] = useState(true);
@@ -16,7 +16,7 @@ const Flash = ({
         setFlashVisible(true);
         const timer = setTimeout(() => {
             setFlashVisible(false);
-        }, 3000); // Hide flash after 5 seconds
+        }, 3000); // Hide flash after 3 seconds
 
         return () => clearTimeout(timer); // Cleanup timer on unmount
     }, [message]);

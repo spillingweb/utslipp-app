@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
@@ -10,12 +11,9 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -40,25 +38,23 @@ class UserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         Gate::authorize('user_access');
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
+        // Create user after validation by rules in StoreUserRequest
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        // Attach role to user
+        $user->roles()->attach($request->role);
+
         event(new Registered($user));
 
-        return to_route('admin')
+        return to_route('admin.users')
             ->with('success', 'Brukeren ble opprettet.');
     }
 
@@ -86,7 +82,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return to_route('admin')
+        return to_route('admin.users')
             ->with('success', 'Brukeren ble oppdatert.');
     }
 
@@ -95,13 +91,13 @@ class UserController extends Controller
         Gate::authorize('user_access');
 
         if (Auth::user()->id === $user->id) {
-            return to_route('admin')
+            return to_route('admin.users')
                 ->with('error', 'Du kan ikke slette deg selv.');
         }
 
         $user->delete();
 
-        return to_route('admin')
+        return to_route('admin.users')
             ->with('success', 'Brukeren ble slettet.');
     }
 }

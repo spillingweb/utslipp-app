@@ -1,5 +1,5 @@
 @view-transition {
-  navigation: auto;
+    navigation: auto;
 }
 
 .input {
@@ -15,4 +15,15 @@
 .cta {
     display: flex;
     justify-content: space-between;
+}
+
+.radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    p {
+        font-weight: 600;
+        margin: 0;
+    }
 }

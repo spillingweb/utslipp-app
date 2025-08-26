@@ -6,15 +6,16 @@ use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
-    Route::get('admin', [AdminController::class, 'index'])->name('admin');
+    Route::redirect('admin', 'admin/brukere');
+    Route::get('admin/brukere', [AdminController::class, 'index'])->name('admin.users');
+    Route::delete('admin/brukere/slett/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
-    Route::get('admin/opprett_bruker', [UserController::class, 'create'])->name('user.create');
-    Route::post('admin/opprett_bruker', [UserController::class, 'store'])->name('user.store');
-    Route::get('admin/rediger_bruker/{user}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('admin/rediger_bruker/{user}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('admin/delete/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('admin/brukere/opprett', [UserController::class, 'create'])->name('user.create');
+    Route::post('admin/brukere/opprett', [UserController::class, 'store'])->name('user.store');
+    Route::get('admin/brukere/rediger/{user}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('admin/brukere/rediger/{user}', [UserController::class, 'update'])->name('user.update');
 
-    Route::get('admin/rolle/{role}', [RoleController::class, 'edit'])->name('role.edit');
-    Route::put('admin/rolle/{role}/{user}', [RoleController::class, 'update'])->name('role.update');
-    Route::delete('admin/rolle/{role}/{user}', [RoleController::class, 'destroy'])->name('role.destroy');
+    Route::get('admin/roller', [AdminController::class, 'roles'])->name('admin.roles');
+    Route::get('admin/roller/{role}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('admin/roller/{role}/{user}', [RoleController::class, 'update'])->name('role.update');
 });

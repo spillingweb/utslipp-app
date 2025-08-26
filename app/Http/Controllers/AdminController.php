@@ -14,13 +14,19 @@ use Inertia\Inertia;
 class AdminController extends Controller
 {
 
-    public function index()
+      public function index()
+    {
+        Gate::authorize('user_access');
+
+        return Inertia::render('Admin/Users');
+    }
+    public function roles()
     {
         Gate::authorize('user_access');
 
         $roles = Role::all();
 
-        return Inertia::render('Admin/Index', [
+        return Inertia::render('Admin/Roles', [
             'roles' => RoleResource::collection($roles),
         ]);
     }

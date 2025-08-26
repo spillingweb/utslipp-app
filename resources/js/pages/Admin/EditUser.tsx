@@ -6,19 +6,17 @@ import AppLayout from '@/layouts/AppLayout';
 import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import styles from './CreateUser.module.css';
-import { Data, Role, User } from '@/types';
+import { User } from '@/types';
 
 type RegisterForm = {
     name: string;
     email: string;
-    role: string;
 };
 
-const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
+const EditUser = ({ user }: { user: { data: User } }) => {
     const { data, setData, put, processing, errors, cancel } = useForm<Required<RegisterForm>>({
         name: user.data.name,
         email: user.data.email,
-        role: user.data.role as string,
     });
 
     const handleSubmit: FormEventHandler = (e) => {
@@ -32,7 +30,7 @@ const EditUser = ({ user }: { roles: Data<Role>; user: { data: User } }) => {
 
     const handleCancel = () => {
         cancel();
-        router.get(route('admin'));
+        router.get(route('admin.users'));
     };
 
     return (

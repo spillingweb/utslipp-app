@@ -1,11 +1,24 @@
 .selectContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
-    margin-top: 2rem;
 }
 
 .removeLink {
     text-align: right;
+}
+
+.back {
+    margin-bottom: 1rem;
+}
+
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    table {
+        flex: 1;
+        min-width: fit-content;
+    }
 }

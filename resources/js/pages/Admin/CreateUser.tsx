@@ -2,7 +2,9 @@ import InputError from '@/components/InputError';
 import Button from '@/components/ui/Button';
 import FormCard from '@/components/ui/FormCard';
 import { Input } from '@/components/ui/Input';
+import Radio from '@/components/ui/Radio';
 import AppLayout from '@/layouts/AppLayout';
+import { Data, Role } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import styles from './CreateUser.module.css';
@@ -15,7 +17,7 @@ type RegisterForm = {
     role: string;
 };
 
-const CreateUser = () => {
+const CreateUser = ({ roles }: { roles: Data<Role> }) => {
     const { data, setData, post, processing, errors, reset, cancel } = useForm<Required<RegisterForm>>({
         name: '',
         email: '',
@@ -34,7 +36,7 @@ const CreateUser = () => {
     const handleCancel = () => {
         reset();
         cancel();
-        router.get(route('admin'));
+        router.get(route('admin.users'));
     };
 
     return (
@@ -48,7 +50,6 @@ const CreateUser = () => {
                         type="text"
                         required
                         autoFocus
-                        tabIndex={1}
                         autoComplete="name"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
@@ -61,7 +62,6 @@ const CreateUser = () => {
                         id="email"
                         type="email"
                         required
-                        tabIndex={2}
                         autoComplete="email"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
@@ -75,7 +75,6 @@ const CreateUser = () => {
                         id="password"
                         type="password"
                         required
-                        tabIndex={3}
                         autoComplete="current-password"
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
@@ -89,7 +88,6 @@ const CreateUser = () => {
                         id="password_confirmation"
                         type="password"
                         required
-                        tabIndex={4}
                         autoComplete="new-password"
                         value={data.password_confirmation}
                         onChange={(e) => setData('password_confirmation', e.target.value)}
@@ -98,11 +96,26 @@ const CreateUser = () => {
                     <InputError message={errors.password_confirmation} />
                 </fieldset>
 
+                <fieldset className={styles.radioGroup}>
+                    <p>Velg rolle</p>
+                    {roles.data.map((role) => (
+                        <Radio
+                            key={role.id}
+                            value={data.role}
+                            label={role.name}
+                            id={role.name}
+                            name="role"
+                            onChange={() => setData('role', role.id.toString())}
+                        />
+                    ))}
+                    <InputError message={errors.role} />
+                </fieldset>
+
                 <div className={styles.cta}>
-                    <Button type="submit" tabIndex={5}>
+                    <Button type="submit">
                         Opprett bruker
                     </Button>
-                    <Button variant="secondary" type="reset" onClick={() => handleCancel()} tabIndex={4}>
+                    <Button variant="secondary" type="reset" onClick={() => handleCancel()}>
                         Avbryt
                     </Button>
                 </div>
