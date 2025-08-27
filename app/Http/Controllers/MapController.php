@@ -40,6 +40,33 @@ class MapController extends Controller
         ]);
     }
 
+    public function project(Request $request, Project $project)
+    {
+        Gate::authorize('tilsyn_object_show');
+
+        $tilsynObjects = Tilsyn_object::filter($request)->get();
+
+        $features = $tilsynObjects->map(function ($item) {
+            $geometry = DB::select("SELECT ST_AsGeoJSON(?) AS geojson", [$item->geom])[0]->geojson;
+            $properties = (new TilsynObjectResource($item))->toArray(request());
+            unset($properties['geom']);
+
+            return [
+                'type' => 'Feature',
+                'geometry' => json_decode($geometry),
+                'properties' => $properties,
+            ];
+        });
+
+        return Inertia::render('Map', [
+            'tilsynObjectsData' => [
+                'type' => 'FeatureCollection',
+                'features' => $features,
+            ],
+            'projectToShow' => $project->id,
+        ]);
+    }
+
     public function filter(Request $request)
     {
         Gate::authorize('tilsyn_object_show');

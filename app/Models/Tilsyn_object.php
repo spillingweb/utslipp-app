@@ -41,7 +41,7 @@ class Tilsyn_object extends Model
             return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'], 'ilike', '%' . $request->input('search') . '%');
         })
             ->when($request->input('project_id'), function ($query) use ($request) {
-                if ($request->input('project_id') === 'null') {
+                if ($request->input('project_id') === 'ingen') {
                     return $query->whereNull('project_id');
                 }
                 return $query->where('project_id', $request->input('project_id'));

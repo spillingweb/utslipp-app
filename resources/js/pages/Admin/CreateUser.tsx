@@ -101,11 +101,12 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                     {roles.data.map((role) => (
                         <Radio
                             key={role.id}
-                            value={data.role}
+                            value={role.name}
                             label={role.name}
                             id={role.name}
                             name="role"
                             onChange={() => setData('role', role.id.toString())}
+                            checked={data.role === role.id.toString()}
                         />
                     ))}
                     <InputError message={errors.role} />

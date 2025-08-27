@@ -1,16 +1,18 @@
+import { use } from 'react';
 import Heading from '../ui/Heading';
-import { SidebarTab } from './Sidebar';
 import styles from './SidebarSection.module.css';
 import {ChevronLeft} from 'lucide-react';
+import { SidebarContext } from '@/store/sidebar-context';
 
 type SidebarSectionProps = {
     isOpen: boolean;
     title: string;
-    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
     children: React.ReactNode;
 };
 
-const SidebarSection = ({ isOpen, title, children, setSidebarTabOpen }: SidebarSectionProps) => {
+const SidebarSection = ({ isOpen, title, children }: SidebarSectionProps) => {
+    const { setSidebarTabOpen } = use(SidebarContext);
+
     let sectionClass = styles.section;
 
     if (isOpen) {

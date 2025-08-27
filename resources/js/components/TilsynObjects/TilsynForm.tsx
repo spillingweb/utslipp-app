@@ -1,9 +1,9 @@
+import { SelectedPointContext } from '@/store/selected-point-context';
+import { SidebarContext } from '@/store/sidebar-context';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
-import { LatLngLiteral } from 'leaflet';
 import { use } from 'react';
-import { SidebarTab } from '../Sidebar/Sidebar';
 import SidebarSection from '../Sidebar/SidebarSection';
 import Button from '../ui/Button';
 import Form from '../ui/Form';
@@ -11,15 +11,10 @@ import { Input } from '../ui/Input';
 import styles from './TilsynForm.module.css';
 import TilsynFormFieldset from './TilsynFormFieldset';
 
-type TilsynFormProps = {
-    isOpen: boolean;
-    selectedPoint: LatLngLiteral | null;
-    setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
-    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
-};
-
-const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint, setSidebarTabOpen }: TilsynFormProps) => {
+const TilsynForm = () => {
     const { can } = usePage<SharedData>().props;
+    const { selectedPoint, setSelectedPoint } = use(SelectedPointContext);
+    const { sidebarTabOpen } = use(SidebarContext);
 
     // Access the TilsynFormContext to get form data and properties
     const {
@@ -92,7 +87,7 @@ const TilsynForm = ({ isOpen, setSelectedPoint, selectedPoint, setSidebarTabOpen
     };
 
     return (
-        <SidebarSection isOpen={isOpen} title={title} setSidebarTabOpen={setSidebarTabOpen}>
+        <SidebarSection isOpen={sidebarTabOpen === 'tilsyn'} title={title}>
             {open === false &&
                 (can.tilsyn_object_edit ? (
                     <div>

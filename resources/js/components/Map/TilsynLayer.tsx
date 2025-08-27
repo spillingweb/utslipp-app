@@ -1,29 +1,31 @@
 import { returnTilsynMarker } from '@/lib/layerStyles';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { TilsynObject } from '@/types';
-import { GeoJSON as GeoJSONtype, LatLngBounds, LatLngLiteral } from 'leaflet';
+import { GeoJSON as GeoJSONtype, LatLngBounds } from 'leaflet';
 import { use, useEffect, useRef } from 'react';
 import { GeoJSON, useMap } from 'react-leaflet';
-import { SidebarTab } from '../Sidebar/Sidebar';
+import { SelectedPointContext } from '@/store/selected-point-context';
+import { SidebarContext } from '@/store/sidebar-context';
 
 type TilsynLayerProps = {
     features: GeoJSON.FeatureCollection;
-    setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
-    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
     setTilsynLayerBounds: React.Dispatch<React.SetStateAction<LatLngBounds | null>>;
 };
 
-const TilsynLayer = ({ features, setSelectedPoint, setSidebarTabOpen, setTilsynLayerBounds }: TilsynLayerProps) => {
+const TilsynLayer = ({ features, setTilsynLayerBounds }: TilsynLayerProps) => {
     const { setData, setTilsynFormProperties } = use(TilsynFormContext);
-    const tilsynRef = useRef<GeoJSONtype | null>(null);
+    const { setSelectedPoint } = use(SelectedPointContext);
+    const { setSidebarTabOpen } = use(SidebarContext);
+
+    const tilsynLayerRef = useRef<GeoJSONtype | null>(null);
     const map = useMap();
 
     useEffect(() => {
-        if (!tilsynRef.current) return;
+        if (!tilsynLayerRef.current) return;
 
-        tilsynRef.current.clearLayers(); // Clear previous layers
-        tilsynRef.current.addData(features); // Add new features
-        setTilsynLayerBounds(tilsynRef.current.getBounds()); // Update bounds
+        tilsynLayerRef.current.clearLayers(); // Clear previous layers
+        tilsynLayerRef.current.addData(features); // Add new features
+        setTilsynLayerBounds(tilsynLayerRef.current.getBounds()); // Update bounds
 
     }, [features, setTilsynLayerBounds]);
 
@@ -52,7 +54,7 @@ const TilsynLayer = ({ features, setSelectedPoint, setSidebarTabOpen, setTilsynL
                     layer.on('click', () => handleTilsynClick(feature as GeoJSON.Feature<GeoJSON.Point>));
                 }
             }}
-            ref={tilsynRef}
+            ref={tilsynLayerRef}
         />
     );
 };

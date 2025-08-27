@@ -1,26 +1,25 @@
 import { useFetch } from '@/hooks/useFetch';
 import { fetchPositionData } from '@/lib/http';
+import { SelectedPointContext } from '@/store/selected-point-context';
+import { SidebarContext } from '@/store/sidebar-context';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
 import { AddressData, SearchFormValues } from '@/types';
-import { LatLngLiteral } from 'leaflet';
 import { use, useEffect, useState } from 'react';
 import { useMapEvents } from 'react-leaflet';
 import SearchLayer from '../Map/SearchLayer';
-import { SidebarTab } from '../Sidebar/Sidebar';
 import SidebarSection from '../Sidebar/SidebarSection';
 import ResultsList from './ResultsList';
 import styles from './Search.module.css';
 import SearchForm from './SearchForm';
 
 type SearchProps = {
-    isOpen: boolean;
-    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
-    setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
     setToolTip: React.Dispatch<React.SetStateAction<AddressData | null>>;
 };
 
-const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: SearchProps) => {
+const Search = ({ setToolTip }: SearchProps) => {
     const { setTilsynFormProperties } = use(TilsynFormContext);
+    const { setSelectedPoint } = use(SelectedPointContext);
+    const { setSidebarTabOpen, sidebarTabOpen } = use(SidebarContext);
 
     // Fetch data, status and fetch function from custom fetch hook
     const { loading, setFetchedData, fetchedData, error, fetchData } = useFetch<{
@@ -77,15 +76,9 @@ const Search = ({ isOpen, setSidebarTabOpen, setSelectedPoint, setToolTip }: Sea
     }, [fetchedData, setTilsynFormProperties, setSidebarTabOpen, setSelectedPoint, setToolTip]);
 
     return (
-        <SidebarSection isOpen={isOpen} title="Søk i eiendommer" setSidebarTabOpen={setSidebarTabOpen}>
+        <SidebarSection isOpen={sidebarTabOpen === 'search'} title="Søk i eiendommer">
             {fetchedData && fetchedData.adresser.length > 1 && <SearchLayer addressArray={fetchedData.adresser} />}
-            <SearchForm
-                searchFormValues={searchFormValues}
-                setSearchFormValues={setSearchFormValues}
-                fetchData={fetchData}
-                setSelectedPoint={setSelectedPoint}
-                loading={loading}
-            />
+            <SearchForm searchFormValues={searchFormValues} setSearchFormValues={setSearchFormValues} fetchData={fetchData} loading={loading} />
             <div className={styles.resultsContainer}>
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {fetchedData && <ResultsList addressArray={fetchedData.adresser} setFetchedData={setFetchedData} />}

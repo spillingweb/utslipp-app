@@ -6,11 +6,11 @@
     display: flex;
     gap: 0.5rem;
     justify-content: space-between;
-    margin-bottom: 1rem;
 }
 
 .lastUpdated {
     font-size: 0.9rem;
     color: #666;
     margin-top: 0;
+    margin: 0;
 }

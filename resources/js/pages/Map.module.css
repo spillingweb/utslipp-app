@@ -14,3 +14,14 @@
     height: 100%;
     width: 100%;
 }
+
+.filterByProject {
+    position: absolute;
+    bottom: 3rem;
+    right: 10px;
+    z-index: 10000;
+    background: white;
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}

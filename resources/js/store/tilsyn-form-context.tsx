@@ -117,8 +117,8 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
                 console.error('Error storing tilsyn object:', errors);
             },
             onSuccess: () => {
-                setTilsynFormProperties({ open: false, disabled: true, mode: 'create' });
-                reset(); // Reset form data after successful submission
+                setTilsynFormProperties({ open: true, disabled: true, mode: 'create' });
+                setData('updated_at', new Date().toLocaleDateString());
             },
         });
     };
@@ -133,8 +133,8 @@ const TilsynFormProvider = ({ children }: { children: React.ReactNode }) => {
                 console.error('Error updating tilsyn object:', errors);
             },
             onSuccess: () => {
-                setData('updated_at', new Date().toLocaleDateString());
                 setData('endret_av', auth.user.name);
+                setData('updated_at', new Date().toLocaleDateString());
                 setTilsynFormProperties({ open: true, disabled: true, mode: 'create' });
             },
         });

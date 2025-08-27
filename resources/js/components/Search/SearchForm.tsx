@@ -5,7 +5,7 @@ import { use } from 'react';
 import Button from '../ui/Button';
 import { Input } from '../ui/Input';
 import styles from './SearchForm.module.css';
-import { LatLngLiteral } from 'leaflet';
+import { SelectedPointContext } from '@/store/selected-point-context';
 
 type SearchFormProps = {
     searchFormValues: SearchFormValues;
@@ -15,11 +15,13 @@ type SearchFormProps = {
             adresser: AddressData[];
         }>,
     ) => void;
-    setSelectedPoint: React.Dispatch<React.SetStateAction<LatLngLiteral | null>>;
     loading: boolean;
 };
 
-const SearchForm = ({ searchFormValues, setSearchFormValues, fetchData, setSelectedPoint, loading }: SearchFormProps) => {
+const SearchForm = ({ searchFormValues, setSearchFormValues, fetchData, loading }: SearchFormProps) => {
+    const { setSelectedPoint } = use(SelectedPointContext);
+    const { setTilsynFormProperties } = use(TilsynFormContext);
+
     // Update state while typing in input fields
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -27,7 +29,6 @@ const SearchForm = ({ searchFormValues, setSearchFormValues, fetchData, setSelec
     };
 
     // Reset state form values to empty strings
-    const { setTilsynFormProperties } = use(TilsynFormContext);
     function handleResetForm() {
         setSearchFormValues({
             gardsnummer: '',
@@ -36,7 +37,7 @@ const SearchForm = ({ searchFormValues, setSearchFormValues, fetchData, setSelec
             adressenavn: '',
             nummer: '',
         });
-        setTilsynFormProperties({ open: false, disabled: true });
+        setTilsynFormProperties({ open: false, disabled: true, mode: 'create' });
         setSelectedPoint(null); // Reset selected point on the map
     }
 

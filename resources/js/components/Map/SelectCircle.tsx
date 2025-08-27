@@ -1,29 +1,37 @@
 import { lyrSoner } from '@/lib/layersDefinitions';
+import { SelectedPointContext } from '@/store/selected-point-context';
+import { SidebarContext } from '@/store/sidebar-context';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
-import { AddressData } from '@/types';
-import { LatLngLiteral } from 'leaflet';
+import { AddressData, SharedData } from '@/types';
+import { usePage } from '@inertiajs/react';
 import pointInPolygon from 'point-in-polygon';
 import { ReactNode, use, useEffect, useState } from 'react';
 import { Circle, Tooltip, useMap } from 'react-leaflet';
-import { SidebarTab } from '../Sidebar/Sidebar';
 
 type SelectCircleProps = {
-    selectedPoint: LatLngLiteral;
-    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
     address?: AddressData;
 };
 
-const SelectCircle = ({ selectedPoint, address, setSidebarTabOpen }: SelectCircleProps) => {
-    const [zooming, setZooming] = useState(true);
+const SelectCircle = ({ address }: SelectCircleProps) => {
+    const { can } = usePage<SharedData>().props;
+
+    const { selectedPoint } = use(SelectedPointContext);
     const { startNewTilsyn } = use(TilsynFormContext);
+    const { setSidebarTabOpen } = use(SidebarContext);
+
+    const [zooming, setZooming] = useState(true);
     const map = useMap();
 
     useEffect(() => {
-        map.flyToBounds([[selectedPoint.lat, selectedPoint.lng]], { maxZoom: 18, paddingTopLeft: [350, 0] });
+        if (selectedPoint) {
+            map.flyToBounds([[selectedPoint.lat, selectedPoint.lng]], { maxZoom: 18, paddingTopLeft: [350, 0] });
+        }
         map.on('zoomend', () => {
             setZooming(false);
         });
     }, [map, selectedPoint]);
+
+    if (!selectedPoint) return null;
 
     let zone = 0;
 
@@ -44,16 +52,16 @@ const SelectCircle = ({ selectedPoint, address, setSidebarTabOpen }: SelectCircl
                 interactive
                 permanent
                 direction="right"
-                eventHandlers={{
+                eventHandlers={can.tilsyn_object_edit ? {
                     click: () => {
                         setSidebarTabOpen('tilsyn');
                         startNewTilsyn(address, zone);
                     },
-                }}
+                } : undefined}
             >
                 <b>{`${gnr}/${bnr}${fnr ? `/${fnr}` : ''} - ${adressetekst}`}</b>
                 <br />
-                <a href="#">Legg til tilsynsobjekt</a>
+                {can.tilsyn_object_edit && <a href="#">Legg til tilsynsobjekt</a>}
             </Tooltip>
         );
     }
@@ -67,7 +75,7 @@ const SelectCircle = ({ selectedPoint, address, setSidebarTabOpen }: SelectCircl
             pathOptions={{ color: 'yellow', weight: 10, opacity: 0.5, fillOpacity: 0 }}
             interactive={false}
         >
-            {!zooming &&toolTip}
+            {!zooming && toolTip}
         </Circle>
     );
 };

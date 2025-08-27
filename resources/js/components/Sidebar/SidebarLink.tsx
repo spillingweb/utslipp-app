@@ -5,9 +5,10 @@ type SidebarLinkProps = {
     isActive: boolean;
     icon: React.ReactNode;
     tabIndex: number;
+    title: string;
 };
 
-const SidebarLink = ({onClick, isActive, icon, tabIndex}: SidebarLinkProps) => {
+const SidebarLink = ({onClick, isActive, icon, tabIndex, title}: SidebarLinkProps) => {
     let className = styles.navLink;
 
     if (isActive) {
@@ -15,7 +16,7 @@ const SidebarLink = ({onClick, isActive, icon, tabIndex}: SidebarLinkProps) => {
     }
 
     return (
-        <li tabIndex={tabIndex}>
+        <li tabIndex={tabIndex} title={title}>
             <button onClick={onClick} className={className}>
                 {icon}
             </button>

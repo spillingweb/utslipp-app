@@ -1,6 +1,7 @@
+import { SidebarContext } from '@/store/sidebar-context';
 import { router, useForm } from '@inertiajs/react';
 import { LatLngBounds } from 'leaflet';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { use, useEffect, useMemo, useRef, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import SidebarSection from '../Sidebar/SidebarSection';
 import ButtonLink from '../ui/ButtonLink';
@@ -8,21 +9,20 @@ import Heading from '../ui/Heading';
 import Radio from '../ui/Radio';
 import CustomFilterForm from './CustomFilterForm';
 import styles from './Filter.module.css';
-import { SidebarTab } from '../Sidebar/Sidebar';
 
 type FilterProps = {
-    isOpen: boolean;
     tilsynObjects: GeoJSON.FeatureCollection | null;
     tilsynLayerBounds: LatLngBounds | null;
-    setSidebarTabOpen: React.Dispatch<React.SetStateAction<SidebarTab | null>>;
 };
 
-const Filter = ({ isOpen, tilsynObjects, tilsynLayerBounds, setSidebarTabOpen }: FilterProps) => {
+const Filter = ({ tilsynObjects, tilsynLayerBounds }: FilterProps) => {
+    const { sidebarTabOpen } = use(SidebarContext);
+
     const isInitialRender = useRef(true);
     const map = useMap();
 
     // initialize custom filter form
-        const { data, setData, post, reset } = useForm({
+    const { data, setData, post, reset } = useForm({
         filterField1: '',
         filterRelOp1: '',
         filterValue1: '',
@@ -31,7 +31,6 @@ const Filter = ({ isOpen, tilsynObjects, tilsynLayerBounds, setSidebarTabOpen }:
         filterRelOp2: '',
         filterValue2: '',
     });
-
 
     const [filterValue, setFilterValue] = useState<'' | 'tilsyn' | 'alle' | 'frist'>('tilsyn');
 
@@ -70,7 +69,7 @@ const Filter = ({ isOpen, tilsynObjects, tilsynLayerBounds, setSidebarTabOpen }:
     };
 
     return (
-        <SidebarSection title="Filtrer objekter" isOpen={isOpen} setSidebarTabOpen={setSidebarTabOpen}>
+        <SidebarSection title="Filtrer objekter" isOpen={sidebarTabOpen === 'filter'}>
             <div className={styles.filterRadio}>
                 <Radio
                     label="Vis alle tilsynsobjekter (standard)"

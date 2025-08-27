@@ -8,7 +8,7 @@ import { Head, router } from '@inertiajs/react';
 import { X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './Index.module.css';
-import TableButtons from './TableButtons';
+import TableButtons from '../../components/TilsynObjects/TableButtons';
 
 type TilsynObjectsProps = {
     tilsynObjects: {
