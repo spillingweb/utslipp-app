@@ -11,7 +11,7 @@ use Inertia\Inertia;
 
 Route::redirect('/', 'login');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/', [MapController::class, 'index'])->name('map');
     Route::post('/', [MapController::class, 'filter'])->name('map.filter');
     

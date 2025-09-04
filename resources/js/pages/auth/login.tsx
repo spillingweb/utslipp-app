@@ -2,9 +2,9 @@ import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
 import InputError from '@/components/InputError';
-import TextLink from '@/components/ui/TextLink';
 import Button from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import TextLink from '@/components/ui/TextLink';
 
 import FormCard from '@/components/ui/FormCard';
 import AuthLayout from '@/layouts/AuthLayout';
@@ -16,7 +16,7 @@ type LoginForm = {
     remember: boolean;
 };
 
-export default function Login() {
+export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
         password: '',
@@ -31,7 +31,7 @@ export default function Login() {
     };
 
     return (
-        <AuthLayout>
+        <AuthLayout status={status}>
             <Head title="Logg inn" />
             <FormCard onSubmit={handleSubmit}>
                 <fieldset className={styles.loginInput}>

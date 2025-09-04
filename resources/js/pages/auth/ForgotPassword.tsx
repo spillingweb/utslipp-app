@@ -19,10 +19,8 @@ export default function ForgotPassword({ status }: { status?: string }) {
     };
 
     return (
-        <AuthLayout>
+        <AuthLayout status={status}>
             <Head title="Glemt passord" />
-            {status && <div className={styles.statusMessage}>{status}</div>}
-
             <FormCard onSubmit={submit} heading="Glemt passordet ditt?">
                 <fieldset className={styles.loginInput}>
                     <label htmlFor="email">Oppgi e-postadressen din, så får du en lenke for å tilbakestille passordet.</label>

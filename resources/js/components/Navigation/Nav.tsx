@@ -1,13 +1,16 @@
-import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
+import { useInitials } from '@/hooks/use-initials';
+import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { LogOut } from 'lucide-react';
+import DropdownMenu from '../ui/DropdownMenu';
+import DropDownMenuContent from '../ui/DropDownMenuContent';
 import LogoBrand from '../ui/LogoBrand';
 import styles from './Nav.module.css';
-import { SharedData } from '@/types';
+import { useState } from 'react';
 
 const Nav = () => {
-    const cleanup = useMobileNavigation();
-    const { can } = usePage<SharedData>().props;
+    const { can, auth } = usePage<SharedData>().props;
+    const getInitials = useInitials();
+    const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false);
 
     function setClass(isActive: boolean) {
         return isActive ? `${styles.navTab} ${styles.active}` : styles.navTab;
@@ -32,10 +35,12 @@ const Nav = () => {
                     </Link>
                 )}
             </ul>
-            <Link className={styles.logOut} method="post" href={route('logout')} as="button" onClick={cleanup}>
-                <LogOut height={15} />
-                Logg ut
-            </Link>
+            <DropdownMenu>
+                <button className={`${styles.userMenuBtn} ${dropDownMenuOpen ? styles.active : ''}`} onClick={() => setDropDownMenuOpen(!dropDownMenuOpen)}>
+                    {getInitials(auth.user.name)}
+                </button>
+                {dropDownMenuOpen && <DropDownMenuContent />}
+            </DropdownMenu>
         </nav>
     );
 };

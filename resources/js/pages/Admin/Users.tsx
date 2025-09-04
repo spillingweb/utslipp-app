@@ -24,7 +24,6 @@ const UserTable = () => {
                     { text: 'Navn', sortable: false },
                     { text: 'E-post', sortable: false },
                     { text: 'Registrert dato', sortable: false },
-                    { text: 'Verifisert', sortable: false },
                     { text: '', sortable: false },
                 ]}
             >
@@ -33,7 +32,6 @@ const UserTable = () => {
                         <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>{user.created_at}</td>
-                        <td>{user.email_verified_at ? 'Ja' : 'Nei'}</td>
 
                         <td>
                             <div className={styles.actionLinks}>

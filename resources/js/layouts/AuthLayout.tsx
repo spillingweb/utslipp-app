@@ -1,14 +1,10 @@
-import { type PropsWithChildren } from 'react';
-import styles from './AuthLayout.module.css';
 import LogoBrand from '@/components/ui/LogoBrand';
+import styles from './AuthLayout.module.css';
 
-export default function AuthLayout({
-    children,
-}: PropsWithChildren<{
-    title?: string;
-}>) {
+export default function AuthLayout({ children, status }: { children: React.ReactNode; status?: string }) {
     return (
         <div className={styles.authPage}>
+            {status && <div className={styles.statusMessage}>{status}</div>}
             <LogoBrand />
             {children}
         </div>
