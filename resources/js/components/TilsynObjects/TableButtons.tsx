@@ -6,7 +6,7 @@ import { CSVLink } from 'react-csv';
 import { useReactToPrint } from 'react-to-print';
 
 const TableButtons = ({ tilsynObjects, tableRef }: { tilsynObjects: TilsynObject[]; tableRef: React.RefObject<HTMLTableElement | null> }) => {
-    const [flashMessage, setFlashMessage] = useState<{ success: string | null; error: string | null } | null>(null);
+    const [flashMessage, setFlashMessage] = useState<{ success: string | undefined; error: string | undefined } | null>(null);
 
     const headers = [
         { label: 'Sone', key: 'sone' },
@@ -40,10 +40,10 @@ const TableButtons = ({ tilsynObjects, tableRef }: { tilsynObjects: TilsynObject
                 const blob = new Blob([tableHtml], { type });
                 const data = [new ClipboardItem({ [type]: blob })];
                 await navigator.clipboard.write(data);
-                setFlashMessage({ success: 'Tabellen er kopiert!', error: null });
+                setFlashMessage({ success: 'Tabellen er kopiert!', error: undefined });
             } catch (err) {
                 console.error('Failed to copy table: ', err);
-                setFlashMessage({ success: null, error: 'Kunne ikke kopiere tabellen til utklippstavlen.' });
+                setFlashMessage({ success: undefined, error: 'Kunne ikke kopiere tabellen til utklippstavlen.' });
             }
         }
     };

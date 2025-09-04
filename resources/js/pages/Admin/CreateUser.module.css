@@ -1,7 +1,3 @@
-@view-transition {
-    navigation: auto;
-}
-
 .input {
     display: flex;
     flex-direction: column;

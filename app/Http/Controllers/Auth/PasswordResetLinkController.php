@@ -16,7 +16,7 @@ class PasswordResetLinkController extends Controller
      */
     public function create(Request $request): Response
     {
-        return Inertia::render('auth/forgot-password', [
+        return Inertia::render('Auth/ForgotPassword', [
             'status' => $request->session()->get('status'),
         ]);
     }
@@ -36,6 +36,6 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-        return back()->with('status', __('A reset link will be sent if the account exists.'));
+        return back()->with('status', 'En lenke for tilbakestilling av passord er sendt til din e-postadresse.');
     }
 }

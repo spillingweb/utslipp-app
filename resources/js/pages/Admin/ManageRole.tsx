@@ -1,6 +1,6 @@
 import Button from '@/components/ui/Button';
-import ButtonLink from '@/components/ui/ButtonLink';
 import Heading from '@/components/ui/Heading';
+import ReturnButton from '@/components/ui/ReturnButton';
 import Select from '@/components/ui/Select';
 import Table from '@/components/ui/Table';
 import AppLayout from '@/layouts/AppLayout';
@@ -25,7 +25,7 @@ const ManageRole = ({ role, roleUsers, otherUsers }: { role: { data: Role }; rol
                 {role.data.name} - administrer brukere
             </Heading>
             <div className={styles.back}>
-                <ButtonLink onClick={() => router.visit(route('admin.roles'))}>Tilbake til roller</ButtonLink>
+                <ReturnButton href={route('admin.roles')}>Tilbake til roller</ReturnButton>
             </div>
             <div className={styles.flexContainer}>
                 <Table

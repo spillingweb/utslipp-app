@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/Input';
 
 import FormCard from '@/components/ui/FormCard';
 import AuthLayout from '@/layouts/AuthLayout';
-import styles from './login.module.css';
+import styles from './auth.module.css';
 
 type LoginForm = {
     email: string;
@@ -33,7 +33,7 @@ export default function Login() {
     return (
         <AuthLayout>
             <Head title="Logg inn" />
-            <FormCard onSubmit={handleSubmit} logo>
+            <FormCard onSubmit={handleSubmit}>
                 <fieldset className={styles.loginInput}>
                     <label htmlFor="email">E-postadresse</label>
                     <Input

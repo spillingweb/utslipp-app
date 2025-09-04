@@ -1,5 +1,5 @@
 .textLink {
-    text-decoration: underline lightgray;
+    text-decoration: underline var(--border);
     text-underline-offset: 4px;
     transition: all 0.2s ease-in-out;
 

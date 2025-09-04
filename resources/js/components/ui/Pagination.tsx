@@ -3,10 +3,10 @@ import styles from './Pagination.module.css';
 
 const Pagination = ({
     meta,
-    updatedPageNumber,
+    updatePageNumber,
 }: {
     meta: { from: number; to: number; total: number; links: { url: string | null; label: string; active: boolean }[] };
-    updatedPageNumber: (link: { url: string | null; label: string; active: boolean }) => void;
+    updatePageNumber: (link: { url: string | null; label: string; active: boolean }) => void;
 }) => {
     return (
         <div className={styles.paginationContainer}>
@@ -20,10 +20,10 @@ const Pagination = ({
                         className={link.active ? styles.active : ''}
                         disabled={link.active || !link.url}
                         onClick={() => {
-                            updatedPageNumber(link);
+                            updatePageNumber(link);
                         }}
                     >
-                        {link.label === '&laquo; Previous' ? '«' : link.label === 'Next &raquo;' ? '»' : link.label}
+                        {link.label === 'pagination.previous' ? '«' : link.label === 'pagination.next' ? '»' : link.label}
                     </Button>
                 ))}
             </div>

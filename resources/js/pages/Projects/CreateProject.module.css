@@ -1,7 +1,3 @@
-@view-transition {
-  navigation: auto;
-}
-
 .createProject {
     background-color: var(--primary-foreground);
     border: 1px solid var(--primary-dark);

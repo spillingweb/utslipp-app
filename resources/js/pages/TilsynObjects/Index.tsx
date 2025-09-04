@@ -31,7 +31,7 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
     // Update page number when pagination links are clicked
-    const updatedPageNumber = (link: { url: string | null; label: string; active: boolean }) => {
+    const updatePageNumber = (link: { url: string | null; label: string; active: boolean }) => {
         setPageNumber(link.url ? link.url.split('=')[1] : '1');
     };
 
@@ -97,7 +97,7 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
                     setSortDirection={setSortDirection}
                 />
             )}
-            <Pagination meta={tilsynObjects.meta} updatedPageNumber={updatedPageNumber} />
+            <Pagination meta={tilsynObjects.meta} updatePageNumber={updatePageNumber} />
         </AppLayout>
     );
 };
