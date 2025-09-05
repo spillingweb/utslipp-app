@@ -1,9 +1,9 @@
+import { useInitials } from '@/hooks/use-initials';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { LogOut } from 'lucide-react';
+import { LogOut, Settings } from 'lucide-react';
 import styles from './DropDownMenuContent.module.css';
-import { useInitials } from '@/hooks/use-initials';
 
 const DropDownMenuContent = () => {
     const cleanup = useMobileNavigation();
@@ -19,9 +19,13 @@ const DropDownMenuContent = () => {
                     <p className={styles.userEmail}>{auth.user.email}</p>
                 </div>
             </div>
-            <Link className={styles.logOut} method="post" href={route('logout')} as="button" onClick={cleanup}>
-                <LogOut height={15} />
-                Logg ut
+            <Link className={styles.gridItem} href={route('profile.edit')} onClick={cleanup}>
+                <Settings className={styles.icon} size={16} />
+                <span>Profil</span>
+            </Link>
+            <Link className={styles.gridItem} method="post" href={route('logout')} as="button" onClick={cleanup}>
+                <LogOut className={styles.icon} size={16} />
+                <span>Logg ut</span>
             </Link>
         </div>
     );

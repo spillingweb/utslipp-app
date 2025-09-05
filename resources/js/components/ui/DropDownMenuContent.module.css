@@ -1,26 +1,33 @@
 .dropDownMenuContent {
     position: absolute;
-    right: 1rem;
-    margin-top: 0.5rem;
-    padding: 1rem;
+    right: 1.5rem;
+    top: 3.3rem;
+    padding: 0.3rem;
+    color: var(--foreground);
     background-color: var(--background);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 15rem;
     font-size: 0.875rem;
 
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 0.5rem;
+    row-gap: 0.3rem;
+    align-items: center;
 }
 
 .userContent {
-    display: flex;
-    gap: 0.5rem;
+    grid-column: 1 / -1;
+    padding: 0.5rem 0.3rem;
+    border-bottom: 1px solid var(--border);
+
+    display: grid;
+    grid-template-columns: subgrid;
 }
 
 .userInitials {
+    grid-column: 1 / 2;
     background-color: var(--primary);
     color: var(--foreground);
     border: none;
@@ -33,22 +40,40 @@
     font-size: 0.8rem;
 }
 
-.userInfo p {
-    margin: 0;
+.userInfo {
+    grid-column: 2 / -1;
+
+    .userName {
+        font-weight: bold;
+    }
+
+    p {
+        margin: 0;
+    }
 }
 
-.userName {
-    font-weight: bold;
-}
-
-.logOut {
+.gridItem {
+    grid-column: 1 / -1;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
     background-color: transparent;
     border: none;
-    padding: 0;
     cursor: pointer;
     font: inherit;
-
-    display: flex;
+    text-align: left;
+    display: grid;
+    grid-template-columns: subgrid;
     align-items: center;
-    gap: 0.5rem;
+
+    &:hover {
+        background-color: var(--primary);
+    }
+
+    .icon {
+        grid-column: 1 / 2;
+    }
+
+    span {
+        grid-column: 2 / -1;
+    }
 }
