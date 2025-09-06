@@ -28,7 +28,7 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
 
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('user.store'), {
+        post(route('admin.user.store'), {
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
@@ -48,7 +48,6 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                     <Input
                         id="name"
                         type="text"
-                        required
                         autoFocus
                         autoComplete="name"
                         value={data.name}
@@ -60,8 +59,6 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                     <label htmlFor="email">E-postadresse</label>
                     <Input
                         id="email"
-                        type="email"
-                        required
                         autoComplete="email"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
@@ -74,7 +71,6 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                     <Input
                         id="password"
                         type="password"
-                        required
                         autoComplete="current-password"
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
@@ -87,7 +83,6 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                     <Input
                         id="password_confirmation"
                         type="password"
-                        required
                         autoComplete="new-password"
                         value={data.password_confirmation}
                         onChange={(e) => setData('password_confirmation', e.target.value)}

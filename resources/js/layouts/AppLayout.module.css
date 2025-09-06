@@ -20,3 +20,9 @@
 .padding {
     padding: 2rem;
 }
+
+.adminContainer {
+    max-width: 80rem;
+    align-self: center;
+    width: 100%;
+}

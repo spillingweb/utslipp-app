@@ -5,7 +5,7 @@ import styles from './AdminLayout.module.css';
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     const handleCreateUser = () => {
-        router.get(route('user.create'));
+        router.get(route('admin.user.create'));
     };
 
     return (

@@ -10,6 +10,7 @@ import { useState } from 'react';
 const Nav = () => {
     const { can, auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
+
     const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false);
 
     function setClass(isActive: boolean) {
@@ -39,7 +40,7 @@ const Nav = () => {
                 <button className={`${styles.userMenuBtn} ${dropDownMenuOpen ? styles.active : ''}`} onClick={() => setDropDownMenuOpen(!dropDownMenuOpen)}>
                     {getInitials(auth.user.name)}
                 </button>
-                {dropDownMenuOpen && <DropDownMenuContent />}
+                {dropDownMenuOpen && <DropDownMenuContent setDropDownMenuOpen={setDropDownMenuOpen} />}
             </DropdownMenu>
         </nav>
     );

@@ -21,7 +21,7 @@ const EditUser = ({ user }: { user: { data: User } }) => {
 
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        put(route('user.update', user.data.id), {
+        put(route('admin.user.update', user.data.id), {
             onError: (errors) => {
                 console.error('Error updating user:', errors);
             }

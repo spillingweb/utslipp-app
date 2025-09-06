@@ -14,11 +14,10 @@ import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
 import TilsynContext from '@/store/TilsynContext';
 import { AddressData } from '@/types';
 import { Head } from '@inertiajs/react';
-import { LatLngBounds } from 'leaflet';
+import L, { LatLngBounds } from 'leaflet';
 import { useEffect, useRef, useState } from 'react';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
-import L from 'leaflet';
 
 const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollection | null }) => {
     const [tilsynObjects, setTilsynObjects] = useState<GeoJSON.FeatureCollection | null>(null);
@@ -35,13 +34,13 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
         }
     }, [tilsynObjectsData]);
 
-    // Disable click propagation on the sidebar to prevent map interactions when clicking on the sidebar
-        const projectSelect = useRef(null);
-        useEffect(() => {
-            if (projectSelect.current) {
-                L.DomEvent.disableClickPropagation(projectSelect.current);
-            }
-        }, []);
+    // Disable click propagation on the project select to prevent map interactions when clicking on the select
+    const projectSelect = useRef<HTMLSelectElement | null>(null);
+    useEffect(() => {
+        if (projectSelect.current) {
+            L.DomEvent.disableClickPropagation(projectSelect.current);
+        }
+    }, []);
 
     return (
         <AppLayout>
@@ -68,7 +67,12 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig position="topright" />
                 {/* <DrawToolbar /> */}
-                <FilterByProject ref={projectSelect} selectedProject={selectedProject} setSelectedProject={setSelectedProject} className={styles.filterByProject} />
+                <FilterByProject
+                    ref={projectSelect}
+                    selectedProject={selectedProject}
+                    setSelectedProject={setSelectedProject}
+                    className={styles.filterByProject}
+                />
                 {tilsynObjects && <ProjectLayer features={tilsynObjects} selectedProject={selectedProject} key={selectedProject} />}
                 <TilsynContext>
                     {tilsynObjects && <TilsynLayer setTilsynLayerBounds={setTilsynLayerBounds} features={tilsynObjects} />}

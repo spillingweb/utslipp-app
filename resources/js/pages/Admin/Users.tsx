@@ -11,7 +11,7 @@ const UserTable = () => {
 
     const handleDeleteUser = (user: User) => {
         if (confirm(`Er du sikker på at du vil slette brukeren ${user.name}? Det kan ikke angres.`)) {
-            router.delete(route('user.destroy', user.id), {
+            router.delete(route('admin.user.destroy', user.id), {
                 preserveScroll: true,
             });
         }
@@ -35,7 +35,7 @@ const UserTable = () => {
 
                         <td>
                             <div className={styles.actionLinks}>
-                                <TextLink href={route('user.edit', user.id)}>Endre</TextLink>
+                                <TextLink href={route('admin.user.edit', user.id)}>Endre</TextLink>
                                 <ButtonLink onClick={() => handleDeleteUser(user)}>Slett</ButtonLink>
                             </div>
                         </td>

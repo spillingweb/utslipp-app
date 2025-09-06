@@ -5,10 +5,15 @@ import { Link, usePage } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
 import styles from './DropDownMenuContent.module.css';
 
-const DropDownMenuContent = () => {
+const DropDownMenuContent = ({ setDropDownMenuOpen }: { setDropDownMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const cleanup = useMobileNavigation();
     const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
+
+    const handleClickOnDropdownItem = () => {
+        setDropDownMenuOpen(false);
+        cleanup();
+    }
 
     return (
         <div className={styles.dropDownMenuContent}>
@@ -19,11 +24,11 @@ const DropDownMenuContent = () => {
                     <p className={styles.userEmail}>{auth.user.email}</p>
                 </div>
             </div>
-            <Link className={styles.gridItem} href={route('profile.edit')} onClick={cleanup}>
+            <Link className={styles.gridItem} href={route('profile.edit')} onClick={handleClickOnDropdownItem}>
                 <Settings className={styles.icon} size={16} />
                 <span>Profil</span>
             </Link>
-            <Link className={styles.gridItem} method="post" href={route('logout')} as="button" onClick={cleanup}>
+            <Link className={styles.gridItem} method="post" href={route('logout')} as="button" onClick={handleClickOnDropdownItem}>
                 <LogOut className={styles.icon} size={16} />
                 <span>Logg ut</span>
             </Link>

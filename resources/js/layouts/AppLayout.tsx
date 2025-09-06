@@ -7,12 +7,14 @@ import { SharedData } from '@/types';
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     const { flash } = usePage<SharedData>().props;
 
-    const containerStyle = route().current('map')  ? styles.mainContainer : `${styles.mainContainer} ${styles.padding}`;
+    let containerStyle = styles.mainContainer;
+
+    if (!route().current('map')) containerStyle += ` ${styles.padding}`;
+    if (route().current('admin.*')) containerStyle += ` ${styles.adminContainer}`;
 
     return (
         <div className={styles.appLayout}>
             <Flash message={flash} />
-
             <header className={styles.header}>
                 <Nav />
             </header>

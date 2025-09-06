@@ -15,7 +15,7 @@ const ManageRole = ({ role, roleUsers, otherUsers }: { role: { data: Role }; rol
     const handleAddUserToRole = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!selectedUser) return;
-        router.put(route('role.update', { role: role.data.id, user: selectedUser }));
+        router.put(route('admin.role.update', { role: role.data.id, user: selectedUser }));
     };
 
     return (

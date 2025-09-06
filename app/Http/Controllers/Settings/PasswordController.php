@@ -17,9 +17,7 @@ class PasswordController extends Controller
      */
     public function edit(Request $request): Response
     {
-        return Inertia::render('settings/password', [
-            'status' => $request->session()->get('status'),
-        ]);
+        return Inertia::render('Settings/ChangePassword');
     }
 
     /**
@@ -30,12 +28,17 @@ class PasswordController extends Controller
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
+        ], [
+            'current_password.required' => 'Vennsligst oppgi ditt nåværende passord.',
+            'current_password.current_password' => 'Det nåværende passordet er feil.',
+            'password.confirmed' => 'De to passordene stemmer ikke overens.',
+            'password.required' => 'Vennligst oppgi et nytt passord.',
         ]);
 
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
 
-        return back();
+        return to_route('profile.edit')->with('success', 'Passordet er oppdatert.');
     }
 }

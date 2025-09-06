@@ -18,7 +18,7 @@ const RolesTable = ({ roles }: { roles: Data<Role> }) => {
                         <td>{role.name}</td>
                         <td style={{ whiteSpace: 'wrap' }}>{role.description}</td>
                         <td style={{ textAlign: 'right' }}>
-                            <TextLink href={route('role.edit', role.id)}>Administrer brukere</TextLink>
+                            <TextLink href={route('admin.role.edit', role.id)}>Administrer brukere</TextLink>
                         </td>
                     </tr>
                 ))}

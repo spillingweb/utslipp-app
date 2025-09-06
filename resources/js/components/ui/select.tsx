@@ -7,7 +7,7 @@ interface SelectProps extends React.ComponentPropsWithoutRef<'select'> {
 }
 
 const Select = ({ children, className, ref, ...props }: SelectProps) => {
-    let classes = `${styles.input} ${styles.select}`;
+    let classes = styles.input;
 
     if (className) {
         classes += ` ${className}`;
