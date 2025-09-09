@@ -1,7 +1,7 @@
 import { TILSYN_STATUS } from '@/lib/tilsynStatus';
 import { SharedData, TilsynObject } from '@/types';
 import { Link, router, usePage } from '@inertiajs/react';
-import { Trash2 } from 'lucide-react';
+import { Trash2, PencilLine } from 'lucide-react';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import Heading from '../ui/Heading';
 import styles from './ProjectCard.module.css';
@@ -34,6 +34,10 @@ const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
         }
     };
 
+    const handleEditProject = () => {
+        router.get(route('project.edit', id));
+    };
+
     // Title shows id and name, or "Uten Prosjekt" if no id (for unassigned objects)
     const title = id ? `${id} - ${name}` : 'Uten Prosjekt';
 
@@ -41,10 +45,15 @@ const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
         <li className={styles.projectCard}>
             <div className={styles.projectHeader}>
                 <Heading level={3}>{title}</Heading>
-                {can.project_edit &&id && (
-                    <button className={styles.deleteButton} title="Slett prosjekt">
-                        <Trash2 size={24} onClick={handleDeleteProject} />
-                    </button>
+                {can.project_edit && id && (
+                    <div>
+                        <button className={styles.editButton} title="Rediger prosjekt">
+                            <PencilLine size={24} onClick={handleEditProject} />
+                        </button>
+                        <button className={styles.deleteButton} title="Slett prosjekt">
+                            <Trash2 size={24} onClick={handleDeleteProject} />
+                        </button>
+                    </div>
                 )}
             </div>
             <div className={styles.projectData}>

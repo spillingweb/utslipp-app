@@ -43,30 +43,18 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
         <AppLayout>
             <Head title="Opprett Bruker" />
             <FormCard heading="Opprett ny bruker" onSubmit={handleSubmit}>
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="name">Navn</label>
-                    <Input
-                        id="name"
-                        type="text"
-                        autoFocus
-                        autoComplete="name"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                    />
+                    <Input id="name" type="text" autoFocus autoComplete="name" value={data.name} onChange={(e) => setData('name', e.target.value)} />
                     <InputError message={errors.name && 'Navn er obligatorisk'} />
                 </fieldset>
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="email">E-postadresse</label>
-                    <Input
-                        id="email"
-                        autoComplete="email"
-                        value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
+                    <Input id="email" autoComplete="email" value={data.email} onChange={(e) => setData('email', e.target.value)} />
                     <InputError message={errors.email} />
                 </fieldset>
 
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="password">Midlertidig passord</label>
                     <Input
                         id="password"
@@ -78,7 +66,7 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                     <InputError message={errors.password} />
                 </fieldset>
 
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="password_confirmation">Bekreft midlertidig passord</label>
                     <Input
                         id="password_confirmation"
@@ -108,9 +96,7 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                 </fieldset>
 
                 <div className={styles.cta}>
-                    <Button type="submit">
-                        Opprett bruker
-                    </Button>
+                    <Button type="submit">Opprett bruker</Button>
                     <Button variant="secondary" type="reset" onClick={() => handleCancel()}>
                         Avbryt
                     </Button>

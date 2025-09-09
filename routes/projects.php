@@ -9,7 +9,8 @@ Route::prefix('prosjekter')->controller(ProjectController::class)
         Route::get('/', 'index')->name('projects');
         Route::post('/', 'store')->name('project.store');
 
-        Route::get('/rediger_prosjekt/{project}', 'edit')->name('project.edit');
+        Route::get('/rediger/{project}', 'edit')->name('project.edit');
+        Route::put('/rediger/{project}', 'update')->name('project.update');
 
         Route::delete('/delete/{project}', 'destroy')->name('project.destroy');
     });

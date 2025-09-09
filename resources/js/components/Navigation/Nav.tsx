@@ -1,11 +1,11 @@
 import { useInitials } from '@/hooks/use-initials';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
+import { useState } from 'react';
 import DropdownMenu from '../ui/DropdownMenu';
 import DropDownMenuContent from '../ui/DropDownMenuContent';
 import LogoBrand from '../ui/LogoBrand';
 import styles from './Nav.module.css';
-import { useState } from 'react';
 
 const Nav = () => {
     const { can, auth } = usePage<SharedData>().props;
@@ -31,13 +31,16 @@ const Nav = () => {
                     Prosjekter
                 </Link>
                 {can.user_access && (
-                    <Link href="/admin" className={setClass(route().current('admin.users') || route().current('admin.roles'))}>
+                    <Link href="/admin" className={setClass(route().current('admin.*'))}>
                         Admin
                     </Link>
                 )}
             </ul>
             <DropdownMenu>
-                <button className={`${styles.userMenuBtn} ${dropDownMenuOpen ? styles.active : ''}`} onClick={() => setDropDownMenuOpen(!dropDownMenuOpen)}>
+                <button
+                    className={`${styles.userMenuBtn} ${dropDownMenuOpen ? styles.active : ''}`}
+                    onClick={() => setDropDownMenuOpen(!dropDownMenuOpen)}
+                >
                     {getInitials(auth.user.name)}
                 </button>
                 {dropDownMenuOpen && <DropDownMenuContent setDropDownMenuOpen={setDropDownMenuOpen} />}

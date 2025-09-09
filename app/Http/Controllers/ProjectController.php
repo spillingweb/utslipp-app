@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\TilsynObjectResource;
 use App\Models\Project;
 use App\Models\Tilsyn_object;
@@ -35,6 +36,25 @@ class ProjectController extends Controller
 
         return to_route('projects')
             ->with('success', 'Prosjektet ble opprettet.');
+    }
+
+    public function edit(Project $project)
+    {
+        Gate::authorize('project_edit');
+
+        return Inertia::render('Projects/Edit', [
+            'project' => $project,
+        ]);
+    }
+
+    public function update(UpdateProjectRequest $request, Project $project): RedirectResponse
+    {
+        Gate::authorize('project_edit');
+
+        $project->update($request->validated());
+
+        return to_route('projects')
+            ->with('success', 'Endringene ble lagret.');
     }
 
     public function destroy(Project $project): RedirectResponse

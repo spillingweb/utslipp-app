@@ -37,7 +37,6 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
     return (
         <AuthLayout >
             <Head title="Endre passord" />
-
             <FormCard onSubmit={submit} >
                 <fieldset className={styles.loginInput}>
                     <label htmlFor="email">E-post</label>

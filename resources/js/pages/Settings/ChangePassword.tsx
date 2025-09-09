@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/Input';
 import ReturnButton from '@/components/ui/ReturnButton';
 import AppLayout from '@/layouts/AppLayout';
 import { Head, useForm } from '@inertiajs/react';
-import styles from './Profile.module.css';
 
 const ChangePassword = () => {
     const { data, setData, put, processing, errors } = useForm<{
@@ -27,7 +26,7 @@ const ChangePassword = () => {
         <AppLayout>
             <Head title="Endre passord" />
             <FormCard onSubmit={onSubmit} heading="Endre passord">
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="current_password">Nåværende passord</label>
                     <Input
                         id="current_password"
@@ -37,12 +36,12 @@ const ChangePassword = () => {
                     />
                     <InputError message={errors.current_password} />
                 </fieldset>
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="password">Nytt passord</label>
                     <Input id="password" type="password" value={data.password} onChange={(e) => setData('password', e.target.value)} />
                     <InputError message={errors.password} />
                 </fieldset>
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="password_confirmation">Bekreft nytt passord</label>
                     <Input
                         id="password_confirmation"

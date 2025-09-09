@@ -41,6 +41,8 @@ export const FilterContext = createContext<FilterContextType>({
 
 export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
     const isInitialRender = useRef(true);
+    const searchParams = new URLSearchParams(window.location.search);
+    const initialFilter = searchParams.get('filter') as filterOptions;
 
     // initialize custom filter form
     const { data, setData, post, reset } = useForm<FilterDataType>({
@@ -53,7 +55,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
         filterValue2: '',
     });
 
-    const [filterValue, setFilterValue] = useState<filterOptions>('tilsyn');
+    const [filterValue, setFilterValue] = useState<filterOptions>(initialFilter || 'tilsyn');
 
     const filterUrl = useMemo(() => {
         const url = new URL(route('map'));
@@ -65,6 +67,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         if (isInitialRender.current) {
+            console.log('initial render');
             isInitialRender.current = false;
             return;
         }

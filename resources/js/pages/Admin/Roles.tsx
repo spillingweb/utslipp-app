@@ -6,7 +6,7 @@ import { Head } from '@inertiajs/react';
 
 const RolesTable = ({ roles }: { roles: Data<Role> }) => {
     return (
-        <AdminLayout>
+        <AdminLayout isUserRole>
             <Head title="Roller" />
             <Table
                 headers={[

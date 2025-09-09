@@ -8,7 +8,7 @@ import { SharedData } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import styles from './Profile.module.css';
 
-const Profile = ({ role }: { role: string }) => {
+const Profile = ({ role }: { role?: string }) => {
     const { auth } = usePage<SharedData>().props;
     const { data, setData, patch, processing, errors } = useForm<{
         name: string;
@@ -33,15 +33,17 @@ const Profile = ({ role }: { role: string }) => {
         <AppLayout>
             <Head title="Profil" />
             <FormCard onSubmit={onSubmit} heading="Profil">
-                <p className={styles.role}>
-                    Du har rollen <span>{role}</span>. For å endre rolle, ta kontakt med systemansvarlig.
-                </p>
-                <fieldset className={styles.input}>
+                {role && (
+                    <p className={styles.role}>
+                        Du har rollen <span>{role}</span>. For å endre rolle, ta kontakt med systemansvarlig.
+                    </p>
+                )}
+                <fieldset>
                     <label htmlFor="name">Navn</label>
                     <Input id="name" type="text" value={data.name} onChange={(e) => setData('name', e.target.value)} />
                     <InputError message={errors.name} />
                 </fieldset>
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="email">E-post</label>
                     <Input id="email" value={data.email} onChange={(e) => setData('email', e.target.value)} />
                     <InputError message={errors.email} />

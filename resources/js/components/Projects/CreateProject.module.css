@@ -15,10 +15,6 @@
     gap: 0.5rem;
 }
 
-.error > input {
-    border-color: var(--destructive);
-}
-
 .heading {
     text-align: center;
     margin-bottom: 1rem;

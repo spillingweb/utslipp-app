@@ -3,11 +3,11 @@ import Heading from '@/components/ui/Heading';
 import ReturnButton from '@/components/ui/ReturnButton';
 import Select from '@/components/ui/Select';
 import Table from '@/components/ui/Table';
-import AppLayout from '@/layouts/AppLayout';
 import { Data, Role, User } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 import styles from './ManageRole.module.css';
+import AdminLayout from '@/layouts/AdminLayout';
 
 const ManageRole = ({ role, roleUsers, otherUsers }: { role: { data: Role }; roleUsers: Data<User>; otherUsers: Data<User> }) => {
     const [selectedUser, setSelectedUser] = useState<string | null>(null);
@@ -19,7 +19,7 @@ const ManageRole = ({ role, roleUsers, otherUsers }: { role: { data: Role }; rol
     };
 
     return (
-        <AppLayout>
+        <AdminLayout>
             <Head title={`Rolle ${role.data.name}`} />
             <Heading level={2} className="mb-medium">
                 {role.data.name} - administrer brukere
@@ -53,7 +53,7 @@ const ManageRole = ({ role, roleUsers, otherUsers }: { role: { data: Role }; rol
                     <Button>Legg til i rollen {role.data.name}</Button>
                 </form>
             </div>
-        </AppLayout>
+        </AdminLayout>
     );
 };
 

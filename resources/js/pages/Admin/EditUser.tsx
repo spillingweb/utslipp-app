@@ -1,12 +1,12 @@
 import InputError from '@/components/InputError';
 import Button from '@/components/ui/Button';
 import FormCard from '@/components/ui/FormCard';
-import {Input} from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import AppLayout from '@/layouts/AppLayout';
+import { User } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import styles from './CreateUser.module.css';
-import { User } from '@/types';
 
 type RegisterForm = {
     name: string;
@@ -24,7 +24,7 @@ const EditUser = ({ user }: { user: { data: User } }) => {
         put(route('admin.user.update', user.data.id), {
             onError: (errors) => {
                 console.error('Error updating user:', errors);
-            }
+            },
         });
     };
 
@@ -37,7 +37,7 @@ const EditUser = ({ user }: { user: { data: User } }) => {
         <AppLayout>
             <Head title="Endre Bruker" />
             <FormCard heading="Endre bruker" onSubmit={handleSubmit}>
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="name">Navn</label>
                     <Input
                         id="name"
@@ -51,7 +51,7 @@ const EditUser = ({ user }: { user: { data: User } }) => {
                     />
                     <InputError message={errors.name} />
                 </fieldset>
-                <fieldset className={styles.input}>
+                <fieldset>
                     <label htmlFor="email">E-postadresse</label>
                     <Input
                         id="email"
@@ -68,7 +68,7 @@ const EditUser = ({ user }: { user: { data: User } }) => {
                     <Button type="submit" disabled={processing}>
                         Oppdater bruker
                     </Button>
-                    <Button type='button' variant="secondary" disabled={processing} onClick={handleCancel}>
+                    <Button type="button" variant="secondary" disabled={processing} onClick={handleCancel}>
                         Avbryt
                     </Button>
                 </div>

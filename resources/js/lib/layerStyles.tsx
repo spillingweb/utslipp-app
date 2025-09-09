@@ -16,15 +16,23 @@ function styleTilsynObjectsMarker(feature: GeoJSON.Feature): L.CircleMarkerOptio
     if (!feature.properties) return circleMarkerOptions;
 
     for (const status of TILSYN_STATUS) {
-        if (feature.properties.status === status.value) {
-            circleMarkerOptions = {
-                ...circleMarkerOptions,
-                color: status.color,
-            };
+        const featureStatus = feature.properties.status;
+        if (featureStatus === status.value) {
+            if (featureStatus === 'O') {
+                circleMarkerOptions = {
+                    ...circleMarkerOptions,
+                    radius: 7.5,
+                    color: status.color,
+                };
+            } else {
+                circleMarkerOptions = {
+                    ...circleMarkerOptions,
+                    color: status.color,
+                };
+            }
             break;
         }
     }
-
     return circleMarkerOptions;
 }
 
@@ -189,7 +197,11 @@ export const VannmiljoPopupContent = (data: { features: VannmiljoFeature[] }) =>
                 return (
                     <div key={Navn}>
                         <b>{Navn}</b>
-                        <p style={{ margin: 0 }}><a target='_blank' href={Faktaark}>{Faktaark}</a></p>
+                        <p style={{ margin: 0 }}>
+                            <a target="_blank" href={Faktaark}>
+                                {Faktaark}
+                            </a>
+                        </p>
                     </div>
                 );
             })}

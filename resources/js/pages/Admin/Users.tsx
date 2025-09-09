@@ -18,7 +18,7 @@ const UserTable = () => {
     };
 
     return (
-        <AdminLayout>
+        <AdminLayout isUserRole>
             <Head title="Brukere" />
             <Table
                 headers={[

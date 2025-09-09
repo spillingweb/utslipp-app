@@ -3,7 +3,7 @@ import AppLayout from '@/layouts/AppLayout';
 import { router } from '@inertiajs/react';
 import styles from './AdminLayout.module.css';
 
-const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+const AdminLayout = ({ isUserRole = false, children }: { isUserRole?: boolean; children: React.ReactNode }) => {
     const handleCreateUser = () => {
         router.get(route('admin.user.create'));
     };
@@ -11,7 +11,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <AppLayout>
             <div className={styles.adminContainer}>
-                <div className={styles.flexHeader}>
+                {isUserRole && <div className={styles.flexHeader}>
                     <ul className={styles.tabs}>
                         <li>
                             <button
@@ -33,7 +33,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                     <Button className={styles.createButton} onClick={handleCreateUser}>
                         + Legg til bruker
                     </Button>
-                </div>
+                </div>}
                 {children}
             </div>
         </AppLayout>

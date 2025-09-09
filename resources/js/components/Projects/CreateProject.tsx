@@ -30,7 +30,7 @@ const CreateProject = () => {
                 Opprett nytt prosjekt
             </Heading>
             <Form onSubmit={handleSubmit}>
-                <fieldset className={`${styles.input} ${errors.id ? styles.error : ''}`}>
+                <fieldset className={styles.input}>
                     <label htmlFor="id">Prosjektnummer</label>
                     <Input
                         id="id"
@@ -43,7 +43,7 @@ const CreateProject = () => {
                     />
                     <InputError message={errors.id && 'ID-en er allerede i bruk'} />
                 </fieldset>
-                <fieldset className={`${styles.input} ${errors.name ? styles.error : ''}`}>
+                <fieldset className={styles.input}>
                     <label htmlFor="name">Navn på prosjektet</label>
                     <Input
                         id="name"

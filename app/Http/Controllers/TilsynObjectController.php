@@ -17,13 +17,14 @@ class TilsynObjectController extends Controller
         Gate::authorize('tilsyn_object_show');
 
         $orderColumn = request('sort_kolonne', 'frist'); // Default sort column
-        $orderDirection = request('sort_retning', 'asc'); // Default sort direction
+        $orderDirectionNo = request('sort_retning', 'stigende'); // Default sort direction
+        $orderDirection = $orderDirectionNo === 'stigende' ? 'asc' : 'desc';
 
         // Validate the requested column and direction to prevent SQL injection
         if (!in_array($orderColumn, ['frist', 'saksbeh', 'project_id', 'sone', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'])) {
             $orderColumn = 'frist';
         }
-        if (!in_array($orderDirection, ['asc', 'desc'])) {
+        if (!in_array($orderDirectionNo, ['stigende', 'synkende'])) {
             $orderDirection = 'asc';
         }
 
@@ -64,7 +65,7 @@ class TilsynObjectController extends Controller
 
         $tilsynObject->delete();
 
-        return redirect()->route('tilsyn_objects')
+        return back()
             ->with('success', 'Tilsynsobjektet ble slettet.');
     }
 }

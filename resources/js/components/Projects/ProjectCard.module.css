@@ -11,17 +11,22 @@
     justify-content: space-between;
 }
 
-.deleteButton {
+button {
     background-color: transparent;
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
     transition: all 0.2s;
+}
 
-    &:hover {
-        color: red;
-        transform: scale(1.2);
-    }
+.editButton:hover {
+    color: #05564e;
+    transform: scale(1.2);
+}
+
+.deleteButton:hover {
+    color: red;
+    transform: scale(1.2);
 }
 
 .projectData {

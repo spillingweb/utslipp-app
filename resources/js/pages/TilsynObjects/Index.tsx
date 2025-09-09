@@ -28,7 +28,7 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
     const [selectedProject, setSelectedProject] = useState<string>(project_id);
     const [pageNumber, setPageNumber] = useState<string>('1');
     const [sortColumn, setSortColumn] = useState<string>('frist');
-    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+    const [sortDirection, setSortDirection] = useState<'stigende' | 'synkende'>('stigende');
 
     // Update page number when pagination links are clicked
     const updatePageNumber = (link: { url: string | null; label: string; active: boolean }) => {

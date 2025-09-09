@@ -11,7 +11,7 @@ type FormCardProps = {
 };
 
 const FormCard = ({ onSubmit, center = true, heading, children }: FormCardProps) => {
-    const className = center ? styles.centerContent : undefined;
+    const className = center ? styles.center : undefined;
 
     return (
         <div className={className}>

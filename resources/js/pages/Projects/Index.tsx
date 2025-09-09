@@ -1,8 +1,8 @@
+import CreateProject from '@/components/Projects/CreateProject';
 import ProjectCard from '@/components/Projects/ProjectCard';
 import AppLayout from '@/layouts/AppLayout';
 import { SharedData, TilsynObject } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
-import CreateProject from './CreateProject';
 import styles from './Index.module.css';
 
 type Project = {

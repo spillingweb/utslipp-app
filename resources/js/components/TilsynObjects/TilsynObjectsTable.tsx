@@ -9,7 +9,7 @@ type TilsynObjectsTableProps = {
     tilsynObjects: TilsynObject[];
     sortColumn: string;
     setSortColumn: React.Dispatch<React.SetStateAction<string>>;
-    setSortDirection: React.Dispatch<React.SetStateAction<'asc' | 'desc'>>;
+    setSortDirection: React.Dispatch<React.SetStateAction<'stigende' | 'synkende'>>;
     ref: React.RefObject<HTMLTableElement | null>;
 };
 
@@ -27,7 +27,7 @@ const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortD
     // Handle sorting when a header is clicked, logic in the parent component
     const handleHeaderClick = (header: string) => {
         if (sortColumn === header.toLowerCase()) {
-            setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+            setSortDirection((prev) => (prev === 'stigende' ? 'synkende' : 'stigende'));
         }
         setSortColumn(header.toLowerCase());
     };
@@ -56,37 +56,40 @@ const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortD
                 ]}
                 onHeaderClick={handleHeaderClick}
             >
-                {tilsynObjects.length > 0 && tilsynObjects.map((object) => (
-                    <tr key={object.id}>
-                        <td>{object.frist}</td>
-                        <td>{object.saksbeh}</td>
-                        <td className={styles.center}>{object.sone}</td>
-                        <td className={styles.center}>{object.project_id}</td>
-                        <td className={styles.center}>{object.gnr}</td>
-                        <td className={styles.center}>{object.bnr}</td>
-                        <td>{object.adresse}</td>
-                        <td className={styles.center}>{object.status}</td>
-                        <td className={styles.center}>{object.hjemmel}</td>
-                        <td className={styles.wrapText}>{object.kommentar}</td>
-                        <td className={styles.wrapText}>{object.svarskjema}</td>
-                        <td className={styles.wrapText}>{object.komtek}</td>
-                        <td className={styles.wrapText}>{object.kontroll}</td>
-                        <td className={styles.wrapText}>{object.arkiv}</td>
-                        {can.tilsyn_object_edit && (
-                            <td>
-                                <div className={styles.actions}>
-                                    <TextLink href={route('tilsyn_object.edit', object.id)}>Endre</TextLink>
-                                    <ButtonLink onClick={() => handleDeleteTilsynsObject(object.id)}>Slett</ButtonLink>
-                                </div>
-                            </td>
-                        )}
-                    </tr>
-                ))}
+                {tilsynObjects.length > 0 &&
+                    tilsynObjects.map((object) => (
+                        <tr key={object.id}>
+                            <td>{object.frist}</td>
+                            <td>{object.saksbeh}</td>
+                            <td className={styles.center}>{object.sone}</td>
+                            <td className={styles.center}>{object.project_id}</td>
+                            <td className={styles.center}>{object.gnr}</td>
+                            <td className={styles.center}>{object.bnr}</td>
+                            <td>{object.adresse}</td>
+                            <td className={styles.center}>{object.status}</td>
+                            <td className={styles.center}>{object.hjemmel}</td>
+                            <td className={styles.wrapText}>{object.kommentar}</td>
+                            <td className={styles.wrapText}>{object.svarskjema}</td>
+                            <td className={styles.wrapText}>{object.komtek}</td>
+                            <td className={styles.wrapText}>{object.kontroll}</td>
+                            <td className={styles.wrapText}>{object.arkiv}</td>
+                            {can.tilsyn_object_edit && (
+                                <td>
+                                    <div className={styles.actions}>
+                                        <TextLink href={route('tilsyn_object.edit', object.id)}>Endre</TextLink>
+                                        <ButtonLink onClick={() => handleDeleteTilsynsObject(object.id)}>Slett</ButtonLink>
+                                    </div>
+                                </td>
+                            )}
+                        </tr>
+                    ))}
 
                 {tilsynObjects.length === 0 && (
-                    <div className={styles.noResults}>
-                        <p>Ingen tilsynsobjekter funnet.</p>
-                    </div>
+                    <tr>
+                        <td colSpan={14} className={styles.noResults}>
+                            <p>Ingen tilsynsobjekter funnet.</p>
+                        </td>
+                    </tr>
                 )}
             </Table>
         </div>
