@@ -56,7 +56,7 @@ const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortD
                 ]}
                 onHeaderClick={handleHeaderClick}
             >
-                {tilsynObjects.map((object) => (
+                {tilsynObjects.length > 0 && tilsynObjects.map((object) => (
                     <tr key={object.id}>
                         <td>{object.frist}</td>
                         <td>{object.saksbeh}</td>
@@ -82,6 +82,12 @@ const TilsynObjectsTable = ({ tilsynObjects, sortColumn, setSortColumn, setSortD
                         )}
                     </tr>
                 ))}
+
+                {tilsynObjects.length === 0 && (
+                    <div className={styles.noResults}>
+                        <p>Ingen tilsynsobjekter funnet.</p>
+                    </div>
+                )}
             </Table>
         </div>
     );

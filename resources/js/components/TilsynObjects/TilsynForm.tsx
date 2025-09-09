@@ -1,3 +1,4 @@
+import { FilterContext } from '@/store/filter-context';
 import { SelectedPointContext } from '@/store/selected-point-context';
 import { SidebarContext } from '@/store/sidebar-context';
 import { TilsynFormContext } from '@/store/tilsyn-form-context';
@@ -15,6 +16,7 @@ const TilsynForm = () => {
     const { can } = usePage<SharedData>().props;
     const { selectedPoint, setSelectedPoint } = use(SelectedPointContext);
     const { sidebarTabOpen } = use(SidebarContext);
+    const { setFilterValue } = use(FilterContext);
 
     // Access the TilsynFormContext to get form data and properties
     const {
@@ -48,6 +50,7 @@ const TilsynForm = () => {
         e.preventDefault();
         if (mode === 'create') {
             storeTilsynObject();
+            setFilterValue('tilsyn'); // Reset filter to default after creating a new object
         } else {
             updateTilsynObject();
         }

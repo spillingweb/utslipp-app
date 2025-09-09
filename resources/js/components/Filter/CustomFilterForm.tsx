@@ -1,44 +1,15 @@
+import { FilterContext } from '@/store/filter-context';
+import { use } from 'react';
 import Button from '../ui/Button';
 import styles from './CustomFilterForm.module.css';
 import FilterForm from './FilterForm';
 
-type CustomFilterFormProps = {
-    setRadioFilterValue: React.Dispatch<React.SetStateAction<'' | 'tilsyn' | 'alle' | 'frist'>>;
-    data: {
-        filterField1: string;
-        filterRelOp1: string;
-        filterValue1: string;
-        logicalOp: string;
-        filterField2: string;
-        filterRelOp2: string;
-        filterValue2: string;
-    };
-    setData: (field: string, value: string) => void;
-    post: (url: string, options?: { preserveState?: boolean; preserveScroll?: boolean; replace?: boolean, onSuccess?: () => void } | undefined) => void;
-};
-
-const CustomFilterForm = ({ setRadioFilterValue, data, setData, post }: CustomFilterFormProps) => {
-
-    const handleCustomFilter = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        // Client-side validation
-        if (!data.filterField1) {
-            alert('Vennligst oppgi et gyldig filter');
-            return;
-        }
-
-        // Filter objects
-        post(route('map.filter'), {
-            onSuccess: () => {
-                setRadioFilterValue('');
-            }
-        });
-    };
+const CustomFilterForm = () => {
+    const { data, setData, handleCustomFilter } = use(FilterContext);
 
     return (
         <form className={styles.filterCustom} onSubmit={handleCustomFilter}>
-            <FilterForm index={1} setData={setData} formData={data} />
+            <FilterForm index={1} />
             <fieldset className={styles.logOpFieldset}>
                 <label className={styles.logOp} htmlFor="and">
                     OG
@@ -74,7 +45,7 @@ const CustomFilterForm = ({ setRadioFilterValue, data, setData, post }: CustomFi
                     />
                 </label>
             </fieldset>
-            <FilterForm index={2} setData={setData} formData={data} />
+            <FilterForm index={2} />
             <Button type="submit">Filtrer i database</Button>
         </form>
     );

@@ -1,7 +1,7 @@
+import { FilterContext } from '@/store/filter-context';
 import { SidebarContext } from '@/store/sidebar-context';
-import { router, useForm } from '@inertiajs/react';
 import { LatLngBounds } from 'leaflet';
-import { use, useEffect, useMemo, useRef, useState } from 'react';
+import { use } from 'react';
 import { useMap } from 'react-leaflet';
 import SidebarSection from '../Sidebar/SidebarSection';
 import ButtonLink from '../ui/ButtonLink';
@@ -17,50 +17,9 @@ type FilterProps = {
 
 const Filter = ({ tilsynObjects, tilsynLayerBounds }: FilterProps) => {
     const { sidebarTabOpen } = use(SidebarContext);
-
-    const isInitialRender = useRef(true);
     const map = useMap();
 
-    // initialize custom filter form
-    const { data, setData, post, reset } = useForm({
-        filterField1: '',
-        filterRelOp1: '',
-        filterValue1: '',
-        logicalOp: '',
-        filterField2: '',
-        filterRelOp2: '',
-        filterValue2: '',
-    });
-
-    const [filterValue, setFilterValue] = useState<'' | 'tilsyn' | 'alle' | 'frist'>('tilsyn');
-
-    const filterUrl = useMemo(() => {
-        const url = new URL(route('map'));
-        if (filterValue) {
-            url.searchParams.append('filter', filterValue);
-        }
-        return url.toString();
-    }, [filterValue]);
-
-    useEffect(() => {
-        if (isInitialRender.current) {
-            isInitialRender.current = false;
-            return;
-        }
-
-        if (filterValue === '') return;
-
-        // Update the URL with the new filter parameters
-        router.visit(filterUrl, {
-            preserveState: true,
-            preserveScroll: true,
-        });
-    }, [filterUrl, reset, filterValue]);
-
-    const handleChangeFilter = (value: '' | 'tilsyn' | 'alle' | 'frist') => {
-        setFilterValue(value);
-        reset(); // Reset custom filter form data
-    };
+    const { filterValue, handleChangeFilter } = use(FilterContext);
 
     const handleCenterObjects = () => {
         if (tilsynLayerBounds) {
@@ -98,7 +57,7 @@ const Filter = ({ tilsynObjects, tilsynLayerBounds }: FilterProps) => {
             </div>
             <hr className={styles.horizontalLine} />
             <Heading level={3}>Egendefinerte filtre:</Heading>
-            <CustomFilterForm setRadioFilterValue={setFilterValue} data={data} setData={setData} post={post} />
+            <CustomFilterForm />
             <div className={styles.flex}>
                 <p className={styles.filterInfo}>
                     Antall filtrerte objekter: <span>{tilsynObjects?.features.length}</span>

@@ -15,9 +15,9 @@ const SidebarContext = createContext<SidebarContextType>({
 const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
     const [sidebarTabOpen, setSidebarTabOpen] = useState<SidebarTab | null>('search');
 
-    return (
-        <SidebarContext.Provider value={{ sidebarTabOpen: sidebarTabOpen, setSidebarTabOpen: setSidebarTabOpen }}>{children}</SidebarContext.Provider>
-    );
+    const ctxValue = { sidebarTabOpen, setSidebarTabOpen };
+
+    return <SidebarContext.Provider value={ctxValue}>{children}</SidebarContext.Provider>;
 };
 
 export { SidebarContext, SidebarProvider };

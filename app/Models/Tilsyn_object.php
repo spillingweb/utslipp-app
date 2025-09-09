@@ -37,14 +37,15 @@ class Tilsyn_object extends Model
 
     public function scopeSearch(Builder $query, Request $request)
     {
-        return $query->when($request->input('search'), function ($query) use ($request) {
-            return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'], 'ilike', '%' . $request->input('search') . '%');
+        return $query->when($request->input('sok'), function ($query) use ($request) {
+            return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'], 
+            'ilike', '%' . $request->input('sok') . '%');
         })
-            ->when($request->input('project_id'), function ($query) use ($request) {
-                if ($request->input('project_id') === 'ingen') {
+            ->when($request->input('prosjekt'), function ($query) use ($request) {
+                if ($request->input('prosjekt') === 'ingen') {
                     return $query->whereNull('project_id');
                 }
-                return $query->where('project_id', $request->input('project_id'));
+                return $query->where('project_id', $request->input('prosjekt'));
             });
     }
 
@@ -58,7 +59,8 @@ class Tilsyn_object extends Model
             return match ($request->input('filter')) {
                 'alle' => $query,
                 'tilsyn' => $query->where('status', '!=', 'O'),
-                'frist' => $query->where('status', '!=', 'O')->where('frist', '<=', now()),
+                'frist' => $query->where('status', '!=', 'O')
+                                ->where('frist', '<=', now()),
                 default => $query->where('status', '!=', 'O'),
             };
         });
@@ -66,12 +68,12 @@ class Tilsyn_object extends Model
 
     public function scopeProject(Builder $query, Request $request)
     {
-        if (!$request->has('project_id')) {
+        if (!$request->has('prosjekt')) {
             return $query->where('status', '!=', 'O');
         }
 
-        return $query->when($request->input('project_id'), function ($query) use ($request) {
-           return $query->where('project_id', $request->input('project_id'));
+        return $query->when($request->input('prosjekt'), function ($query) use ($request) {
+           return $query->where('project_id', $request->input('prosjekt'));
         });
     }
 }

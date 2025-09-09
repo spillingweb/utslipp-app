@@ -1,3 +1,9 @@
+.adminContainer {
+    max-width: 80rem;
+    align-self: center;
+    width: 100%;
+}
+
 .flexHeader {
   display: flex;
   justify-content: space-between;

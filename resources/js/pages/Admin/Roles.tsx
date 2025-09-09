@@ -2,10 +2,12 @@ import Table from '@/components/ui/Table';
 import TextLink from '@/components/ui/TextLink';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Data, Role } from '@/types';
+import { Head } from '@inertiajs/react';
 
 const RolesTable = ({ roles }: { roles: Data<Role> }) => {
     return (
         <AdminLayout>
+            <Head title="Roller" />
             <Table
                 headers={[
                     { text: 'Navn', sortable: false },

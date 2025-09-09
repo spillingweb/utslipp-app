@@ -33,6 +33,8 @@ class PasswordController extends Controller
             'current_password.current_password' => 'Det nåværende passordet er feil.',
             'password.confirmed' => 'De to passordene stemmer ikke overens.',
             'password.required' => 'Vennligst oppgi et nytt passord.',
+            'password.min' => 'Passordet må være minst :min tegn langt.',
+            'password.regex' => 'Passordet må inneholde minst én stor bokstav, én liten bokstav, ett tall og ett spesialtegn.',
         ]);
 
         $request->user()->update([

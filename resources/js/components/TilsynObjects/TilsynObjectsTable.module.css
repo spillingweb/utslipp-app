@@ -1,5 +1,6 @@
 .tableContainer {
     overflow-y: auto;
+    font-size: 0.75rem;
 }
 
 .wrapText {

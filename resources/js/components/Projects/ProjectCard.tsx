@@ -34,6 +34,7 @@ const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
         }
     };
 
+    // Title shows id and name, or "Uten Prosjekt" if no id (for unassigned objects)
     const title = id ? `${id} - ${name}` : 'Uten Prosjekt';
 
     return (
@@ -59,7 +60,7 @@ const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
                         <Tooltip />
                     </PieChart>
                 </figure>
-                <Link href={`tilsynsobjekter?project_id=${id ? id : 'null'}`}>Se tabell</Link>
+                <Link href={`tilsynsobjekter?prosjekt=${id ? id : 'ingen'}`}>Se tabell</Link>
                 <Link href={`/?prosjekt=${id ? id : 'ingen'}`}>Vis i kart</Link>
             </div>
         </li>

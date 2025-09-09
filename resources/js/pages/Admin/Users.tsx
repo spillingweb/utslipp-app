@@ -3,7 +3,7 @@ import Table from '@/components/ui/Table';
 import TextLink from '@/components/ui/TextLink';
 import AdminLayout from '@/layouts/AdminLayout';
 import { User } from '@/types';
-import { router, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import styles from './AdminTables.module.css';
 
 const UserTable = () => {
@@ -19,6 +19,7 @@ const UserTable = () => {
 
     return (
         <AdminLayout>
+            <Head title="Brukere" />
             <Table
                 headers={[
                     { text: 'Navn', sortable: false },

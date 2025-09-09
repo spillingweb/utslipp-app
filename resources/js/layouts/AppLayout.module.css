@@ -15,14 +15,11 @@
 .mainContainer {
     flex: 1;
     overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .padding {
     padding: 2rem;
-}
-
-.adminContainer {
-    max-width: 80rem;
-    align-self: center;
-    width: 100%;
 }

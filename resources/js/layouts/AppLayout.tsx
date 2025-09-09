@@ -10,7 +10,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     let containerStyle = styles.mainContainer;
 
     if (!route().current('map')) containerStyle += ` ${styles.padding}`;
-    if (route().current('admin.*')) containerStyle += ` ${styles.adminContainer}`;
 
     return (
         <div className={styles.appLayout}>

@@ -3,3 +3,7 @@
     gap: 0.5rem;
     justify-content: flex-end;
 }
+
+.tableContainer {
+    overflow-y: auto;
+}

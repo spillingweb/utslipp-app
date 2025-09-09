@@ -7,8 +7,8 @@ import { TilsynObject } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import { X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import styles from './Index.module.css';
 import TableButtons from '../../components/TilsynObjects/TableButtons';
+import styles from './Index.module.css';
 
 type TilsynObjectsProps = {
     tilsynObjects: {
@@ -39,14 +39,14 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
     const tilsynObjectsUrl = useMemo(() => {
         const url = new URL(route('tilsyn_objects'));
         if (selectedProject) {
-            url.searchParams.append('project_id', selectedProject);
+            url.searchParams.append('prosjekt', selectedProject);
         }
         if (searchTerm) {
-            url.searchParams.append('search', searchTerm);
+            url.searchParams.append('sok', searchTerm);
         }
         url.searchParams.append('page', pageNumber);
-        url.searchParams.append('sort_by', sortColumn === 'saksbehandler' ? 'saksbeh' : sortColumn === 'prosjekt' ? 'project_id' : sortColumn);
-        url.searchParams.append('sort_direction', sortDirection);
+        url.searchParams.append('sort_kolonne', sortColumn === 'saksbehandler' ? 'saksbeh' : sortColumn === 'prosjekt' ? 'project_id' : sortColumn);
+        url.searchParams.append('sort_retning', sortDirection);
         return url.toString();
     }, [searchTerm, pageNumber, selectedProject, sortColumn, sortDirection]);
 
@@ -59,7 +59,6 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
         router.visit(tilsynObjectsUrl, {
             preserveState: true,
             preserveScroll: true,
-            // replace: true,
         });
     }, [tilsynObjectsUrl]);
 
@@ -83,20 +82,13 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
                 <FilterByProject selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
                 <TableButtons tilsynObjects={tilsynObjects.data} tableRef={tableRef} />
             </div>
-            {tilsynObjects.data.length === 0 && (
-                <div className={styles.noResults}>
-                    <p>Ingen tilsynsobjekter funnet.</p>
-                </div>
-            )}
-            {tilsynObjects.data.length > 0 && (
-                <TilsynObjectsTable
-                    ref={tableRef}
-                    tilsynObjects={tilsynObjects.data}
-                    sortColumn={sortColumn}
-                    setSortColumn={setSortColumn}
-                    setSortDirection={setSortDirection}
-                />
-            )}
+            <TilsynObjectsTable
+                ref={tableRef}
+                tilsynObjects={tilsynObjects.data}
+                sortColumn={sortColumn}
+                setSortColumn={setSortColumn}
+                setSortDirection={setSortDirection}
+            />
             <Pagination meta={tilsynObjects.meta} updatePageNumber={updatePageNumber} />
         </AppLayout>
     );

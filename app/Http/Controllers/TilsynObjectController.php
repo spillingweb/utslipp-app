@@ -16,8 +16,8 @@ class TilsynObjectController extends Controller
     {
         Gate::authorize('tilsyn_object_show');
 
-        $orderColumn = request('sort_by', 'frist'); // Default sort column
-        $orderDirection = request('sort_direction', 'asc'); // Default sort direction
+        $orderColumn = request('sort_kolonne', 'frist'); // Default sort column
+        $orderDirection = request('sort_retning', 'asc'); // Default sort direction
 
         // Validate the requested column and direction to prevent SQL injection
         if (!in_array($orderColumn, ['frist', 'saksbeh', 'project_id', 'sone', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'])) {
@@ -33,8 +33,8 @@ class TilsynObjectController extends Controller
 
         return Inertia::render('TilsynObjects/Index', [
             'tilsynObjects' => TilsynObjectResource::collection($tilsynObjects),
-            'project_id' => $request->project_id ?? '',
-            'search' => $request->search ?? '',
+            'project_id' => $request->prosjekt ?? '',
+            'search' => $request->sok ?? '',
         ]);
     }
 
