@@ -38,7 +38,7 @@ const EditUser = ({ user }: { user: { data: User } }) => {
             <Head title="Endre Bruker" />
             <FormCard heading="Endre bruker" onSubmit={handleSubmit}>
                 <fieldset>
-                    <label htmlFor="name">Navn</label>
+                    <label className='bold' htmlFor="name">Navn</label>
                     <Input
                         id="name"
                         type="text"
@@ -52,7 +52,7 @@ const EditUser = ({ user }: { user: { data: User } }) => {
                     <InputError message={errors.name} />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="email">E-postadresse</label>
+                    <label className='bold' htmlFor="email">E-postadresse</label>
                     <Input
                         id="email"
                         type="email"

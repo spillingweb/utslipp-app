@@ -5,7 +5,6 @@ import { use } from 'react';
 import { useMap } from 'react-leaflet';
 import SidebarSection from '../Sidebar/SidebarSection';
 import ButtonLink from '../ui/ButtonLink';
-import Heading from '../ui/Heading';
 import Radio from '../ui/Radio';
 import CustomFilterForm from './CustomFilterForm';
 import styles from './Filter.module.css';
@@ -56,7 +55,6 @@ const Filter = ({ tilsynObjects, tilsynLayerBounds }: FilterProps) => {
                 />
             </div>
             <hr className={styles.horizontalLine} />
-            <Heading level={3}>Egendefinerte filtre:</Heading>
             <CustomFilterForm />
             <div className={styles.flex}>
                 <p className={styles.filterInfo}>

@@ -1,21 +1,3 @@
-.loginForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-
-    fieldset {
-        border: none;
-        padding: 0;
-        margin: 0;
-    }
-}
-
-.loginInput {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
 .flexSpaceBetween {
     display: flex;
     justify-content: space-between;
@@ -35,4 +17,10 @@
     padding: 1rem;
     border-radius: var(--radius);
     text-align: center;
+}
+
+.rememberMe {
+    flex-direction: row;
+    justify-content: start;
+    gap: 0;
 }

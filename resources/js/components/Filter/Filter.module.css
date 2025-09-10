@@ -1,19 +1,13 @@
-fieldset {
-    margin: 0;
-    padding: 0;
-    border: none;
-}
-
 label[for] {
     cursor: pointer;
 }
 
 .horizontalLine {
-    margin: 1.5rem 0;
+    margin: 1rem 0;
 }
 
 .flex {
+    margin-top: 0.5rem;
     display: flex;
     justify-content: space-between;
-    margin-right: .5rem;
 }

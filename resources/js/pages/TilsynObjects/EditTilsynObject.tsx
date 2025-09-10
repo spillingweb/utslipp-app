@@ -30,6 +30,7 @@ const EditTilsynObject = ({ tilsynObject }: { tilsynObject: { data: TilsynObject
         <AppLayout>
             <Head title="Rediger tilsynsobjekt" />
             <FormCard
+                flex={false}
                 heading={`${tilsynData.gnr}/${tilsynData.bnr}${data.fnr ? `/${tilsynData.fnr}` : ''} ${tilsynData.adresse}`}
                 onSubmit={handleUpdateTilsynObject}
             >

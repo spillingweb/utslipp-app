@@ -44,18 +44,18 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
             <Head title="Opprett Bruker" />
             <FormCard heading="Opprett ny bruker" onSubmit={handleSubmit}>
                 <fieldset>
-                    <label htmlFor="name">Navn</label>
+                    <label className='bold' htmlFor="name">Navn</label>
                     <Input id="name" type="text" autoFocus autoComplete="name" value={data.name} onChange={(e) => setData('name', e.target.value)} />
                     <InputError message={errors.name && 'Navn er obligatorisk'} />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="email">E-postadresse</label>
+                    <label className='bold' htmlFor="email">E-postadresse</label>
                     <Input id="email" autoComplete="email" value={data.email} onChange={(e) => setData('email', e.target.value)} />
                     <InputError message={errors.email} />
                 </fieldset>
 
                 <fieldset>
-                    <label htmlFor="password">Midlertidig passord</label>
+                    <label className='bold' htmlFor="password">Midlertidig passord</label>
                     <Input
                         id="password"
                         type="password"
@@ -67,7 +67,7 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                 </fieldset>
 
                 <fieldset>
-                    <label htmlFor="password_confirmation">Bekreft midlertidig passord</label>
+                    <label className='bold' htmlFor="password_confirmation">Bekreft midlertidig passord</label>
                     <Input
                         id="password_confirmation"
                         type="password"
@@ -79,8 +79,8 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                     <InputError message={errors.password_confirmation} />
                 </fieldset>
 
-                <fieldset className={styles.radioGroup}>
-                    <p>Velg rolle</p>
+                <fieldset>
+                    <p className='bold'>Velg rolle</p>
                     {roles.data.map((role) => (
                         <Radio
                             key={role.id}

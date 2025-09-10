@@ -27,7 +27,7 @@ const ChangePassword = () => {
             <Head title="Endre passord" />
             <FormCard onSubmit={onSubmit} heading="Endre passord">
                 <fieldset>
-                    <label htmlFor="current_password">Nåværende passord</label>
+                    <label className='bold' htmlFor="current_password">Nåværende passord</label>
                     <Input
                         id="current_password"
                         type="password"
@@ -37,12 +37,12 @@ const ChangePassword = () => {
                     <InputError message={errors.current_password} />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="password">Nytt passord</label>
+                    <label className='bold' htmlFor="password">Nytt passord</label>
                     <Input id="password" type="password" value={data.password} onChange={(e) => setData('password', e.target.value)} />
                     <InputError message={errors.password} />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="password_confirmation">Bekreft nytt passord</label>
+                    <label className='bold' htmlFor="password_confirmation">Bekreft nytt passord</label>
                     <Input
                         id="password_confirmation"
                         type="password"

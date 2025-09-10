@@ -61,6 +61,10 @@ a {
     color: currentColor;
 }
 
+p {
+    margin: 0;
+}
+
 .mb-small {
     margin-bottom: 0.5rem !important;
 }
@@ -71,4 +75,8 @@ a {
 
 .mb-large {
     margin-bottom: 1.5rem !important;
+}
+
+.bold {
+    font-weight: 600;
 }

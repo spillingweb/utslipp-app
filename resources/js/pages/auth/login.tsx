@@ -34,14 +34,15 @@ export default function Login({ status }: { status?: string }) {
         <AuthLayout status={status}>
             <Head title="Logg inn" />
             <FormCard onSubmit={handleSubmit}>
-                <fieldset className={styles.loginInput}>
-                    <label htmlFor="email">E-postadresse</label>
+                <fieldset>
+                    <label className="bold" htmlFor="email">
+                        E-postadresse
+                    </label>
                     <Input
                         id="email"
                         type="email"
                         aria-required
                         autoFocus
-                        tabIndex={1}
                         autoComplete="email"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
@@ -49,11 +50,13 @@ export default function Login({ status }: { status?: string }) {
                     <InputError message={errors.email} />
                 </fieldset>
 
-                <fieldset className={styles.loginInput}>
+                <fieldset>
                     <div className={styles.flexSpaceBetween}>
-                        <label htmlFor="password">Passord</label>
+                        <label className="bold" htmlFor="password">
+                            Passord
+                        </label>
 
-                        <TextLink href={route('password.request')} tabIndex={5}>
+                        <TextLink href={route('password.request')} tabIndex={0}>
                             Glemt passordet?
                         </TextLink>
                     </div>
@@ -61,7 +64,6 @@ export default function Login({ status }: { status?: string }) {
                         id="password"
                         type="password"
                         aria-required
-                        tabIndex={2}
                         autoComplete="current-password"
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
@@ -69,12 +71,12 @@ export default function Login({ status }: { status?: string }) {
                     <InputError message={errors.password} />
                 </fieldset>
 
-                <fieldset>
-                    <Input id="remember" type="checkbox" onClick={() => setData('remember', !data.remember)} tabIndex={3} />
+                <div className={styles.rememberMe}>
+                    <Input id="remember" type="checkbox" onClick={() => setData('remember', !data.remember)} />
                     <label htmlFor="remember">Husk meg</label>
-                </fieldset>
+                </div>
 
-                <Button type="submit" tabIndex={4} disabled={processing}>
+                <Button type="submit" disabled={processing}>
                     Logg inn
                 </Button>
             </FormCard>

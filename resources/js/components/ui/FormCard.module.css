@@ -9,13 +9,3 @@
 .heading {
     text-align: center;
 }
-
-fieldset {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    label {
-        font-weight: 600;
-    }
-}

@@ -29,12 +29,12 @@ const Edit = ({ project }: { project: { id: string; name: string } }) => {
             <Head title="Rediger prosjekt" />
             <FormCard onSubmit={handleSubmit} heading="Rediger prosjekt">
                 <fieldset>
-                    <label htmlFor="id">Prosjektnummer</label>
+                    <label className='bold' htmlFor="id">Prosjektnummer</label>
                     <Input id="id" type="number" autoFocus tabIndex={0} value={data.id} onChange={(e) => setData('id', e.target.value)} />
                     <InputError message={errors.id && 'ID-en er allerede i bruk'} />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="name">Navn på prosjektet</label>
+                    <label className='bold' htmlFor="name">Navn på prosjektet</label>
                     <Input id="name" type="text" value={data.name} onChange={(e) => setData('name', e.target.value)} />
                     <InputError message={errors.name && 'Navnet er allerede i bruk'} />
                 </fieldset>

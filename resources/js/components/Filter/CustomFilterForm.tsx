@@ -3,12 +3,14 @@ import { use } from 'react';
 import Button from '../ui/Button';
 import styles from './CustomFilterForm.module.css';
 import FilterForm from './FilterForm';
+import Heading from '../ui/Heading';
 
 const CustomFilterForm = () => {
     const { data, setData, handleCustomFilter } = use(FilterContext);
 
     return (
         <form className={styles.filterCustom} onSubmit={handleCustomFilter}>
+            <Heading level={3}>Egendefinerte filtre:</Heading>
             <FilterForm index={1} />
             <fieldset className={styles.logOpFieldset}>
                 <label className={styles.logOp} htmlFor="and">

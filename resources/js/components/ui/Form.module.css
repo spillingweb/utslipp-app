@@ -9,3 +9,11 @@
         margin: 0;
     }
 }
+
+.flex {
+    fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

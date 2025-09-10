@@ -39,12 +39,12 @@ const Profile = ({ role }: { role?: string }) => {
                     </p>
                 )}
                 <fieldset>
-                    <label htmlFor="name">Navn</label>
+                    <label className='bold' htmlFor="name">Navn</label>
                     <Input id="name" type="text" value={data.name} onChange={(e) => setData('name', e.target.value)} />
                     <InputError message={errors.name} />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="email">E-post</label>
+                    <label className='bold' htmlFor="email">E-post</label>
                     <Input id="email" value={data.email} onChange={(e) => setData('email', e.target.value)} />
                     <InputError message={errors.email} />
                 </fieldset>

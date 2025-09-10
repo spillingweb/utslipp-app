@@ -100,7 +100,7 @@ const TilsynForm = () => {
                     <div>Klikk på et tilsynsobjekt på kartet for å se informasjon om eiendommen.</div>
                 ))}
             {open === true && (
-                <Form onSubmit={handleSubmitForm}>
+                <Form flex={false} onSubmit={handleSubmitForm}>
                     <div hidden>
                         <label htmlFor="lat">Latitude</label>
                         <Input id="lat" type="number" value={selectedPoint?.lat || ''} readOnly disabled />

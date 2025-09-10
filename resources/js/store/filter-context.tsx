@@ -67,7 +67,6 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         if (isInitialRender.current) {
-            console.log('initial render');
             isInitialRender.current = false;
             return;
         }

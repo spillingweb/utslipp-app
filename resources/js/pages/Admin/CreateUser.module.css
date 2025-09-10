@@ -2,18 +2,3 @@
     display: flex;
     justify-content: space-between;
 }
-
-.radioGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    p {
-        font-weight: 600;
-        margin: 0;
-    }
-
-    label {
-        font-weight: 400;
-    }
-}

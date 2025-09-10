@@ -8,9 +8,10 @@ type FormCardProps = {
     center?: boolean;
     heading?: string;
     children: React.ReactNode;
+    flex?: boolean;
 };
 
-const FormCard = ({ onSubmit, center = true, heading, children }: FormCardProps) => {
+const FormCard = ({ onSubmit, center = true, heading, children, flex=true }: FormCardProps) => {
     const className = center ? styles.center : undefined;
 
     return (
@@ -21,7 +22,7 @@ const FormCard = ({ onSubmit, center = true, heading, children }: FormCardProps)
                         {heading}
                     </Heading>
                 )}
-                <Form onSubmit={onSubmit}>{children}</Form>
+                <Form flex={flex} onSubmit={onSubmit}>{children}</Form>
             </Card>
         </div>
     );
