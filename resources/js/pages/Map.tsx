@@ -1,6 +1,5 @@
 import Filter from '@/components/Filter/Filter';
 import Legend from '@/components/Legend/Legend';
-// import DrawToolbar from '@/components/Map/DrawToolbar';
 import LayersControlConfig from '@/components/Map/LayersControlConfig';
 import ProjectLayer from '@/components/Map/ProjectLayer';
 import SelectCircle from '@/components/Map/SelectCircle';
@@ -14,8 +13,8 @@ import { lyrHvittRundt, lyrSoner } from '@/lib/layersDefinitions';
 import TilsynContext from '@/store/TilsynContext';
 import { AddressData } from '@/types';
 import { Head } from '@inertiajs/react';
-import L, { LatLngBounds } from 'leaflet';
-import { useEffect, useRef, useState } from 'react';
+import { LatLngBounds } from 'leaflet';
+import { useEffect, useState } from 'react';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import styles from './Map.module.css';
 
@@ -33,14 +32,6 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
             setToolTip(null);
         }
     }, [tilsynObjectsData]);
-
-    // Disable click propagation on the project select to prevent map interactions when clicking on the select
-    const projectSelect = useRef<HTMLSelectElement | null>(null);
-    useEffect(() => {
-        if (projectSelect.current) {
-            L.DomEvent.disableClickPropagation(projectSelect.current);
-        }
-    }, []);
 
     return (
         <AppLayout>
@@ -66,9 +57,7 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
             >
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig position="topright" />
-                {/* <DrawToolbar /> */}
                 <FilterByProject
-                    ref={projectSelect}
                     selectedProject={selectedProject}
                     setSelectedProject={setSelectedProject}
                     className={styles.filterByProject}

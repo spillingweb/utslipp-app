@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
 import InputError from '@/components/InputError';
@@ -51,15 +51,9 @@ export default function Login({ status }: { status?: string }) {
                 </fieldset>
 
                 <fieldset>
-                    <div className={styles.flexSpaceBetween}>
-                        <label className="bold" htmlFor="password">
-                            Passord
-                        </label>
-
-                        <TextLink href={route('password.request')} tabIndex={0}>
-                            Glemt passordet?
-                        </TextLink>
-                    </div>
+                    <label className="bold" htmlFor="password">
+                        Passord
+                    </label>
                     <Input
                         id="password"
                         type="password"
@@ -71,14 +65,31 @@ export default function Login({ status }: { status?: string }) {
                     <InputError message={errors.password} />
                 </fieldset>
 
-                <div className={styles.rememberMe}>
-                    <Input id="remember" type="checkbox" onClick={() => setData('remember', !data.remember)} />
-                    <label htmlFor="remember">Husk meg</label>
+                <div className={styles.flexSpaceBetween}>
+                    <div className={styles.rememberMe}>
+                        <Input id="remember" type="checkbox" onClick={() => setData('remember', !data.remember)} />
+                        <label htmlFor="remember">Husk meg</label>
+                    </div>
+
+                    <TextLink href={route('password.request')} tabIndex={0}>
+                        Glemt passordet?
+                    </TextLink>
                 </div>
 
                 <Button type="submit" disabled={processing}>
                     Logg inn
                 </Button>
+                <Link href="/auth/microsoft/redirect">
+                    <div className={styles.microsoftLogin}>
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"
+                            alt="Microsoft Logo"
+                            height={20}
+                            width={20}
+                        />
+                        Logg inn med Microsoft
+                    </div>
+                </Link>
             </FormCard>
         </AuthLayout>
     );

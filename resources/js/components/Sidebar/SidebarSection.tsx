@@ -21,10 +21,10 @@ const SidebarSection = ({ isOpen, title, children }: SidebarSectionProps) => {
 
     return (
         <section className={sectionClass}>
-            <div className={styles.sectionHeader}>
+            <header className={styles.sectionHeader}>
                 <Heading className={styles.sectionTitle} level={2}>{title}</Heading>
                 <ChevronLeft size={20} className={styles.toggleIcon} onClick={() => {setSidebarTabOpen(null)}} />
-            </div>
+            </header>
             <div className={styles.sectionContent}>{children}</div>
         </section>
     );

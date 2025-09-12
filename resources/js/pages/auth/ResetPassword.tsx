@@ -39,7 +39,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
             <Head title="Endre passord" />
             <FormCard onSubmit={submit} >
                 <fieldset className={styles.loginInput}>
-                    <label htmlFor="email">E-post</label>
+                    <label className="bold" htmlFor="email">E-post</label>
 
                     <Input
                         id="email"
@@ -54,7 +54,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                 </fieldset>
 
                 <fieldset className={styles.loginInput}>
-                    <label htmlFor="password">Passord</label>
+                    <label className="bold" htmlFor="password">Passord</label>
 
                     <Input
                         id="password"

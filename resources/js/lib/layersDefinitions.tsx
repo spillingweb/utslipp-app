@@ -112,6 +112,17 @@ export const LAYERS: {
             ),
         },
         {
+            name: 'Gemini Portal',
+            component: (
+                <WMSLayer
+                    url={route('wms.proxy')}
+                    options={{
+                        layers: 'va_basis',
+                    }}
+                />
+            ),
+        },
+        {
             name: 'Nye VA-traseer',
             component: (
                 <LayerGroup>

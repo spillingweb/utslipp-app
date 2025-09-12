@@ -16,7 +16,7 @@ const TilsynForm = () => {
     const { can } = usePage<SharedData>().props;
     const { selectedPoint, setSelectedPoint } = use(SelectedPointContext);
     const { sidebarTabOpen } = use(SidebarContext);
-    const { setFilterValue } = use(FilterContext);
+    const { setFilterValue, reset: resetFilter } = use(FilterContext);
 
     // Access the TilsynFormContext to get form data and properties
     const {
@@ -51,6 +51,7 @@ const TilsynForm = () => {
         if (mode === 'create') {
             storeTilsynObject();
             setFilterValue('tilsyn'); // Reset filter to default after creating a new object
+            resetFilter(); // Reset custom filter form data
         } else {
             updateTilsynObject();
         }
@@ -110,9 +111,9 @@ const TilsynForm = () => {
                     <TilsynFormFieldset data={data} disabled={disabled} setData={setData} />
                     <Buttons />
                     {disabled && (
-                        <p className={styles.lastUpdated}>
+                        <footer className={styles.lastUpdated}>
                             Sist oppdatert {data.updated_at} av {data.endret_av}
-                        </p>
+                        </footer>
                     )}
                 </Form>
             )}

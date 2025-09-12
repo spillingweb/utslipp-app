@@ -20,6 +20,7 @@ type FilterContextType = {
     setData: (field: keyof FilterDataType, value: string | undefined) => void;
     handleChangeFilter: (value: filterOptions) => void;
     handleCustomFilter: (e: React.FormEvent<HTMLFormElement>) => void;
+    reset: () => void;
 };
 
 export const FilterContext = createContext<FilterContextType>({
@@ -37,6 +38,7 @@ export const FilterContext = createContext<FilterContextType>({
     setData: () => {},
     handleChangeFilter: () => {},
     handleCustomFilter: () => {},
+    reset: () => {},
 });
 
 export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
@@ -109,6 +111,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
         setData,
         handleChangeFilter,
         handleCustomFilter,
+        reset,
     };
 
     return <FilterContext.Provider value={ctxValue}>{children}</FilterContext.Provider>;
