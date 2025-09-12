@@ -133,7 +133,7 @@ class MapController extends Controller
 
         $tilsynObject->update($request->validated());
 
-        return back()->with('success', 'Tilsynsobjektet ble oppdatert.');
+        return to_route('map')->with('success', 'Tilsynsobjektet ble oppdatert, og filtre er nullstilt.');
     }
 
     public function destroy(Tilsyn_object $tilsynObject)
@@ -142,6 +142,6 @@ class MapController extends Controller
 
         $tilsynObject->delete();
 
-        return back()->with('success', 'Tilsynsobjektet ble slettet.');
+        return to_route('map')->with('success', 'Tilsynsobjektet ble slettet, og filtre er nullstilt.');
     }
 }

@@ -2,9 +2,9 @@ import InputError from '@/components/InputError';
 import Button from '@/components/ui/Button';
 import FormCard from '@/components/ui/FormCard';
 import { Input } from '@/components/ui/Input';
-import ReturnButton from '@/components/ui/ReturnButton';
 import AppLayout from '@/layouts/AppLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
+import styles from './ChangePassword.module.css';
 
 const ChangePassword = () => {
     const { data, setData, put, processing, errors } = useForm<{
@@ -51,10 +51,12 @@ const ChangePassword = () => {
                     />
                     <InputError message={errors.password_confirmation} />
                 </fieldset>
-                <Button type="submit" disabled={processing}>
-                    Lagre nytt passord
-                </Button>
-                <ReturnButton href={route('profile.edit')}>Tilbake til profil</ReturnButton>
+                <div className={styles.cta}>
+                    <Button type="submit" disabled={processing}>
+                        Lagre nytt passord
+                    </Button>
+                    <Button type='button' variant='secondary' onClick={() => router.get(route('profile.edit'))}>Avbryt</Button>
+                </div>
             </FormCard>
         </AppLayout>
     );

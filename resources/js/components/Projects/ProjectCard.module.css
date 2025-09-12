@@ -20,7 +20,6 @@ button {
 }
 
 .editButton:hover {
-    color: #05564e;
     transform: scale(1.2);
 }
 

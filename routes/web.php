@@ -1,8 +1,8 @@
 <?php
 
-use App\App\Http\Controllers\WmsProxyController;
-use App\Http\Controllers\MapController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\WmsProxyController;
+use App\Http\Controllers\MapController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');

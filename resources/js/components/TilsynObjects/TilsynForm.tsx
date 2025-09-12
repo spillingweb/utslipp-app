@@ -40,9 +40,15 @@ const TilsynForm = () => {
     };
 
     const handleDeleteTilsynObject = () => {
-        if (confirm(`Er du sikker på at du vil slette tilsynsobjektet? Det kan ikke angres.`)) {
+        if (
+            confirm(
+                `Er du sikker på at du vil slette tilsynsdata for ${data.gnr}/${data.bnr}${data.fnr ? `/${data.fnr}` : ''} - ${data.adresse}? Det kan ikke angres.`,
+            )
+        ) {
             deleteTilsynObject();
             setSelectedPoint(null); // Reset selected point on the map
+            setFilterValue('tilsyn'); // Reset filter to default after creating a new object
+            resetFilter(); // Reset custom filter form data
         }
     };
 
@@ -50,11 +56,11 @@ const TilsynForm = () => {
         e.preventDefault();
         if (mode === 'create') {
             storeTilsynObject();
-            setFilterValue('tilsyn'); // Reset filter to default after creating a new object
-            resetFilter(); // Reset custom filter form data
         } else {
             updateTilsynObject();
         }
+        setFilterValue('tilsyn'); // Reset filter to default after creating a new object
+        resetFilter(); // Reset custom filter form data
     };
 
     const title = open ? `${data.gnr}/${data.bnr}${data.fnr ? `/${data.fnr}` : ''} ${data.adresse}` : 'Tilsynsobjekt';

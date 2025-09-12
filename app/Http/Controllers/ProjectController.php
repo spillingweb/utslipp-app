@@ -51,6 +51,12 @@ class ProjectController extends Controller
     {
         Gate::authorize('project_edit');
 
+        // Update project number of tilsyn objects if project number changes
+        if ($request->validated()['id'] !== $project->id) {
+            Tilsyn_object::where('project_id', $project->id)
+            ->update(['project_id' => $request->validated()['id']]);
+        }
+
         $project->update($request->validated());
 
         return to_route('projects')
