@@ -52,16 +52,24 @@ const SelectCircle = ({ address }: SelectCircleProps) => {
                 interactive
                 permanent
                 direction="right"
-                eventHandlers={can.tilsyn_object_edit ? {
-                    click: () => {
-                        setSidebarTabOpen('tilsyn');
-                        startNewTilsyn(address, zone);
-                    },
-                } : undefined}
+                eventHandlers={
+                    can.tilsyn_object_edit
+                        ? {
+                              click: () => {
+                                  setSidebarTabOpen('tilsyn');
+                                  startNewTilsyn(address, zone);
+                              },
+                          }
+                        : undefined
+                }
             >
                 <b>{`${gnr}/${bnr}${fnr ? `/${fnr}` : ''} - ${adressetekst}`}</b>
                 <br />
                 {can.tilsyn_object_edit && <a href="#">Legg til tilsynsobjekt</a>}
+                <br />
+                <a href={`https://ringerike.documaster.no/browse/?gnr=${gnr}&bnr=${bnr}${fnr ? `&fnr=${fnr}` : ''}`} target="_blank">
+                    Åpne Documaster
+                </a>
             </Tooltip>
         );
     }

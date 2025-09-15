@@ -36,3 +36,20 @@ input[readOnly] {
 .grid2columns {
     grid-column: 1 / -1;
 }
+
+.flexSpaceBetween {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .link {
+        color: currentColor;
+        text-decoration: underline var(--border);
+        text-underline-offset: 4px;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            text-decoration: underline var(--primary);
+        }
+    }
+}

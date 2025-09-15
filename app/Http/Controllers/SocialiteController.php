@@ -16,6 +16,8 @@ class SocialiteController extends Controller
      */
     public function redirect()
     {
+        $tenant = env('MICROSOFT_TENANT_ID');
+
         return Socialite::driver('microsoft')->redirect();
     }
 

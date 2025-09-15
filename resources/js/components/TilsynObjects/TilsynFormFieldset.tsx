@@ -130,7 +130,17 @@ const TilsynFormFieldset = ({
                 onChange={(e) => setData('kontroll', e.target.value)}
             />
 
-            <label htmlFor="arkiv">Arkiv</label>
+            <div className={`${styles.grid2columns} ${styles.flexSpaceBetween}`}>
+                <label htmlFor="arkiv">Arkiv</label>
+                <a className={styles.link}
+                    href={`https://ringerike.documaster.no/browse/?gnr=${data.gnr}&bnr=${data.bnr}${data.fnr ? `&fnr=${data.fnr}` : ''}`}
+                    tabIndex={0}
+                    target="_blank"
+                >
+                    Åpne Documaster
+                </a>
+            </div>
+
             <TextArea className={styles.grid2columns} id="arkiv" value={data.arkiv || ''} onChange={(e) => setData('arkiv', e.target.value)} />
         </fieldset>
     );

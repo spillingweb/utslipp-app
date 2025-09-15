@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\WmsProxyController;
 use App\Http\Controllers\MapController;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +15,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/delete/{tilsyn_object}', [MapController::class, 'destroy'])->name('map.destroy');
 
     Route::get('/wms_proxy', [WmsProxyController::class, 'getTile'])->name('wms.proxy');
-
-    Route::get('/auth/microsoft/redirect', [SocialiteController::class, 'redirect']);
-    Route::get('/auth/microsoft/callback', [SocialiteController::class, 'callback']);
 });
 
 require __DIR__ . '/settings.php';
