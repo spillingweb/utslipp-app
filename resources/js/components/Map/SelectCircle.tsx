@@ -7,6 +7,7 @@ import { usePage } from '@inertiajs/react';
 import pointInPolygon from 'point-in-polygon';
 import { ReactNode, use, useEffect, useState } from 'react';
 import { Circle, Tooltip, useMap } from 'react-leaflet';
+import ButtonLink from '../ui/ButtonLink';
 
 type SelectCircleProps = {
     address?: AddressData;
@@ -48,24 +49,19 @@ const SelectCircle = ({ address }: SelectCircleProps) => {
     if (address) {
         const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst } = address;
         toolTip = (
-            <Tooltip
-                interactive
-                permanent
-                direction="right"
-                eventHandlers={
-                    can.tilsyn_object_edit
-                        ? {
-                              click: () => {
-                                  setSidebarTabOpen('tilsyn');
-                                  startNewTilsyn(address, zone);
-                              },
-                          }
-                        : undefined
-                }
-            >
+            <Tooltip interactive permanent direction="right">
                 <b>{`${gnr}/${bnr}${fnr ? `/${fnr}` : ''} - ${adressetekst}`}</b>
                 <br />
-                {can.tilsyn_object_edit && <a href="#">Legg til tilsynsobjekt</a>}
+                {can.tilsyn_object_edit && (
+                    <ButtonLink
+                        onClick={() => {
+                            setSidebarTabOpen('tilsyn');
+                            startNewTilsyn(address, zone);
+                        }}
+                    >
+                        Legg til tilsynsobjekt
+                    </ButtonLink>
+                )}
                 <br />
                 <a href={`https://ringerike.documaster.no/browse/?gnr=${gnr}&bnr=${bnr}${fnr ? `&fnr=${fnr}` : ''}`} target="_blank">
                     Åpne Documaster

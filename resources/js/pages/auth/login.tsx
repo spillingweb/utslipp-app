@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
 import InputError from '@/components/InputError';
@@ -79,7 +79,7 @@ export default function Login({ status }: { status?: string }) {
                 <Button type="submit" disabled={processing}>
                     Logg inn
                 </Button>
-                <Link href={route('microsoft.redirect')}>
+                <a href={route('microsoft.redirect')}>
                     <div className={styles.microsoftLogin}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"
@@ -89,7 +89,7 @@ export default function Login({ status }: { status?: string }) {
                         />
                         Logg inn med Microsoft
                     </div>
-                </Link>
+                </a>
             </FormCard>
         </AuthLayout>
     );

@@ -1,17 +1,17 @@
 .sidebar {
     z-index: 1000;
+    width: fit-content;
     cursor: default;
     position: relative;
     max-height: calc(100% - 1rem);
     border: 2px solid rgba(0, 0, 0, 0.2);
-    width: fit-content;
     margin: .5rem;
     border-radius: 0.5rem;
     overflow: hidden;
     background-color: var(--background);
     font-family:
-        'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
     font-size: 1rem;
     
     display: flex;

@@ -1,0 +1,57 @@
+.nav {
+    display: none;
+    position: absolute;
+    top: 3.3rem;
+    left: 0.5rem;
+    padding: 0.3rem;
+    color: var(--foreground);
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.875rem;
+
+    @media screen and (min-width: 640px) {
+        display: block;
+        position: relative;
+        top: 0;
+        flex-grow: 1;
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+    &.open {
+        display: block;
+    }
+}
+
+.navTabs {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 640px) {
+        flex-grow: 1;
+        flex-direction: row;
+    }
+}
+
+.navTab {
+    padding: 0.9rem;
+    transition: background-color ease 0.2s;
+    cursor: pointer;
+}
+
+.navTab:hover {
+    background-color: hsl(from var(--destructive) h s 70%);
+    color: var(--secondary);
+}
+
+.active {
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
+}

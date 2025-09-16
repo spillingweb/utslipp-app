@@ -33,11 +33,11 @@ class ProfileUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Navn er påkrevd.',
+            'name.required' => 'Vennligst oppgi navn.',
             'name.string' => 'Navn må være en tekst.',
             'name.max' => 'Navn kan ikke være lengre enn 255 tegn.',
 
-            'email.required' => 'E-post er påkrevd.',
+            'email.required' => 'Vennligst oppgi e-post.',
             'email.string' => 'E-post må være en tekst.',
             'email.email' => 'E-post må være en gyldig e-postadresse.',
             'email.max' => 'E-post kan ikke være lengre enn 255 tegn.',

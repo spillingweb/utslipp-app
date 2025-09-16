@@ -1,25 +1,18 @@
-import { useInitials } from '@/hooks/use-initials';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
-import DropdownMenu from '../ui/DropdownMenu';
-import DropDownMenuContent from '../ui/DropDownMenuContent';
-import LogoBrand from '../ui/LogoBrand';
 import styles from './Nav.module.css';
 
-const Nav = () => {
-    const { can, auth } = usePage<SharedData>().props;
-    const getInitials = useInitials();
-
-    const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false);
+const Nav = ({isOpen}: {isOpen: boolean}) => {
+    const { can } = usePage<SharedData>().props;
 
     function setClass(isActive: boolean) {
         return isActive ? `${styles.navTab} ${styles.active}` : styles.navTab;
     }
 
+    const navClass = isOpen ? `${styles.nav} ${styles.open}` : styles.nav;
+
     return (
-        <nav className={styles.nav} aria-label="Main navigation">
-            <LogoBrand />
+        <nav className={navClass} aria-label="Main navigation">
             <ul className={styles.navTabs}>
                 <Link href="/" className={setClass(route().current('map'))} preserveState>
                     Kart
@@ -36,15 +29,6 @@ const Nav = () => {
                     </Link>
                 )}
             </ul>
-            <DropdownMenu>
-                <button
-                    className={`${styles.userMenuBtn} ${dropDownMenuOpen ? styles.active : ''}`}
-                    onClick={() => setDropDownMenuOpen(!dropDownMenuOpen)}
-                >
-                    {getInitials(auth.user.name)}
-                </button>
-                {dropDownMenuOpen && <DropDownMenuContent setDropDownMenuOpen={setDropDownMenuOpen} />}
-            </DropdownMenu>
         </nav>
     );
 };

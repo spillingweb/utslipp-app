@@ -1,35 +1,43 @@
 .section {
-  display: none;
-  width: 25rem;
+    display: none;
 }
 
 .open {
-  display: block;
+    display: block;
+
+    width: 100%;
+    max-width: 20rem;
 }
 
 .sectionHeader {
-  height: 3rem;
-  padding: 0 1rem;
-  background-color: var(--primary);
-  font-size: 1.2rem;
+    height: 3rem;
+    padding: 0 1rem;
+    background-color: var(--primary);
+    font-size: 1.2rem;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  a {
     display: flex;
-    color: var(--gray-dark);
-  }
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+        display: flex;
+        color: var(--gray-dark);
+    }
 }
 
 .toggleIcon {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .sectionContent {
-  padding: 1rem;
-  max-height: calc(100vh - 8rem);
-  overflow-y: auto;
-  overflow-x: hidden;
+    padding: 1rem;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 25rem;
+
+    @media screen and (min-width: 640px) {
+        width: 25rem;
+    }
 }

@@ -16,26 +16,24 @@ class SocialiteController extends Controller
      */
     public function redirect()
     {
-        $tenant = env('MICROSOFT_TENANT_ID');
-
-        return Socialite::driver('microsoft')->with(['tenant' => $tenant])->redirect();
+        return Socialite::driver('azure')->redirect();
     }
 
     /**
-     * Handle the callback from Microsoft.
+     * Handle the callback from Azure.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function callback()
     {
-        $microsoftUser = Socialite::driver('microsoft')->user();
+        $azureUser = Socialite::driver('azure')->user();
 
         // Check if the user already exists in your database
-        $user = User::where('email', $microsoftUser->getEmail())->first();
+        $user = User::where('email', $azureUser->getEmail())->first();
 
         // Redirect to login if email not found in database
         if (!$user) {
-            return to_route('login')->withErrors(['email' => 'Email not found in our records.']);
+            return to_route('login')->withErrors(['email' => 'Vi kunne ikke finne din e-post i systemet. Vennligst kontakt administrator.']);
         }
 
         // Log in the user

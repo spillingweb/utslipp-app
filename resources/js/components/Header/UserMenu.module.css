@@ -1,7 +1,37 @@
-.dropDownMenuContent {
+.userMenuBtn {
+    background-color: var(--primary);
+    color: var(--foreground);
+    border: none;
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition:
+        background-color ease 0.2s,
+        transform 0.1s;
+
+    &:hover {
+        background-color: hsl(from var(--primary) h s 70%);
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+
+    &.active {
+        background-color: hsl(from var(--primary) h s 70%);
+    }
+}
+
+.userMenuContent {
     position: absolute;
-    right: 1.5rem;
     top: 3.3rem;
+    right: 0.5rem;
     padding: 0.3rem;
     color: var(--foreground);
     background-color: var(--background);
@@ -9,12 +39,16 @@
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 0.875rem;
-
+    
     display: grid;
     grid-template-columns: auto 1fr;
     column-gap: 0.5rem;
     row-gap: 0.3rem;
     align-items: center;
+    
+    @media screen and (min-width: 640px) {
+        right: 1.5rem;
+    }
 }
 
 .userContent {

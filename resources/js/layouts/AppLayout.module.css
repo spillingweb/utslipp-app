@@ -4,14 +4,6 @@
     flex-direction: column;
 }
 
-.header {
-    z-index: 200;
-    width: 100%;
-    padding: 0 2rem;
-    background-color: var(--background);
-    border-bottom: 1px solid var(--border);
-}
-
 .mainContainer {
     flex: 1;
     overflow-y: auto;

@@ -12,6 +12,7 @@
 }
 
 .filterByProject {
+    display: none;
     position: absolute;
     bottom: 3rem;
     right: 10px;
@@ -20,4 +21,8 @@
     padding: 8px;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+    @media screen and (min-width: 640px) {
+        display: block;
+    }
 }
