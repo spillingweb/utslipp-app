@@ -8,6 +8,7 @@ import pointInPolygon from 'point-in-polygon';
 import { ReactNode, use, useEffect, useState } from 'react';
 import { Circle, Tooltip, useMap } from 'react-leaflet';
 import ButtonLink from '../ui/ButtonLink';
+import styles from './SelectCircle.module.css';
 
 type SelectCircleProps = {
     address?: AddressData;
@@ -49,23 +50,23 @@ const SelectCircle = ({ address }: SelectCircleProps) => {
     if (address) {
         const { gardsnummer: gnr, bruksnummer: bnr, festenummer: fnr, adressetekst } = address;
         toolTip = (
-            <Tooltip interactive permanent direction="right">
-                <b>{`${gnr}/${bnr}${fnr ? `/${fnr}` : ''} - ${adressetekst}`}</b>
-                <br />
-                {can.tilsyn_object_edit && (
-                    <ButtonLink
-                        onClick={() => {
-                            setSidebarTabOpen('tilsyn');
-                            startNewTilsyn(address, zone);
-                        }}
-                    >
-                        Legg til tilsynsobjekt
-                    </ButtonLink>
-                )}
-                <br />
-                <a href={`https://ringerike.documaster.no/browse/?gnr=${gnr}&bnr=${bnr}${fnr ? `&fnr=${fnr}` : ''}`} target="_blank">
-                    Åpne Documaster
-                </a>
+            <Tooltip interactive permanent direction="right" >
+                <div className={styles.tooltipContent}>
+                    <p>{`${gnr}/${bnr}${fnr ? `/${fnr}` : ''} - ${adressetekst}`}</p>
+                    {can.tilsyn_object_edit && (
+                        <ButtonLink
+                            onClick={() => {
+                                setSidebarTabOpen('tilsyn');
+                                startNewTilsyn(address, zone);
+                            }}
+                        >
+                            Legg til tilsynsobjekt
+                        </ButtonLink>
+                    )}
+                    <a href={`https://ringerike.documaster.no/browse/?gnr=${gnr}&bnr=${bnr}${fnr ? `&fnr=${fnr}` : ''}`} target="_blank">
+                        Åpne Documaster
+                    </a>
+                </div>
             </Tooltip>
         );
     }

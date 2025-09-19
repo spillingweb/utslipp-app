@@ -1,6 +1,7 @@
+import * as turf from '@turf/turf';
 import { GeoJSON as GeoJSONtype } from 'leaflet';
 import { useEffect, useMemo, useRef } from 'react';
-import { GeoJSON, useMap } from 'react-leaflet';
+import { GeoJSON, LayerGroup, useMap } from 'react-leaflet';
 
 const ProjectLayer = ({ features, selectedProject }: { features: GeoJSON.FeatureCollection; selectedProject: string | null }) => {
     const map = useMap();
@@ -19,6 +20,8 @@ const ProjectLayer = ({ features, selectedProject }: { features: GeoJSON.Feature
         }),
         [features, selectedProject],
     );
+
+    const projectPolygon = turf.convex(filteredFeatures) as GeoJSON.FeatureCollection | null;
 
     useEffect(() => {
         if (!ProjectLayerRef.current) return;
@@ -41,7 +44,14 @@ const ProjectLayer = ({ features, selectedProject }: { features: GeoJSON.Feature
         }
     }, [selectedProject, filteredFeatures, ProjectLayerRef, map]);
 
-    return <GeoJSON data={filteredFeatures} ref={ProjectLayerRef} />;
+    return (
+        <LayerGroup>
+            {projectPolygon && (
+                <GeoJSON data={projectPolygon} style={{ color: '#0074d9', weight: 2, fillOpacity: 0.1 }} />
+            )}
+            <GeoJSON data={filteredFeatures} ref={ProjectLayerRef} />
+        </LayerGroup>
+    );
 };
 
 export default ProjectLayer;

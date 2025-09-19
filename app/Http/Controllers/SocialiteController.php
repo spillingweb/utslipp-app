@@ -10,7 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 class SocialiteController extends Controller
 {
     /**
-     * Redirect the user to the Microsoft authentication page.
+     * Redirect the user to the Azure authentication page.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -33,7 +33,8 @@ class SocialiteController extends Controller
 
         // Redirect to login if email not found in database
         if (!$user) {
-            return to_route('login')->withErrors(['email' => 'Vi kunne ikke finne din e-post i systemet. Vennligst kontakt administrator.']);
+            return to_route('login')
+                    ->with('error', 'Vi kunne ikke finne din e-post i systemet. Vennligst kontakt administrator.');
         }
 
         // Log in the user

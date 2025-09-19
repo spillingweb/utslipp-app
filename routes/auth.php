@@ -24,10 +24,16 @@ Route::middleware('guest')->group(function () {
     Route::post('tilbakestill-passord', [NewPasswordController::class, 'store'])
         ->name('password.store');
 
-    Route::get('/auth/microsoft/redirect', [SocialiteController::class, 'redirect'])
-        ->name('microsoft.redirect');
+    Route::get('/auth/azure/redirect', [SocialiteController::class, 'redirectAzure'])
+        ->name('azure.redirect');
         
-    Route::get('/auth/microsoft/callback', [SocialiteController::class, 'callback'])
+    Route::get('/auth/azure/callback', [SocialiteController::class, 'callbackAzure'])
+        ->name('azure.callback');
+
+    Route::get('/auth/microsoft/redirect', [SocialiteController::class, 'redirectMicrosoft'])
+        ->name('microsoft.redirect');
+
+    Route::get('/auth/microsoft/callback', [SocialiteController::class, 'callbackMicrosoft'])
         ->name('microsoft.callback');
 });
 
