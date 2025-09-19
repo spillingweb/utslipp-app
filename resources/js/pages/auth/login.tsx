@@ -79,7 +79,7 @@ export default function Login({ status }: { status?: string }) {
                 <Button type="submit" disabled={processing}>
                     Logg inn
                 </Button>
-                <a href={route('microsoft.redirect')}>
+                <a href={route('azure.redirect')}>
                     <div className={styles.microsoftLogin}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"
