@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ProjectSeeder::class,
-            TilsynObjectSeeder::class,
             RoleSeeder::class,
             PermissionSeeder::class,
             RoleUserTableSeeder::class,

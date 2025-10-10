@@ -23,6 +23,10 @@
         text-overflow: ellipsis;
         padding-left: 0.3rem;
     }
+
+    textarea {
+        field-sizing: content;
+    }
 }
 
 input[readOnly] {

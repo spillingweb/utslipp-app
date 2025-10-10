@@ -17,7 +17,9 @@ class TilsynObjectResource extends JsonResource
         return [
             'id' => $this->id,
             'created_at' => $this->created_at->format("d.m.Y"),
-            'updated_at' => $this->updated_at->format("d.m.Y"),
+            'updated_at' => $this->when($this->updated_at, function () {
+                return $this->updated_at->format("d.m.Y");
+            }, null),
             'geom' => $this->geom,
             'gnr' => $this->gnr,
             'bnr' => $this->bnr,

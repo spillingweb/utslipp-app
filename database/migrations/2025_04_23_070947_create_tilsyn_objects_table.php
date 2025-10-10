@@ -22,14 +22,13 @@ return new class extends Migration
             $table->string('bygning', 20)->nullable();
             $table->integer('sone');
             $table->string('status', 10);
-            $table->string('saksnr', 20)->nullable();
+            $table->string('saksnr', 50)->nullable();
             $table->text('kommentar')->nullable();
             $table->date('frist')->nullable();
             $table->string('saksbeh', 50)->nullable();
             $table->string('endret_av', 50)->nullable();
             $table->text('svarskjema')->nullable();
             $table->text('komtek')->nullable();
-            $table->text('slam')->nullable();
             $table->text('kontroll')->nullable();
             $table->text('arkiv')->nullable();
             $table->string('hjemmel', 50)->nullable();

@@ -116,7 +116,7 @@ const TilsynForm = () => {
                     </div>
                     <TilsynFormFieldset data={data} disabled={disabled} setData={setData} />
                     <Buttons />
-                    {disabled && (
+                    {disabled && data.updated_at && (
                         <footer className={styles.lastUpdated}>
                             Sist oppdatert {data.updated_at} av {data.endret_av}
                         </footer>

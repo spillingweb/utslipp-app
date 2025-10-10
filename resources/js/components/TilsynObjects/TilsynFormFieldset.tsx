@@ -68,7 +68,7 @@ const TilsynFormFieldset = ({
             </Select>
 
             <label htmlFor="bygning">Bygning</label>
-            <Select id="bygning" value={data.bygning} onChange={(e) => setData('bygning', e.target.value)}>
+            <Select id="bygning" value={data.bygning || ''} onChange={(e) => setData('bygning', e.target.value)}>
                 <option value="">Velg bygning</option>
                 <option value="B">Bolig</option>
                 <option value="H">Fritidsbolig</option>
@@ -78,6 +78,7 @@ const TilsynFormFieldset = ({
 
             <label htmlFor="saksbeh">Saksbeh.</label>
             <Select id="saksbeh" value={data.saksbeh || ''} onChange={(e) => setData('saksbeh', e.target.value)}>
+                <option value="">{data.saksbeh || 'Velg saksbehandler'}</option>
                 {users.data.map((user) => (
                     <option key={user.id} value={user.name}>
                         {user.name}
