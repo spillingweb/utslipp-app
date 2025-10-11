@@ -77,10 +77,14 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
         <AppLayout>
             <Head title="Tilsynsobjekter" />
             <div className={styles.searchAndExport}>
-                <Input name="search" placeholder="Søk" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
-                <X size={16} className={styles.clearIcon} onClick={() => setInputValue('')} />
-                <FilterByProject selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
-                <TableButtons tilsynObjects={tilsynObjects.data} tableRef={tableRef} />
+                <div className={styles.searchContainer}>
+                    <Input name="search" placeholder="Søk" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
+                    <X size={16} className={styles.clearIcon} onClick={() => setInputValue('')} />
+                    <FilterByProject selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
+                </div>
+                <div className={styles.exportContainer}>
+                    <TableButtons tilsynObjects={tilsynObjects.data} tableRef={tableRef} />
+                </div>
             </div>
             <TilsynObjectsTable
                 ref={tableRef}

@@ -266,7 +266,7 @@ export const LAYERS: {
                         query_layers: 'forurenset_omrade',
                         attribution: '<a href="http://www.miljodirektoratet.no/" target="_blank">Miljødirektoratet</a>',
                         identify: true,
-                        info_format: 'application/geojson',
+                        info_format: 'application/geo+json',
                     }}
                     makePopupContent={GrunnforurensningPopupContent}
                 />

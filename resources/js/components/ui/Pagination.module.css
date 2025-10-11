@@ -8,6 +8,12 @@
 .paginationButtons {
     display: flex;
     gap: 0.3rem;
+
+    .hideOnMobile {
+        @media (max-width: 850px) {
+            display: none;
+        }
+    }
 }
 
 .active {

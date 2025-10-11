@@ -31,13 +31,13 @@ const FilterByProject = ({
             className={className}
             ref={projectRef}
         >
-            <option value="">Alle prosjekter</option>
+            <option value="">Velg prosjekt</option>
+            <option value="ingen">Ingen prosjekt</option>
             {projects.map((project) => (
                 <option key={project.id} value={project.id}>
-                    {`${project.id} - ${project.name}`}
+                    {`${project.id} ${project.name}`}
                 </option>
             ))}
-            <option value="ingen">Uten prosjekt</option>
         </Select>
     );
 };

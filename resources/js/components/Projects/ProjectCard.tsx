@@ -48,10 +48,10 @@ const ProjectCard = ({ id, name, objects }: ProjectCardProps) => {
                 {can.project_edit && id && (
                     <div>
                         <button className={styles.editButton} title="Rediger prosjekt">
-                            <PencilLine size={24} onClick={handleEditProject} />
+                            <PencilLine size={14} onClick={handleEditProject} />
                         </button>
                         <button className={styles.deleteButton} title="Slett prosjekt">
-                            <Trash2 size={24} onClick={handleDeleteProject} />
+                            <Trash2 size={14} onClick={handleDeleteProject} />
                         </button>
                     </div>
                 )}

@@ -69,7 +69,7 @@ const TilsynFormFieldset = ({
 
             <label htmlFor="bygning">Bygning</label>
             <Select id="bygning" value={data.bygning || ''} onChange={(e) => setData('bygning', e.target.value)}>
-                <option value="">Velg bygning</option>
+                <option value=""></option>
                 <option value="B">Bolig</option>
                 <option value="H">Fritidsbolig</option>
                 <option value="N">Næringsbygg</option>
@@ -78,17 +78,23 @@ const TilsynFormFieldset = ({
 
             <label htmlFor="saksbeh">Saksbeh.</label>
             <Select id="saksbeh" value={data.saksbeh || ''} onChange={(e) => setData('saksbeh', e.target.value)}>
-                <option value="">{data.saksbeh || 'Velg saksbehandler'}</option>
+                <option value=""></option>
                 {users.data.map((user) => (
-                    <option key={user.id} value={user.name}>
+                    <option key={user.id} value={user.name} defaultChecked={data.saksbeh === user.name}>
                         {user.name}
                     </option>
                 ))}
+                {/* Make option if saksbeh in database is not registered as a user in the system */}
+                {data.saksbeh && !users.data.find((user) => user.name === data.saksbeh) && (
+                    <option key={data.saksbeh} value={data.saksbeh} defaultChecked>
+                        {data.saksbeh}
+                    </option>
+                )}
             </Select>
 
             <label htmlFor="hjemmel">Hjemmel</label>
             <Select id="hjemmel" value={data.hjemmel || ''} onChange={(e) => setData('hjemmel', e.target.value)}>
-                <option value="">Velg hjemmel</option>
+                <option value=""></option>
                 <option value="27-2">§ 27-2 i plan- og bygningsloven (tilknytningsplikt)</option>
                 <option value="7">§ 7 i forurensningsloven (ulovlig forurensning)</option>
                 <option value="18">§ 18 i forurensningsloven (trekke tilbake tillatelse)</option>

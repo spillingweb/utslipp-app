@@ -2,7 +2,7 @@ import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import styles from './Nav.module.css';
 
-const Nav = ({isOpen}: {isOpen: boolean}) => {
+const Nav = ({ isOpen }: { isOpen: boolean }) => {
     const { can } = usePage<SharedData>().props;
 
     function setClass(isActive: boolean) {

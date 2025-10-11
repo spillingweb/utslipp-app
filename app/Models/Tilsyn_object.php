@@ -37,6 +37,8 @@ class Tilsyn_object extends Model
 
     public function scopeSearch(Builder $query, Request $request)
     {
+        $query->where('status', '!=', 'O');
+        
         return $query->when($request->input('sok'), function ($query) use ($request) {
             return $query->whereAny(['saksbeh', 'gnr', 'bnr', 'adresse', 'status', 'kommentar', 'svarskjema', 'komtek', 'kontroll', 'arkiv', 'hjemmel'], 
             'ilike', '%' . $request->input('sok') . '%');

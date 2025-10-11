@@ -30,7 +30,7 @@
 
 .userMenuContent {
     position: absolute;
-    top: 3.3rem;
+    top: 3.5rem;
     right: 0.5rem;
     padding: 0.3rem;
     color: var(--foreground);
@@ -46,7 +46,7 @@
     row-gap: 0.3rem;
     align-items: center;
     
-    @media screen and (min-width: 640px) {
+    @media screen and (min-width: 700px) {
         right: 1.5rem;
     }
 }

@@ -1,5 +1,3 @@
-import { GeoJsonObject } from 'geojson';
-import { parseGML } from 'gml2geojson';
 import { popup } from 'leaflet';
 import { useState } from 'react';
 import { useMapEvent, WMSTileLayer } from 'react-leaflet';
@@ -15,7 +13,7 @@ type WMSOptions = {
 };
 
 const INFO_FORMATS_TEXT = ['text/plain', 'text/html', 'application/vnd.ogc.gml'];
-const INFO_FORMATS_JSON = ['application/json', 'application/geojson', 'application/gml+json'];
+const INFO_FORMATS_JSON = ['application/json', 'application/geojson', 'application/gml+json', 'application/geo+json'];
 
 const WMSLayer = ({ url, options, makePopupContent }: { url: string; options: WMSOptions; makePopupContent?: (data: any) => string }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -36,7 +34,7 @@ const WMSLayer = ({ url, options, makePopupContent }: { url: string; options: WM
         const swProjected = crs.project(sw);
         const neProjected = crs.project(ne);
 
-        const { x, y } = e.containerPoint;
+        const { x, y } = e.containerPoint || { x: 0, y: 0 };
 
         const params = new URLSearchParams({
             request: 'GetFeatureInfo',
@@ -55,18 +53,15 @@ const WMSLayer = ({ url, options, makePopupContent }: { url: string; options: WM
         });
 
         fetch(`${url}?${params.toString()}`)
-            .then((response) => (INFO_FORMATS_TEXT.includes(info_format) ? response.text() : response.json()))
+            .then((response) => {
+                return INFO_FORMATS_TEXT.includes(info_format) ? response.text() : response.json();
+            })
             .then((data) => {
                 if (INFO_FORMATS_JSON.includes(info_format) && data.features.length === 0) return; // No features found
                 if (INFO_FORMATS_TEXT.includes(info_format) && data === '') return; // No data returned
 
-                if (info_format === 'application/vnd.ogc.gml') {
-                    const geoJson: GeoJsonObject = parseGML(data);
-                    console.log('Fetched data:', geoJson, data);
-                }
-
                 // Make popup with information from the response
-                popup({maxHeight: 300, maxWidth: 400})
+                popup({ maxHeight: 300, maxWidth: 400 })
                     .setLatLng(e.latlng)
                     .setContent(makePopupContent ? makePopupContent(data) : data)
                     .openOn(map);

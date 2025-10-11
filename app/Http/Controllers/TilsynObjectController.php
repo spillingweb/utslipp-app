@@ -30,7 +30,7 @@ class TilsynObjectController extends Controller
 
         $tilsynObjects = Tilsyn_object::search($request)
             ->orderBy($orderColumn, $orderDirection)
-            ->paginate(15);
+            ->paginate(10)->onEachSide(2);
 
         return Inertia::render('TilsynObjects/Index', [
             'tilsynObjects' => TilsynObjectResource::collection($tilsynObjects),

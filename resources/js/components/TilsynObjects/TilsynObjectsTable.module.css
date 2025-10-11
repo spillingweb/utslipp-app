@@ -4,8 +4,7 @@
 }
 
 .wrapText {
-    overflow-wrap: break-word;
-    min-width: 15rem;
+    min-width: 30rem;
 }
 
 .center {

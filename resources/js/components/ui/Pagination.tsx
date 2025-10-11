@@ -14,10 +14,12 @@ const Pagination = ({
                 Viser {meta.from || 0} til {meta.to} av {meta.total} resultater
             </div>
             <div className={styles.paginationButtons}>
-                {meta.links.map((link, index) => (
+                {meta.links.map((link, index) => {
+                    const buttonClass = !link.label.startsWith('pagination.') ? styles.hideOnMobile : link.active ? styles.active : '';
+                    return (
                     <Button
                         key={index}
-                        className={link.active ? styles.active : ''}
+                        className={buttonClass}
                         disabled={link.active || !link.url}
                         onClick={() => {
                             updatePageNumber(link);
@@ -25,7 +27,7 @@ const Pagination = ({
                     >
                         {link.label === 'pagination.previous' ? '«' : link.label === 'pagination.next' ? '»' : link.label}
                     </Button>
-                ))}
+                )})}
             </div>
         </div>
     );

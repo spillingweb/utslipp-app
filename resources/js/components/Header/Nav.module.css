@@ -11,7 +11,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 0.875rem;
 
-    @media screen and (min-width: 640px) {
+    @media screen and (min-width: 700px) {
         display: block;
         position: relative;
         top: 0;
@@ -30,18 +30,19 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
+    font-size: 1rem;
 
     display: flex;
     flex-direction: column;
 
-    @media screen and (min-width: 640px) {
+    @media screen and (min-width: 700px) {
         flex-grow: 1;
         flex-direction: row;
     }
 }
 
 .navTab {
-    padding: 0.9rem;
+    padding: 1.3rem;
     transition: background-color ease 0.2s;
     cursor: pointer;
 }

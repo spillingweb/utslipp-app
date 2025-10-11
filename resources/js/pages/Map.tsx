@@ -57,11 +57,7 @@ const Map = ({ tilsynObjectsData }: { tilsynObjectsData: GeoJSON.FeatureCollecti
             >
                 <ScaleControl position="bottomright" imperial={false} maxWidth={400} />
                 <LayersControlConfig position="topright" />
-                <FilterByProject
-                    selectedProject={selectedProject}
-                    setSelectedProject={setSelectedProject}
-                    className={styles.filterByProject}
-                />
+                <FilterByProject selectedProject={selectedProject} setSelectedProject={setSelectedProject} className={styles.filterByProject} />
                 {tilsynObjects && <ProjectLayer features={tilsynObjects} selectedProject={selectedProject} key={selectedProject} />}
                 <TilsynContext>
                     {tilsynObjects && <TilsynLayer setTilsynLayerBounds={setTilsynLayerBounds} features={tilsynObjects} />}

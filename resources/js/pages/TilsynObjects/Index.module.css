@@ -2,12 +2,30 @@
     margin-bottom: 1rem;
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
     align-items: center;
-    gap: 0.5rem;
+    
+    .searchContainer {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        position: relative;
+    }
+    
+    .exportContainer {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    @media (min-width: 700px) {
+        flex-direction: row;
+        justify-content: space-between;
 
-    select {
-        margin-right: auto;
+        select {
+            margin-right: auto;
+        }
     }
 }
 
