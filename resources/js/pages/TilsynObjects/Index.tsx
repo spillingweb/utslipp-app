@@ -73,6 +73,11 @@ const TilsynObjects = ({ tilsynObjects, project_id, search }: TilsynObjectsProps
         return () => clearTimeout(handler);
     }, [inputValue, searchTerm]);
 
+    // Effect to reset page number when filters change
+    useEffect(() => {
+        setPageNumber('1');
+    }, [selectedProject, sortColumn, sortDirection]);
+
     return (
         <AppLayout>
             <Head title="Tilsynsobjekter" />

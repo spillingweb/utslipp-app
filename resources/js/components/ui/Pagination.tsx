@@ -15,19 +15,21 @@ const Pagination = ({
             </div>
             <div className={styles.paginationButtons}>
                 {meta.links.map((link, index) => {
-                    const buttonClass = !link.label.startsWith('pagination.') ? styles.hideOnMobile : link.active ? styles.active : '';
+                    const buttonClass =
+                        !link.label.startsWith('pagination.') && !link.active ? styles.hideOnMobile : link.active ? styles.active : '';
                     return (
-                    <Button
-                        key={index}
-                        className={buttonClass}
-                        disabled={link.active || !link.url}
-                        onClick={() => {
-                            updatePageNumber(link);
-                        }}
-                    >
-                        {link.label === 'pagination.previous' ? '«' : link.label === 'pagination.next' ? '»' : link.label}
-                    </Button>
-                )})}
+                        <Button
+                            key={index}
+                            className={buttonClass}
+                            disabled={link.active || !link.url}
+                            onClick={() => {
+                                updatePageNumber(link);
+                            }}
+                        >
+                            {link.label === 'pagination.previous' ? '«' : link.label === 'pagination.next' ? '»' : link.label}
+                        </Button>
+                    );
+                })}
             </div>
         </div>
     );

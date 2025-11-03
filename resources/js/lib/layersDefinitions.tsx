@@ -34,26 +34,6 @@ export const lyrSoner = L.geoJSON(soner, {
     },
 });
 
-/************ Gemini Portal WMS with authentication *************/
-
-// const base64UserNameAndPassword = btoa(`${import.meta.env.VITE_WMS_USER}:${import.meta.env.VITE_WMS_PASS}`);
-
-// export const GeminiPortalWMS: L.TileLayer.WMSHeader = L.TileLayer.wmsHeader(
-//     'https://ringerike.geminisuite.com/portal/api/proxy/map/va-basis.wms?',
-//     {
-//         layers: 'va_basis',
-//         format: 'image/png',
-//         transparent: true,
-//     },
-//     [
-//         {
-//             header: 'Authorization',
-//             value: `Basic ${base64UserNameAndPassword}`,
-//         },
-//     ],
-//     null,
-// );
-
 /**************** Object containing all layers for layer control **********/
 
 export const LAYERS: {
@@ -65,7 +45,7 @@ export const LAYERS: {
             name: 'Gråtone',
             component: (
                 <TileLayer
-                    attribution='&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
+                    attribution='&copy; <a href="https://www.spillingweb.com">SpillingWeb 2025</a> <a href="http://www.kartverket.no/">Kartverket</a>'
                     url="https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png"
                 />
             ),
@@ -74,7 +54,7 @@ export const LAYERS: {
             name: 'Farger',
             component: (
                 <TileLayer
-                    attribution='&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
+                    attribution='&copy; <a href="https://www.spillingweb.com">SpillingWeb 2025</a> <a href="http://www.kartverket.no/">Kartverket</a>'
                     url="https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png"
                 />
             ),
