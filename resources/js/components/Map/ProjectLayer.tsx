@@ -36,20 +36,26 @@ const ProjectLayer = ({ features, selectedProject }: { features: GeoJSON.Feature
             params.delete('prosjekt');
         }
         window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
-
-        // Zoom to selected project
-        if (filteredFeatures.features.length > 0) {
-            const bounds = ProjectLayerRef.current.getBounds();
-            map.fitBounds(bounds, { paddingTopLeft: [350, 0] });
-        }
     }, [selectedProject, filteredFeatures, ProjectLayerRef, map]);
 
     return (
-        <LayerGroup>
+        <LayerGroup key={selectedProject} >
             {projectPolygon && (
                 <GeoJSON data={projectPolygon} style={{ color: '#0074d9', weight: 2, fillOpacity: 0.1 }} />
             )}
-            <GeoJSON data={filteredFeatures} ref={ProjectLayerRef} />
+            <GeoJSON data={filteredFeatures} ref={(layer) => {
+                ProjectLayerRef.current = layer;
+                if (layer && filteredFeatures.features.length > 0) {
+                    try {
+                        const bounds = layer.getBounds();
+                        if (bounds.isValid() && map) {
+                            map.fitBounds(bounds, { paddingTopLeft: [350, 0] });
+                        }
+                    } catch (err) {
+                        console.error('Error fitting bounds:', err);
+                    }
+                }
+            }} />
         </LayerGroup>
     );
 };
