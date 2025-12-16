@@ -1,0 +1,41 @@
+.flexSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loginAction {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.statusMessage {
+    background-color: var(--success);
+    color: var(--success-foreground);
+    padding: 1rem;
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+.rememberMe {
+    flex-direction: row;
+    justify-content: start;
+    gap: 0;
+}
+
+.microsoftLogin {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background-color: var(--background);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
