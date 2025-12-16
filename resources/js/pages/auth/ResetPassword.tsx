@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/Input';
 import AuthLayout from '@/layouts/AuthLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import styles from './auth.module.css';
+import styles from './Auth.module.css';
 
 interface ResetPasswordProps {
     token: string;
