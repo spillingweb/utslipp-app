@@ -1,4 +1,4 @@
-import styles from './radio.module.css';
+import styles from './Radio.module.css';
 
 type RadioProps = {
     label: string;
