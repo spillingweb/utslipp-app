@@ -8,7 +8,7 @@ import TextLink from '@/components/ui/TextLink';
 
 import FormCard from '@/components/ui/FormCard';
 import AuthLayout from '@/layouts/AuthLayout';
-import styles from './auth.module.css';
+import styles from './Auth.module.css';
 
 type LoginForm = {
     email: string;
