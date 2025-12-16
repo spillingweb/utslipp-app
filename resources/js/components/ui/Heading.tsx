@@ -1,4 +1,4 @@
-import styles from "./heading.module.css";
+import styles from "./Heading.module.css";
 
 type HeadingProps = {
     level: 1 | 2 | 3 | 4;
