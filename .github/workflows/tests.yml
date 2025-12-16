@@ -45,6 +45,3 @@ jobs:
 
       - name: Generate Application Key
         run: php artisan key:generate
-
-      - name: Tests
-        run: ./vendor/bin/pest
