@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { popup } from 'leaflet';
 import { useState } from 'react';
 import { useMapEvent, WMSTileLayer } from 'react-leaflet';
