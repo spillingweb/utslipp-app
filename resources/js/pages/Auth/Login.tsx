@@ -1,96 +1,27 @@
-import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
-
-import InputError from '@/components/InputError';
-import Button from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import TextLink from '@/components/ui/TextLink';
-
-import FormCard from '@/components/ui/FormCard';
+import LogoBrand from '@/components/ui/LogoBrand';
 import AuthLayout from '@/layouts/AuthLayout';
+import { Head } from '@inertiajs/react';
 import styles from './Auth.module.css';
-
-type LoginForm = {
-    email: string;
-    password: string;
-    remember: boolean;
-};
+import Logo from '../../../assets/microsoft_logo.svg';
 
 export default function Login({ status }: { status?: string }) {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
-        email: '',
-        password: '',
-        remember: false,
-    });
-
-    const handleSubmit: FormEventHandler = (e) => {
-        e.preventDefault();
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
-    };
-
     return (
-        <AuthLayout status={status}>
+        <AuthLayout status={status} withLogo={false}>
             <Head title="Logg inn" />
-            <FormCard onSubmit={handleSubmit}>
-                <fieldset>
-                    <label className="bold" htmlFor="email">
-                        E-postadresse
-                    </label>
-                    <Input
-                        id="email"
-                        type="email"
-                        aria-required
-                        autoFocus
-                        autoComplete="email"
-                        value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-                    <InputError message={errors.email} />
-                </fieldset>
-
-                <fieldset>
-                    <label className="bold" htmlFor="password">
-                        Passord
-                    </label>
-                    <Input
-                        id="password"
-                        type="password"
-                        aria-required
-                        autoComplete="current-password"
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-                    <InputError message={errors.password} />
-                </fieldset>
-
-                <div className={styles.flexSpaceBetween}>
-                    <div className={styles.rememberMe}>
-                        <Input id="remember" type="checkbox" onClick={() => setData('remember', !data.remember)} />
-                        <label htmlFor="remember">Husk meg</label>
-                    </div>
-
-                    <TextLink href={route('password.request')} tabIndex={0}>
-                        Glemt passordet?
-                    </TextLink>
-                </div>
-
-                <Button type="submit" disabled={processing}>
-                    Logg inn
-                </Button>
-                <a href={route('azure.redirect')}>
+            <div className={styles.center}>
+                <LogoBrand />
+                <a href={route('microsoft.redirect')}>
                     <div className={styles.microsoftLogin}>
                         <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"
+                            src={Logo}
                             alt="Microsoft Logo"
                             height={20}
                             width={20}
                         />
-                        Logg inn med Microsoft
+                        Logg inn
                     </div>
                 </a>
-            </FormCard>
+            </div>
         </AuthLayout>
     );
 }

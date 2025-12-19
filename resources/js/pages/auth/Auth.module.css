@@ -32,10 +32,22 @@
     gap: 0.5rem;
     justify-content: center;
     border: 1px solid var(--border);
-    background-color: var(--background);
-    padding: 0.5rem 1rem;
+    background-color: var(--primary);
+    padding: 1rem 2rem;
     border-radius: var(--radius);
     color: var(--text);
+    font-size: 1.2rem;
     box-shadow: var(--shadow-sm);
-    transition: background-color 0.2s, box-shadow 0.2s;
+    transition:
+        background-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }

@@ -77,7 +77,7 @@ DB_PASSWORD=
 # Microsoft Azure AD credentials
 AZURE_CLIENT_ID=your_client_id
 AZURE_CLIENT_SECRET=your_client_secret
-AZURE_REDIRECT_URI=http://localhost/auth/callback/azure
+AZURE_REDIRECT_URI=http://localhost/auth/callback/microsoft
 AZURE_TENANT_ID=your_tenant_id
 ```
 
