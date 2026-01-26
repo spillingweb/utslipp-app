@@ -31,7 +31,7 @@ const FilterByProject = ({
             className={className}
             ref={projectRef}
         >
-            <option value="">Velg prosjekt</option>
+            <option value="">{selectedProject ? "Fjern prosjektfilter" : "Velg prosjekt"}</option>
             <option value="ingen">Ingen prosjekt</option>
             {projects.map((project) => (
                 <option key={project.id} value={project.id}>

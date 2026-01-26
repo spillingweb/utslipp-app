@@ -34,8 +34,8 @@ class StoreUserRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class),
             ],
-            'password' => ['required', Password::min(8), 'confirmed'],
-            'password_confirmation' => ['required'],
+            // 'password' => ['required', Password::min(8), 'confirmed'],
+            // 'password_confirmation' => ['required'],
             'role' => ['required', Rule::exists(Role::class, 'id')],
         ];
     }
@@ -48,10 +48,10 @@ class StoreUserRequest extends FormRequest
             'email.email' => 'E-post må være en gyldig e-postadresse.',
             'email.unique' => 'E-postadressen er allerede i bruk.',
             'email.lowercase' => 'E-post må være i små bokstaver.',
-            'password.required' => 'Vennligst oppgi et passord.',
-            'password.min' => 'Passordet må være minst :min tegn langt.',
-            'password.confirmed' => 'Passordene må stemme overens.',
-            'password_confirmation.required' => 'Vennligst bekreft passordet.',
+            // 'password.required' => 'Vennligst oppgi et passord.',
+            // 'password.min' => 'Passordet må være minst :min tegn langt.',
+            // 'password.confirmed' => 'Passordene må stemme overens.',
+            // 'password_confirmation.required' => 'Vennligst bekreft passordet.',
             'role.required' => 'Vennligst velg en rolle.',
             'role.exists' => 'Den valgte rollen finnes ikke.',
         ];

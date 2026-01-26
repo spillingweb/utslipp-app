@@ -41,7 +41,7 @@ const ProjectLayer = ({ features, selectedProject }: { features: GeoJSON.Feature
     return (
         <LayerGroup key={selectedProject} >
             {projectPolygon && (
-                <GeoJSON data={projectPolygon} style={{ color: '#0074d9', weight: 2, fillOpacity: 0.1 }} />
+                <GeoJSON data={projectPolygon} style={{ color: '#0074d9', weight: 2, fillOpacity: 0.1 }} interactive={false} />
             )}
             <GeoJSON data={filteredFeatures} ref={(layer) => {
                 ProjectLayerRef.current = layer;

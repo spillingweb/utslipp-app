@@ -12,24 +12,24 @@ import styles from './CreateUser.module.css';
 type RegisterForm = {
     name: string;
     email: string;
-    password: string;
-    password_confirmation: string;
+    // password: string;
+    // password_confirmation: string;
     role: string;
 };
 
 const CreateUser = ({ roles }: { roles: Data<Role> }) => {
-    const { data, setData, post, processing, errors, reset, cancel } = useForm<Required<RegisterForm>>({
+    const { data, setData, post, errors, reset, cancel } = useForm<Required<RegisterForm>>({
         name: '',
         email: '',
-        password: '',
-        password_confirmation: '',
+        // password: '',
+        // password_confirmation: '',
         role: '',
     });
 
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('admin.user.store'), {
-            onFinish: () => reset('password', 'password_confirmation'),
+            // onFinish: () => reset('password', 'password_confirmation'),
         });
     };
 
@@ -54,7 +54,7 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                     <InputError message={errors.email} />
                 </fieldset>
 
-                <fieldset>
+                {/* <fieldset>
                     <label className='bold' htmlFor="password">Midlertidig passord</label>
                     <Input
                         id="password"
@@ -77,7 +77,7 @@ const CreateUser = ({ roles }: { roles: Data<Role> }) => {
                         disabled={processing}
                     />
                     <InputError message={errors.password_confirmation} />
-                </fieldset>
+                </fieldset> */}
 
                 <fieldset>
                     <p className='bold'>Velg rolle</p>
