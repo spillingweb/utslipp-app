@@ -1,27 +1,31 @@
-# Municipal Emissions Analytics Platform (Utslipp-App)
+<div align="center">
+  <h1>Municipal Emissions Analytics Platform (Utslipp App)</h1>
+  
+  <img src="https://img.shields.io/badge/Stack-Laravel%2012%20%7C%20React%2019%20%7C%20TypeScript-blue" alt="Stack" />
+  <img src="https://img.shields.io/badge/Database-PostgreSQL%20%2B%20PostGIS-336791" alt="Database" />
+  <img src="https://img.shields.io/badge/Target-Norwegian%20Municipality%20%28Ringerike%20Kommune%29-d81b60" alt="Target" />
+</div>
 
-[![Stack](https://shields.io)](https://github.com)
-[![Database](https://shields.io)](https://github.com)
-[![Target](https://shields.io)](https://github.com)
+<br />
 
 A secure, enterprise-grade geospatial web application engineered for a **Norwegian municipality** to monitor, analyze, and report regional environmental emissions data. 
 
 Built end-to-end as a **Solo Full-Stack Developer**, this platform bridges a high-performance backend infrastructure with an intuitive, interactive dashboard designed to handle complex spatial calculations and strict municipal data privacy standards.
 
----
+
 
 ## 🛠️ Modern Architecture & Tech Stack
 
 This project leverages a highly optimized monolithic-SPA architecture, utilizing the latest major versions of modern web frameworks:
 
-*   **Backend:** Laravel 12 (PHP 8.3+) — Robust API routing, proxy handling, and security.
-*   **Database:** PostgreSQL + PostGIS Extension — Native server-side spatial indexing and geometric operations.
+*   **Backend:** Laravel 12 (PHP 8.2+) — Robust API routing, proxy handling, and security.
+*   **Database:** PostgreSQL + PostGIS Extension — Native server-side spatial indexing and geometric operations for handling complex municipal geographic data.
 *   **Frontend:** React 19 & TypeScript — Modern, strictly typed component architecture.
 *   **Styling:** CSS Modules — Scoped, modular component styling to prevent global style leakage.
 *   **SPA Bridge:** Inertia.js 2.0 — Delivers a single-page application experience with lightning-fast data loading, eliminating the complexity of a separate client/server API lifecycle.
-*   **Geospatial Processing:** Mapbox GL / Leaflet + Turf.js.
+*   **Geospatial Processing:** React Leaflet + Turf.js.
 
----
+
 
 ## 🧠 Advanced Technical Deep-Dives
 
@@ -41,39 +45,14 @@ To strictly comply with public sector regulations and shield internal municipal 
 *   Implements **CSS Modules** on the React 19 frontend to guarantee that styles remain completely scoped to their respective components.
 *   Eliminates class-name collisions and side-effects, making the UI highly modular, maintainable, and easy to scale.
 
----
 
-## 📁 Project Structure & Architecture
-
-The project follows a standard Laravel + Inertia.js directory convention, cleanly dividing the backend routing and database layers from the component-driven frontend application:
-
-```text
-utslipp-app/
-├── app/                      # Backend Core Logic
-│   ├── Http/                 # Controllers & Middleware (Inertia Responses)
-│   └── Models/               # Eloquent Models (handling PostGIS geometric data)
-├── database/                 # Database Layer
-│   ├── migrations/           # Schemas (defining PostGIS geometry columns)
-│   └── seeders/              # Municipal mock data engines
-├── resources/                # Frontend Application (React 19 / TypeScript)
-│   ├── js/
-│   │   ├── Components/       # Reusable UI items (Maps, Charts, Filters)
-│   │   ├── Pages/            # Inertia-rendered application views
-│   │   └── app.tsx           # Frontend application bootstrap entry point
-│   └── css/                  # Base styles and global configurations
-├── routes/                   # Web & Proxy API Route definitions
-├── vite.config.js            # Asset compiler configuring React & CSS Modules
-└── README.md
-```
-
----
 
 ## 🏗️ Local Development Setup
 
 ### Prerequisites
-*   PHP 8.3+ & Composer
-*   Node.js 20+ & NPM
-*   PostgreSQL with PostGIS installed locally (or via Docker)
+*   PHP 8.2+ & Composer
+*   Node.js 18+ & NPM
+*   PostgreSQL 12+ with PostGIS extension enabled
 
 ### Installation Steps
 
@@ -89,7 +68,7 @@ utslipp-app/
    cp .env.example .env
    php artisan key:generate
    ```
-   *(Configure your PostgreSQL connection and mapping API keys inside the `.env` file.)*
+   *(Update the PostgreSQL credentials, WMS proxy credentials, and Azure AD settings in the `.env` file.)*
 
 3. **Frontend Configuration:**
    ```bash
