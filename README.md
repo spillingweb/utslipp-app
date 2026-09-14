@@ -1,189 +1,112 @@
-# Utslipp App
+# Municipal Emissions Analytics Platform (Utslipp-App)
 
-A Laravel application with React frontend for managing emission monitoring objects (tilsyn objects) with interactive map visualization.
+[![Stack](https://shields.io)](https://github.com)
+[![Database](https://shields.io)](https://github.com)
+[![Target](https://shields.io)](https://github.com)
 
-## 🚀 Tech Stack
+A secure, enterprise-grade geospatial web application engineered for a **Norwegian municipality** to monitor, analyze, and report regional environmental emissions data. 
 
-- **Backend**: Laravel 12 (PHP 8.2+)
-- **Frontend**: React 19 with TypeScript
-- **Bridge**: Inertia.js 2.0
-- **Styling**: CSS modules + shadcn/ui components
-- **Build Tool**: Vite
-- **Database**: PostgreSQL
-- **Maps**: Leaflet with WMS support
-- **Authentication**: Laravel Socialite (Microsoft Azure AD)
+Built end-to-end as a **Solo Full-Stack Developer**, this platform bridges a high-performance backend infrastructure with an intuitive, interactive dashboard designed to handle complex spatial calculations and strict municipal data privacy standards.
 
-## 📋 Features
+---
 
-- **Interactive Map Interface**: Leaflet-based map with WMS layers for geographical data visualization
-- **Tilsyn Object Management**: Create, read, update, and delete emission monitoring objects
-- **Project Management**: Organize monitoring activities into projects
-- **Role-Based Access Control**: Comprehensive permission and role system
-- **Microsoft Azure AD Integration**: Single sign-on authentication
-- **CSV Export**: Export data for reporting and analysis
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
+## 🛠️ Modern Architecture & Tech Stack
 
-## 🛠️ Prerequisites
+This project leverages a highly optimized monolithic-SPA architecture, utilizing the latest major versions of modern web frameworks:
 
-- PHP 8.2 or higher
-- Composer
-- Node.js 18+ and npm
-- PostgreSQL
-- Git
+*   **Backend:** Laravel 12 (PHP 8.3+) — Robust API routing, proxy handling, and security.
+*   **Database:** PostgreSQL + PostGIS Extension — Native server-side spatial indexing and geometric operations.
+*   **Frontend:** React 19 & TypeScript — Modern, strictly typed component architecture.
+*   **Styling:** CSS Modules — Scoped, modular component styling to prevent global style leakage.
+*   **SPA Bridge:** Inertia.js 2.0 — Delivers a single-page application experience with lightning-fast data loading, eliminating the complexity of a separate client/server API lifecycle.
+*   **Geospatial Processing:** Mapbox GL / Leaflet + Turf.js.
 
-## 📦 Installation
+---
 
-### 1. Clone the repository
+## 🧠 Advanced Technical Deep-Dives
 
-```bash
-git clone <repository-url>
-cd utslipp-app
-```
+### 1. Robust Spatial Database Engine (PostgreSQL + PostGIS)
+To manage municipal geographic data efficiently, the application uses **PostgreSQL with the PostGIS extension**. 
+*   Stores complex geographic features (Polygons, MultiPolygons, Points) natively.
+*   Leverages spatial indexing (`GIST`) to execute ultra-fast server-side location queries.
+*   Combines with **Turf.js** on the frontend to create a hybrid geospatial processing model (server-side persistence + client-side real-time rendering).
 
-### 2. Install PHP dependencies
+### 2. Secure Web Map Service (WMS) Proxy
+To strictly comply with public sector regulations and shield internal municipal data infrastructures:
+*   Engineered a **custom Laravel proxy layer** to interface with restricted government Web Map Services.
+*   Prevents token and API key leakage by ensuring client-side requests never communicate directly with upstream mapping servers.
+*   Includes built-in backend caching mechanisms to drastically minimize external API network latency.
 
-```bash
-composer install
-```
+### 3. Maintainable UI Isolation (CSS Modules)
+*   Implements **CSS Modules** on the React 19 frontend to guarantee that styles remain completely scoped to their respective components.
+*   Eliminates class-name collisions and side-effects, making the UI highly modular, maintainable, and easy to scale.
 
-### 3. Install JavaScript dependencies
+---
 
-```bash
-npm install
-```
+## 📁 Project Structure & Architecture
 
-### 4. Environment setup
+The project follows a standard Laravel + Inertia.js directory convention, cleanly dividing the backend routing and database layers from the component-driven frontend application:
 
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-### 5. Configure your `.env` file
-
-Update the following variables:
-
-```env
-APP_NAME="Utslipp App"
-APP_URL=http://localhost
-
-DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=utslipp-app
-DB_USERNAME=root
-DB_PASSWORD=
-
-# Microsoft Azure AD credentials
-AZURE_CLIENT_ID=your_client_id
-AZURE_CLIENT_SECRET=your_client_secret
-AZURE_REDIRECT_URI=http://localhost/auth/callback/microsoft
-AZURE_TENANT_ID=your_tenant_id
-```
-
-### 6. Run database migrations and seeders
-
-```bash
-php artisan migrate
-php artisan db:seed
-```
-
-### 7. Build frontend assets
-
-For development:
-```bash
-npm run dev
-```
-
-For production:
-```bash
-npm run build
-```
-
-For SSR support:
-```bash
-npm run build:ssr
-```
-
-### 8. Start the development server
-
-```bash
-php artisan serve
-```
-
-Visit `http://localhost:8000` in your browser.
-
-
-## 📁 Project Structure
-
-```
-├── app/
-│   ├── Http/Controllers/    # Laravel controllers
-│   ├── Models/              # Eloquent models (User, Project, Role, etc.)
-│   └── Providers/           # Service providers
-├── database/
-│   ├── migrations/          # Database migrations
-│   └── seeders/             # Database seeders
-├── resources/
+```text
+utslipp-app/
+├── app/                      # Backend Core Logic
+│   ├── Http/                 # Controllers & Middleware (Inertia Responses)
+│   └── Models/               # Eloquent Models (handling PostGIS geometric data)
+├── database/                 # Database Layer
+│   ├── migrations/           # Schemas (defining PostGIS geometry columns)
+│   └── seeders/              # Municipal mock data engines
+├── resources/                # Frontend Application (React 19 / TypeScript)
 │   ├── js/
-│   │   ├── components/      # React components
-│   │   ├── layouts/         # Layout components
-│   │   ├── pages/           # Inertia pages
-│   │   ├── types/           # TypeScript type definitions
-│   │   └── app.tsx          # Main React entry point
-│   └── css/                 # Stylesheets
-├── routes/
-│   ├── web.php              # Main web routes
-│   ├── auth.php             # Authentication routes
-│   ├── admin.php            # Admin routes
-│   ├── projects.php         # Project routes
-│   └── tilsynObjects.php    # Tilsyn object routes
-└── tests/                   # Pest test files
+│   │   ├── Components/       # Reusable UI items (Maps, Charts, Filters)
+│   │   ├── Pages/            # Inertia-rendered application views
+│   │   └── app.tsx           # Frontend application bootstrap entry point
+│   └── css/                  # Base styles and global configurations
+├── routes/                   # Web & Proxy API Route definitions
+├── vite.config.js            # Asset compiler configuring React & CSS Modules
+└── README.md
 ```
 
-## 🔐 Authentication
+---
 
-The application uses Microsoft Azure AD for authentication via Laravel Socialite. Users can sign in using their Microsoft organizational accounts.
+## 🏗️ Local Development Setup
 
-## 👥 User Roles & Permissions
+### Prerequisites
+*   PHP 8.3+ & Composer
+*   Node.js 20+ & NPM
+*   PostgreSQL with PostGIS installed locally (or via Docker)
 
-The application includes a comprehensive role-based access control system with the following entities:
+### Installation Steps
 
-- **Users**: Application users
-- **Roles**: User roles (e.g., Admin, Manager, Viewer)
-- **Permissions**: Granular permissions for specific actions
-- **Projects**: Organizational units for tilsyn objects
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com.git
+   cd utslipp-app
+   ```
 
-## 🗺️ Map Features
+2. **Backend Configuration:**
+   ```bash
+   composer install
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   *(Configure your PostgreSQL connection and mapping API keys inside the `.env` file.)*
 
-- Interactive Leaflet-based map interface
-- WMS (Web Map Service) layer support
-- GeoJSON data visualization
-- Point-in-polygon calculations using Turf.js
-- Custom WMS proxy for secure layer access
+3. **Frontend Configuration:**
+   ```bash
+   npm install
+   ```
 
-## 🚢 Deployment
+4. **Database Migrations & Seeders:**
+   ```bash
+   php artisan migrate --seed
+   ```
 
-### Production Build
+5. **Run the Application:**
+   Open two terminal tabs to run the concurrent development servers:
+   ```bash
+   # Terminal 1: Vite Core (Frontend asset compilation)
+   npm run dev
 
-1. Set environment to production in `.env`:
-```env
-APP_ENV=production
-APP_DEBUG=false
-```
-
-2. Optimize Laravel:
-```bash
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-3. Build frontend assets:
-```bash
-npm run build
-```
-
-## 👤 Support
-
-For issues and questions, please create an issue in the repository.
+   # Terminal 2: Laravel Local Server
+   php artisan serve
+   ```
